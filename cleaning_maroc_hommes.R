@@ -135,7 +135,6 @@ table(dataH$`D'où venez vous ?`)
 
 ###################### à réviser ##########################
 
-##################### entrer le code d'Hubert pour chaque langue
 table(dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`)
 
 cleanData$ses_lang_fr <- NA
@@ -235,30 +234,12 @@ table(cleanData$logementprincipal)
 
 ########################### Problème avec deux données ######################
 table(dataH$`Distance d'Ahouli`)
-
 cleanData$distanceahouli <- NA
-
-cleanData$distanceahouli[dataH$`Distance d'Ahouli` == "11 Km" |
-                           dataH$`Distance d'Ahouli` ==  "12 Km" |
-                           dataH$`Distance d'Ahouli` == "13 Km" |
-                           dataH$`Distance d'Ahouli` == "26 Km" |
-                           dataH$`Distance d'Ahouli` == "28 Km" |
-                           dataH$`Distance d'Ahouli` == "29,8 km"] <- "0 à 30 Km d'Ahouli"
-cleanData$distanceahouli[dataH$`Distance d'Ahouli` == "45 km" |
-                           dataH$`Distance d'Ahouli` ==  "50 km" |
-                           dataH$`Distance d'Ahouli` == "52 km" |
-                           dataH$`Distance d'Ahouli`== "59,72 km"] <- "31 à 60 Km d'Ahouli"
-
-cleanData$distanceahouli[dataH$`Distance d'Ahouli` == "63 km" |
-                         dataH$`Distance d'Ahouli` == "85,7 km"] <- "61 à 90 Km d'Ahouli"
-
-cleanData$distanceahouli[dataH$`Distance d'Ahouli` == "97 km" | 
-                           dataH$`Distance d'Ahouli` == "107 km" |
-                         dataH$`Distance d'Ahouli` == "112 Km"] <- "91 à 120 Km d'Ahouli"
-cleanData$distanceahouli[dataH$`Distance d'Ahouli` == "122,7 km"] <- "121 Km et plus d'Ahouli"
-
+cleanData$distanceahouli <- gsub(",", ".", dataH$`Distance d'Ahouli`)
+cleanData$distanceahouli <- gsub("[^0-9.]", "", cleanData$distanceahouli)
+cleanData$distanceahouli <- as.numeric(cleanData$distanceahouli)
 table(cleanData$distanceahouli)
-
+hist(cleanData$distanceahouli)
 
 ############################ Vivez vous avec les membres de votre famille ###############
 table(dataH$`Vivez-vous avec les membres de votre famille?`)
