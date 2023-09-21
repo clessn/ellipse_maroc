@@ -171,7 +171,7 @@ _privatefolder*
 # Cossinage
 *.docx
 *.doc
-*.xlsx
+#*.xlsx
 *.xls
 *.pptx
 *.ppt
