@@ -210,3 +210,251 @@ cleanDataF$nbpersonnelogement[dataFemmes$`Combien de personnes vivent dans le lo
                                 "20"] <- "9 ou plus"
 
 table(cleanDataF$nbpersonnelogement)
+
+
+
+######################### réparation majeure ####################
+table(dataFemmes$`Est-ce que le logement a besoin de réparation majeure?`)
+
+cleanDataF$reparationmajeure <- NA
+
+cleanDataF$reparationmajeure[dataFemmes$`Est-ce que le logement a besoin de réparation majeure?` ==
+                               "Non"] <- 0
+cleanDataF$reparationmajeure[dataFemmes$`Est-ce que le logement a besoin de réparation majeure?` ==
+                               "Oui"] <- 1
+
+table(cleanDataF$reparationmajeure)
+
+########################### réparation mineure ################
+table(dataFemmes$`Est-ce que le logement a besoin de réparation mineure?`)
+
+cleanDataF$reparationmineure <- NA
+
+cleanDataF$reparationmineure[dataFemmes$`Est-ce que le logement a besoin de réparation mineure?` ==
+                               "Non"] <- 0
+cleanDataF$reparationmineure[dataFemmes$`Est-ce que le logement a besoin de réparation mineure?` ==
+                               "Oui"] <- 1
+
+table(cleanDataF$reparationmineure)
+
+########################### eau courante #####################
+table(dataFemmes$`Est-ce que le logement a l'eau courante?`)
+
+cleanDataF$eaucourante <- NA
+
+cleanDataF$eaucourante[dataFemmes$`Est-ce que le logement a l'eau courante?` ==
+                         "Non"] <- 0
+cleanDataF$eaucourante[dataFemmes$`Est-ce que le logement a l'eau courante?` ==
+                         "Oui"] <- 1
+
+table(cleanDataF$eaucourante)
+
+
+############################ toilettes ###################
+table(dataFemmes$`Est-ce que le logement a des toilettes?`)
+
+cleanDataF$toilette <- NA
+
+cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
+                      "Non"] <- "Non"
+cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
+                      "Oui, à l'extérieur"] <- "Oui, à l'extérieur"
+cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
+                      "Oui, dans la maison"] <- "Oui, dans la maison"
+
+table(cleanDataF$toilette)
+
+
+########################## Revenus principals #####################
+table(dataFemmes$`Quelles sont vos sources de revenus principales?`)
+
+
+
+########################### Montant revenus annuels ##################
+table(dataFemmes$`Quel est le montant total de vos revenus annuels?`)
+
+cleanDataF$ses_revenu <- NA
+
+cleanDataF$ses_revenu[dataFemmes$`Quel est le montant total de vos revenus annuels?` ==
+                        "0 à 2000 dirhams"] <- "0 à 2000 dirhams"
+cleanDataF$ses_revenu[dataFemmes$`Quel est le montant total de vos revenus annuels?` ==
+                        "2001 à 5000 dirhams"] <- "2001 à 5000 dirhams"
+
+table(cleanDataF$ses_revenu)
+
+############################# services de santé #################
+table(dataFemmes$`Avez-vous accès à des services de santé?`)
+
+
+############################ assurance médicale #######################
+table(dataFemmes$`Avez vous une assurance médicale?`)
+
+cleanDataF$assurancemedicale <- NA
+
+cleanDataF$assurancemedicale[dataFemmes$`Avez vous une assurance médicale?` ==
+                               "Non"] <- 0
+cleanDataF$assurancemedicale[dataFemmes$`Avez vous une assurance médicale?` ==
+                               "Oui"] <- 1
+
+table(cleanDataF$assurancemedicale)
+
+
+############################# système d'assainissement ################
+table(dataFemmes$`Y a-t-il un système d'assainissement dans la communauté?`)
+
+cleanDataF$assainisement <- NA
+
+cleanDataF$assainisement[dataFemmes$`Y a-t-il un système d'assainissement dans la communauté?` ==
+                           "Non"] <- 0
+cleanDataF$assainisement[dataFemmes$`Y a-t-il un système d'assainissement dans la communauté?` ==
+                           "Oui"] <- 1
+
+table(cleanDataF$assainisement)
+
+
+############################### école primaire #######################
+table(dataFemmes$`Y a-t-il une école primaire dans la communauté?`)
+
+cleanDataF$ecoleprimaire <- NA
+
+cleanDataF$ecoleprimaire[dataFemmes$`Y a-t-il une école primaire dans la communauté?` ==
+                           "Oui"] <- 1
+
+table(cleanDataF$ecoleprimaire)
+
+
+############################### école secondaire ######################
+table(dataFemmes$`Y a-t-il une école secondaire dans la communauté?`)
+
+cleanDataF$ecolesecondaire <- NA
+
+cleanDataF$ecolesecondaire[dataFemmes$`Y a-t-il une école secondaire dans la communauté?` ==
+                             "Non"] <- "Non"
+cleanDataF$ecolesecondaire[dataFemmes$`Y a-t-il une école secondaire dans la communauté?` ==
+                             "Oui"] <- "Oui"
+cleanDataF$ecolesecondaire[dataFemmes$`Y a-t-il une école secondaire dans la communauté?` ==
+                             "Non,Si non, à quelle distance? - 15km" |
+                             dataFemmes$`Y a-t-il une école secondaire dans la communauté?` ==
+                             "Oui,Si non, à quelle distance? - 15 km" |
+                             dataFemmes$`Y a-t-il une école secondaire dans la communauté?` ==
+                             "Non,Si non, à quelle distance? - 15 km"] <- "Non, l'école se trouve à une distance de 15 km"
+cleanDataF$ecolesecondaire[dataFemmes$`Y a-t-il une école secondaire dans la communauté?` ==
+                             "Non,Si non, à quelle distance? - 30km" |
+                             dataFemmes$`Y a-t-il une école secondaire dans la communauté?` ==
+                             "Non,Si non, à quelle distance? - 30 km" |
+                             dataFemmes$`Y a-t-il une école secondaire dans la communauté?` == 
+                             "Non,Si non, à quelle distance? - 39 km"] <- "Non, l'école se trouve à une distance d'entre 16 à 39 km"
+
+table(cleanDataF$ecolesecondaire)
+
+
+############################### système de transport collectif ################
+table(dataFemmes$`Y a-t-il un système de transport collectif dans la communauté?`)
+
+
+############################## Épicerie #################
+table(dataFemmes$`Où allez vous pour acheter l'épicerie?`)
+
+cleanDataF$epicerie <- NA
+
+cleanDataF$epicerie[dataFemmes$`Où allez vous pour acheter l'épicerie?` ==
+                      "Midelt"] <- "Midelt"
+
+table(cleanDataF$epicerie)
+
+########################## santé générale ###################
+table(dataFemmes$`Comment évalueriez-vous votre santé générale?`)
+
+cleanDataF$santegenerale <- NA
+
+cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+                           "Mauvaise"] <- 0
+cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+                           "Médiocre"] <- 0.25
+cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+                           "Bonne"] <- 0.5
+cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+                           "Très bonne"] <- 0.75
+cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+                           "Excellente"] <- 1
+
+table(cleanDataF$santegenerale)
+
+
+############################## consulté médecin ####################
+table(dataFemmes$`Avez-vous consulté un médecin ou un autre professionnel de santé au cours des 12 derniers mois?`)
+
+cleanDataF$consultationmedicale <- NA
+
+cleanDataF$consultationmedicale[dataFemmes$`Avez-vous consulté un médecin ou un autre professionnel de santé au cours des 12 derniers mois?` ==
+                                  "Non"] <- 0
+cleanDataF$consultationmedicale[dataFemmes$`Avez-vous consulté un médecin ou un autre professionnel de santé au cours des 12 derniers mois?` ==
+                                  "Oui"] <- 1
+
+table(cleanDataF$consultationmedicale)
+
+
+########################## Maladie cardiovasculaire ###################
+table(dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`)
+
+cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
+                                     "Non"] <- "Non"
+cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
+                                     "Hypertension"] <- "Hypertension"
+cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
+                                     "Hypertension,Maladie coronarienne"] <- "Hypertension,maladie coronarienne"
+cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
+                                     "Autre (veuillez spécifier) - Anémie"] <- "Anémie"
+cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
+                                     "Hypertension,Autre (veuillez spécifier) - Fatigue"] <- "Hypertension,fatigue"
+
+table(cleanDataF$maladiecardiovasculaire)
+
+
+########################### maladies chroniques ########################
+table(dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`)
+
+
+############################ problèmes respiratoires ####################
+table(dataFemmes$`Avez-vous des problèmes respiratoires?`)
+
+cleanDataF$maladierespiratoire <- NA
+
+cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
+                                 "Non"] <- "Non"
+cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
+                                 "Asthme"] <- "Asthme"
+cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
+                                 "Bronchite"] <- "Bronchite"
+cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
+                                 "Autre (veuillez spécifier) - Rhume"] <- "Rhume"
+
+table(cleanDataF$maladierespiratoire)
+
+############################### problèmes de peau #######################
+table(dataFemmes$`Avez-vous des problèmes de peau?`)
+
+cleanDataF$problemepeau <- NA
+
+cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
+                          "Non"] <- "Non"
+cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
+                          "Démangeaisons"] <- "Démangeaisons"
+cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
+                          "Éruptions cutanées"] <- "Éruptions cutanées"
+cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
+                          "Éruptions cutanées,Démangeaisons"] <- "Éruptions cutanées,démangeaisons"
+cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
+                          "Éruptions cutanées,Autre (veuillez spécifier) - Kyste sébacé"] <- "Éruptions cutanées,kyste sébacé"
+
+
+table(cleanDataF$problemepeau)
+
+
+############################ problèmes neurologiques ##################
+########################### grepl ? ##########################
+table(dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`)
+
+
+######################## problèmes digestifs #######################
+table(dataFemmes$`Avez-vous des problèmes digestifs?`)
