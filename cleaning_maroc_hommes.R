@@ -138,7 +138,12 @@ table(dataH$`D'où venez vous ?`)
 ##################### entrer le code d'Hubert pour chaque langue
 table(dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`)
 
-cleanData$langueparlee <- NA
+cleanData$ses_lang_fr <- NA
+cleanData$ses_lang_amaz <-NA
+cleanData$ses_lang_darija <- NA
+cleanData$ses_lang_arabe <- NA
+cleanData$ses_lang_ang <- NA
+
 
 cleanData$ses_lang_fr[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)` %in% c("Amaridji,Francais", "Francais", "Anglais et francais")] <- 1
 
