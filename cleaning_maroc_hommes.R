@@ -143,45 +143,28 @@ cleanData$ses_lang_amaz <-NA
 cleanData$ses_lang_darija <- NA
 cleanData$ses_lang_arabe <- NA
 cleanData$ses_lang_ang <- NA
+cleanData$ses_lang_espagnol <- NA
+cleanData$ses_lang_allem <- NA
 
+votre_vecteur <- c("Amar,Francais", "Francais", "Anglais et Francais", "Espagnol")
 
-cleanData$ses_lang_fr[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)` %in% c("Amaridji,Francais", "Francais", "Anglais et francais")] <- 1
+resultat <- as.integer(grepl("Francais", votre_vecteur))
+resultat <- as.integer(grepl("Amazgigh", votre_vecteur))
 
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Amazigh"] <- "Amazigh"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija"] <- "Darija"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Amazigh"] <- "Darija,Amazigh"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Amazigh, Français"] <- "Darija,Amazigh,Français"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Arabe,Darija,Français"] <- "Arabe,Darija,Français"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Français"] <- "Darija,Français"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Amazigh,Français,Anglais,
-                       Autre (veuillez spécifier) - Espagnol"] <- "Darija,
-                       Amazigh,Français,Anglais,Espagnol"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Amazigh,Français,Autre
-                       (veuillez spécifier) - Espagnol"] <- "Darija,Amazigh,
-                                                              Français,Espagnol"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Arabe,Darija,Autre (veuillez spécifier)
-                       - Espagnol"] <- "Arabe,Darija,Espagnol"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Amazigh,Anglais"] <- "Darija,Amazigh,Anglais"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Amazigh,Français,Anglais"] <- "Darija,Amazigh,
-                                                              Français,Anglais"
-cleanData$langueparlee[dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`
-                       == "Darija,Amazigh,Français,Anglais,Autre
-                       (veuillez spécifier) - Espagnol, allemand"] <- "Darija,
-                                    Amazigh,Français,Anglais,Espagnol,Allemand"
+cleanData$ses_lang_fr <- as.integer(grepl("Français", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
+table(cleanData$ses_lang_fr)
 
-table(cleanData$langueparlee)
+cleanData$ses_lang_amaz <- as.integer(grepl("Amazigh", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
+table(cleanData$ses_lang_amaz)
 
+cleanData$ses_lang_darija <- as.integer(grepl("Darija", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
+table(cleanData$ses_lang_amaz)
+
+cleanData$ses_lang_ang <- as.integer(grepl("Anglais", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
+table(cleanData$ses_lang_ang)
+
+cleanData$ses_lang_espagnol <- as.integer(grepl("Espagnol", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
+table(cleanData$ses_lang_espagnol)
 
 ######################## Niveau d'étude ###########################
 table(dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`)
