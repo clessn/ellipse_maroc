@@ -828,15 +828,87 @@ table(cleanData$protocole)
 table(dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`)
 
 
-###################### risque qualité de l'eau #####################
-table(dataH$`Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  
-[Qualité de l’eau]`)
+###################### risque bétail #####################
+table(dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]])
 
+cleanData$impact_betail <- NA
+
+cleanData$impact_betail[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
+                                                      "Mauvaise"] <- 0
+
+cleanData$impact_betail[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
+                       "Médiocre"] <- 0.5
+
+cleanData$impact_betail[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
+                       "Bonne"] <- 1
+
+table(cleanData$impact_betail)
 
 ##################### risque qualité de l'air ###################
-table(dataH$`Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  Qualité de l’air`)
+table(dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]])
+
+cleanData$impact_qualiteair <- NA
+
+cleanData$impact_qualiteair[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                              "Mauvaise"] <- 0
+cleanData$impact_qualiteair[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                              "Médiocre"] <- 0.33
+cleanData$impact_qualiteair[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                              "Bonne"] <- 0.66
+cleanData$impact_qualiteair[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                              "Très bonne"] <- 1
+
+table(cleanData$impact_qualiteair)
 
 
+####################### qualité de l'eau ###################
+table(dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]])
+
+cleanData$impact_qualiteeau <- NA
+
+cleanData$impact_qualiteeau[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
+                              "Mauvaise"] <- 0
+cleanData$impact_qualiteeau[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
+                              "Médiocre"] <- 0.5
+cleanData$impact_qualiteeau[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
+                              "Bonne"] <- 1
+
+table(cleanData$impact_qualiteeau)
+
+
+####################### qualité alimentation ###################
+table(dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]])
+
+
+cleanData$qualite_alimentation <- NA
+
+cleanData$qualite_alimentation[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                              "Mauvaise"] <- 0
+cleanData$qualite_alimentation[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                                 "Médiocre"] <- 0.33
+cleanData$qualite_alimentation[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                                 "Bonne"] <- 0.66
+cleanData$qualite_alimentation[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                                 "Très bonne"] <- 1
+
+table(cleanData$qualite_alimentation)
+
+
+######################## impact culture #####################
+table(dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]])
+
+cleanData$impact_culture <- NA
+
+cleanData$impact_culture[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                                 "Mauvaise"] <- 0
+cleanData$impact_culture[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                           "Médiocre"] <- 0.33
+cleanData$impact_culture[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                           "Bonne"] <- 0.66
+cleanData$impact_culture[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                           "Très bonne"] <- 1
+
+table(cleanData$impact_culture)
 
 
 ################### qualité environnement social ################
