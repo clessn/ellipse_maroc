@@ -16,7 +16,7 @@ cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "21 - 29 ans"] <- "21 à 29 a
 cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "30 - 39 ans"] <- "30 à 39 ans"
 cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "40-49"] <- "40 à 49 ans"
 cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "50-59"] <- "50 à 59 ans"
-cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "60 ou plus"] <- "60 ou plus"
+cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "60 ou plus"] <- "60 ans ou plus"
 table(cleanData$ses_age)
 
 
@@ -79,14 +79,12 @@ cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"
 table(cleanData$ses_étatcivil)
 
 ################## nb enfants ##################
-######### le problème du NA ########
 table(dataH$`Combien d'enfants avez-vous ?`)
 
 cleanData$ses_enfants <- NA
 
 cleanData$ses_enfants[is.na(dataH$`Combien d'enfants avez-vous ?`)] <- "0"
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "NA" |
-                        dataH$`Combien d'enfants avez-vous ?` == "1"] <- "0-1"
+cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "1"] <- "1"
 
 cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "2" |
                         dataH$`Combien d'enfants avez-vous ?` == "3"] <- "2-3"
@@ -132,9 +130,6 @@ table(dataH$`D'où venez vous ?`)
 
 
 ###################### Langue ############################
-
-###################### à réviser ##########################
-
 table(dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`)
 
 cleanData$ses_lang_fr <- NA
@@ -278,12 +273,11 @@ cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de 
 table(cleanData$nombrepiecehabitable)
 
 ########################## Personnes dans le logement ######################
-###################### 4 NA ################
 table(dataH$`Combien de personnes vivent dans le logement ?`)
 
 cleanData$nbpersonnelogement <- NA
 
-cleanData$ses_enfants[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- "0"
+cleanData$nbpersonnelogement[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- "0"
 cleanData$nbpersonnelogement[dataH$`Combien de personnes vivent dans le logement ?` ==
                                "1" |
                        dataH$`Combien de personnes vivent dans le logement ?` ==
@@ -330,7 +324,6 @@ table(cleanData$visitefamille)
 
 
 ########################## réparation majeure #######################
-
 table(dataH$`Est-ce que le logement a besoin de réparation majeure?`)
 
 cleanData$reparationmajeure <- NA
@@ -344,7 +337,6 @@ table(cleanData$reparationmajeure)
 
 
 ############################## réparation mineure ####################
-
 table(dataH$`Est-ce que le logement a besoin de réparation mineure?`)
 
 cleanData$reparationmineure <- NA
@@ -387,7 +379,6 @@ table(cleanData$toilette)
 
 
 ################################ revenus principal ####################
-
 table(dataH$`Quelles sont vos sources de revenus principales?`)
 
 cleanData$revenuprincipal <- NA
@@ -414,7 +405,6 @@ cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales
 table(cleanData$revenuprincipal)
 
 ##############################  accès services de santé #################
-
 table(dataH$`Avez-vous accès à des services de santé?`)
 
 
@@ -448,7 +438,6 @@ table(cleanData$assainissement)
 
 
 ###################### école primaire ########################
-
 table(dataH$`Y a-t-il une école primaire dans la communauté?`)
 
 cleanData$ecoleprimaire <- NA
@@ -465,8 +454,51 @@ cleanData$ecoleprimaire[dataH$`Y a-t-il une école primaire dans la communauté?
 
 table(cleanData$ecoleprimaire)
 
-######################### système de transport ###################
 
+######################### école secondaire ####################
+table(dataH$`Y a-t-il une école secondaire dans la communauté?`)
+
+cleanData$ecolesecondaire <- NA
+
+cleanData$ecolesecondaire[dataH$`Y a-t-il une école secondaire dans la communauté?` == 
+                            "Oui"] <- "Oui"
+cleanData$ecolesecondaire[dataH$`Y a-t-il une école secondaire dans la communauté?` == 
+                            "Non,Si non, à quelle distance? - 3km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 3 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 4 km" | 
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            " Non,Si non, à quelle distance? - 5 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 6 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 7 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 8 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 10 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Oui,Si non, à quelle distance? - 15 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 15 km"] <- "Non, l'école se trouve à une distance de maximum 15 km "
+
+cleanData$ecolesecondaire[dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 20 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 22 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 25 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 27 km" |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 30 km " |
+                            dataH$`Y a-t-il une école secondaire dans la communauté?` ==
+                            "Non,Si non, à quelle distance? - 60 km"] <- "Non, l'école se trouve à une distance maximum de 60 km"
+
+
+table(cleanData$ecolesecondaire)
+######################### système de transport ###################
 table(dataH$`Y a-t-il un système de transport collectif dans la communauté?`)
 
 
@@ -507,7 +539,6 @@ cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` ==
 table(cleanData$epicerie)
 
 ############################# Santé générale ####################
-
 table(dataH$`Comment évalueriez-vous votre santé générale?`)
 
 cleanData$santegenerale <- NA
@@ -526,7 +557,6 @@ cleanData$santegenerale[dataH$`Comment évalueriez-vous votre santé générale?
 table(cleanData$santegenerale)
 
 ############################ consommation alcool ##############
-
 table(dataH$`Est-ce que vous consommez de l'alcool?`)
 
 cleanData$consommationalcool <- NA
@@ -569,6 +599,8 @@ table(cleanData$maladiecardiovasculaire)
 
 
 ############################# Maladie chronique ######################
+
+############################# créer plusieurs variables ? #################
 table(dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`)
 
 cleanData$maladiechronique <- NA
@@ -599,7 +631,6 @@ table(cleanData$maladierespiratoire)
 
 
 ############################# problèmes de peau ####################
-
 table(dataH$`Avez-vous des problèmes de peau?`)
 
 cleanData$problemepeau <- NA
@@ -742,13 +773,11 @@ table(cleanData$anneeexperience)
 
 
 ######################## Perception du danger ###################
-
 table(dataH$`Connaissez-vous les dangers de l'extraction du plomb?`)
 
 
 
 ####################### Suivi médical ####################
-
 table(dataH$`Avez-vous accès à un suivi médical régulier pour détecter et traiter les problèmes de santé liés à l'exposition au plomb et aux conditions de travail dans la mine?`)
 
 cleanData$suivimedical <- NA
@@ -761,9 +790,34 @@ cleanData$suivimedical[dataH$`Avez-vous accès à un suivi médical régulier po
 table(cleanData$suivimedical)
 
 ######################## Équipement de sécurité ################
-####################### À cleaner comme du monde ###############
+####################### Comment faire si c'est mal écrit ###############
 table(dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`)
 
+cleanData$equipement <- NA
+
+cleanData$equipement <- as.integer(grepl("Casque|casque", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
+
+cleanData$equipement <- as.integer(grepl("Lampe|lamp|lampe|Lamp", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
+
+cleanData$equipement <- as.integer(grepl("Bottes|botte|bottes", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
+
+cleanData$equipement <- as.integer(grepl("tenu", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
+
+cleanData$equipement <- as.integer(grepl("masque|Masque", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
+
+cleanData$equipement <- as.integer(grepl("gants|Gant|Gants", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
+
+cleanData$equipement <- as.integer(grepl("chapeau", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
+
+cleanData$equipement <- as.integer(grepl("lunettes", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement)
 
 ##################### impacts long terme préoccupations ##################
 table(dataH$`Selon vous, les impacts à long terme de l'extraction artisanale sur la santé des travailleurs sont-ils préoccupants?`)
