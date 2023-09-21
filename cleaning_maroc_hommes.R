@@ -95,8 +95,6 @@ cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "6" |
 
 table(cleanData$ses_enfants)
 
-
-
 ###################### Statut professionel actuel ####################
 table(dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`)
 
@@ -174,7 +172,7 @@ cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous aye
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
                       == "Sans diplôme"] <- "Sans diplôme"
 
-table(cleanData$niveauétude)
+table(cleanData$niveauetude)
 
 ######################### Logement principal ##########################
 
