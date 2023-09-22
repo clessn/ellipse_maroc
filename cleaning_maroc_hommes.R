@@ -247,8 +247,7 @@ cleanData$membrefamilleensemble[dataH$`Vivez-vous avec les membres de votre fami
 table(cleanData$membrefamilleensemble)
 
 
-########################## Nombre pièces habitables #####################
-
+########################## Nombre pièces habitables ##############
 table(dataH$`Quel est le nombre de pièce habitable de votre logement?`)
 
 cleanData$nombrepiecehabitable <- NA
@@ -575,8 +574,17 @@ table(cleanData$consommationalcool)
 ########################### Me donne mal à la tête ça ##################
 table(dataH$`Fumez-vous du tabac?`)
 
+cleanData$tabac <- NA
 
+cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non"] <- "Non"
+cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Occasionnellement" |
+                  dataH$`Fumez-vous du tabac?`== "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Occasionnellement"] <- "Oui, occasionnellement"
+cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement" |
+                  dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement" |
+                  dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement ( par le nez ? )"] <- "Oui, quotidiennement"
+cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Oui"] <- "Oui"
 
+table(cleanData$tabac)
 
 ############################ Maladie cardiovasculaire ################
 table(dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`)
@@ -716,6 +724,9 @@ table(cleanData$douleursmusculaires)
 ######################## Blessure dans les 12 dernier mois ###################
 table(dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`)
 
+cleanData$blessurerecentes <- NA
+
+
 
 
 
@@ -772,6 +783,49 @@ table(cleanData$anneeexperience)
 
 ######################## Perception du danger ###################
 table(dataH$`Connaissez-vous les dangers de l'extraction du plomb?`)
+
+cleanData$perceptiondanger <- NA
+
+cleanData$perceptiondanger <- as.integer(grepl("Accident et blessures|risques des accidents et blessures|Blessures|accident et blessures|blessures et accidents ( éboulement)", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("Silicose|silicose", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("mort", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("problème respiratoire ( poumons)|problème de poumons|poussière de poumons|Problème de poumons|problème respiratoire", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("risque d’éboulement|Éboulement|Risque d’éboulement|éboulement", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("rhumatisme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("sciatique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("détérioration de la santé", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("asthme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("problème neurologique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("problème d’articulation|problème articulations et musculaire|douleurs d’articulation", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("hypertension", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+cleanData$perceptiondanger <- as.integer(grepl("perte de la vue|accident et blessures baisse de vue|perte de la vue accident et blessures", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger)
+
+
 
 
 
