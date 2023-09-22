@@ -788,7 +788,6 @@ cleanData$suivimedical[dataH$`Avez-vous accès à un suivi médical régulier po
 table(cleanData$suivimedical)
 
 ######################## Équipement de sécurité ################
-####################### Comment faire si c'est mal écrit ###############
 table(dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`)
 
 cleanData$equipement <- NA

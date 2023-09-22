@@ -458,3 +458,475 @@ table(dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`)
 
 ######################## problèmes digestifs #######################
 table(dataFemmes$`Avez-vous des problèmes digestifs?`)
+
+cleanDataF$problemedigestif <- NA
+
+cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
+                              "Non"] <- "Non"
+cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
+                              "Douleurs abdominales"] <- "Douleurs abdominales"
+cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
+                              "Nausées,Vomissements"] <- "Nausées,vomissements"
+cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
+                              "Vomissements,Douleurs abdominales"] <- "Vomissements,douleurs abdominales"
+cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
+                              "Nausées,Douleurs abdominales"] <- "Nausées,douleurs abdominales"
+cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
+                              "Vomissements"] <- "Vomissements"
+cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
+             "Nausées,Vomissements,Douleurs abdominales"] <- "Nausées,vomissements,douleurs abdominales"
+
+table(cleanDataF$problemedigestif)
+
+
+############################# douleurs articulaires/musculaires #############
+table(dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?`)
+
+cleanDataF$douleursmusculaires <- NA
+
+cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
+                                 "Non"] <- "Non"
+cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
+"Oui, j'ai des douleurs articulaires fréquentes"] <- "Oui, j'ai des douleurs articulaires fréquentes"
+cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
+"Oui, j'ai des douleurs musculaires  fréquentes"] <- "Oui, j'ai des douleurs musculaires  fréquentes"
+cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
+"Oui, j'ai des douleurs musculaires  fréquentes,Oui, j'ai des douleurs articulaires fréquentes"] <- "Oui, j'ai des douleurs musculaires et articulaires fréquentes"
+
+
+table(cleanDataF$douleursmusculaires)
+
+
+############################### blessures accidents dans 12 derniers mois
+table(dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`)
+
+cleanDataF$blessurerecentes <- NA
+
+cleanDataF$blessurerecentes[dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
+                              "Non"] <- "Non"
+cleanDataF$blessurerecentes[dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
+                              "Oui, j'ai eu un accident au cours des 12 derniers mois,Si oui veuillez préciser quel type de blessure ou d'accident: - Chute de blocs au fond" |
+                              dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
+                              "Oui, j'ai eu une blessure au cours des 12 derniers mois,Si oui veuillez préciser quel type de blessure ou d'accident: - Chute de bloc au fond"
+                            ] <- "Oui, une chute de blocs au fond"
+
+
+table(cleanDataF$blessurerecentes)
+
+
+############################### Difficultés à dormir ####################
+table(dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?`)
+
+cleanDataF$troublesommeil <- NA
+
+cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
+                            "Non"] <- "Non"
+cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
+                            "Oui, je souffre d'insomnie"] <- "Oui, je souffre d'insomnie"
+cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
+                            "Oui, j'ai des difficultés à dormir"] <- "Oui, j'ai des difficultés à dormir"
+
+
+
+table(cleanDataF$troublesommeil)
+
+
+################################### problème santé communauté ################
+table(dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté`)
+
+cleanDataF$santecommunaute <- NA
+
+cleanDataF$santecommunaute <- as.integer(grepl("Accidents et blessures|ccidents et blessures", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Hypertension", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("hémorroïde|Hémorroïdes", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Problème digestif|Problème digestifs", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Rhumatisme|rhumatisme", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Troubles musculosquelettiques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Allergie|allergie", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Fatigue", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Problèmes de santé mentale", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Accidents et blessures|ccidents et blessures", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Autres problèmes de santé chroniques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Maux de tête", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("Problème neurologique|Maladie neurologique", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("problème rénal|Rénales", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("silicose|Silicose", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("détérioration de la santé", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+cleanDataF$santecommunaute <- as.integer(grepl("sciatique", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute)
+
+
+####################################### problème qualité eau ################
+table(dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]])
+
+cleanDataF$impact_qualiteeau <- NA
+
+cleanDataF$impact_qualiteeau[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
+                              "Mauvaise"] <- 0
+cleanDataF$impact_qualiteeau[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
+                              "Médiocre"] <- 0.33
+cleanDataF$impact_qualiteeau[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
+                              "Bonne"] <- 0.66
+cleanDataF$impact_qualiteeau[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
+                              "Très bonne"] <- 1
+
+table(cleanDataF$impact_qualiteeau)
+
+################################# qualité l'air ######################
+table(dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]])
+
+cleanDataF$impact_qualiteair <- NA
+
+cleanDataF$impact_qualiteair[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                              "Mauvaise"] <- 0
+cleanDataF$impact_qualiteair[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                               "Médiocre"] <- 0.33
+cleanDataF$impact_qualiteair[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                               "Bonne"] <- 0.66
+cleanDataF$impact_qualiteair[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’air]"]] ==
+                               "Très bonne"] <- 1
+
+table(cleanDataF$impact_qualiteair)
+
+
+############################### qualité alimentation ################
+table(dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]])
+
+cleanDataF$qualite_alimentation <- NA
+
+cleanDataF$qualite_alimentation[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                                 "Mauvaise"] <- 0
+cleanDataF$qualite_alimentation[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                                  "Médiocre"] <- 0.33
+cleanDataF$qualite_alimentation[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                                  "Bonne"] <- 0.66
+cleanDataF$qualite_alimentation[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’alimentation]"]] ==
+                                  "Très bonne"] <- 1
+
+table(cleanDataF$impact_qualiteair)
+
+############################# qualité impact bétail #####################
+table(dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]])
+
+cleanDataF$impact_betail <- NA
+
+cleanDataF$impact_betail[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
+                          "Mauvaise"] <- 0
+cleanDataF$impact_betail[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
+                           "Médiocre"] <- 0.33
+cleanDataF$impact_betail[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
+                           "Bonne"] <- 0.66
+cleanDataF$impact_betail[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
+                           "Très bonne"] <- 1
+
+table(cleanDataF$impact_betail)
+
+############################## impact culture ######################
+table(dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]])
+
+cleanDataF$impact_culture <- NA
+
+cleanDataF$impact_culture[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                           "Mauvaise"] <- 0
+cleanDataF$impact_culture[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                            "Médiocre"] <- 0.33
+cleanDataF$impact_culture[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                            "Bonne"] <- 0.66
+cleanDataF$impact_culture[dataFemmes[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur les cultures]"]] ==
+                            "Très bonne"] <- 1
+
+table(cleanDataF$impact_culture)
+
+
+############################# qualité environnement de travail #################
+table(dataFemmes$`En général, diriez-vous que la qualité de l'environnement de travail est:`)
+
+cleanDataF$qualitetravail <- NA
+
+cleanDataF$qualitetravail[dataFemmes$`En général, diriez-vous que la qualité de l'environnement de travail est:` ==
+                            "Mauvaise"] <- 0
+cleanDataF$qualitetravail[dataFemmes$`En général, diriez-vous que la qualité de l'environnement de travail est:` ==
+                            "Médiocre"] <- 0.5
+cleanDataF$qualitetravail[dataFemmes$`En général, diriez-vous que la qualité de l'environnement de travail est:` ==
+                            "Moyenne"] <- 1
+
+table(cleanDataF$qualitetravail)
+
+
+
+############################## environnement social #################
+table(dataFemmes$`En général, diriez-vous que la qualité de l'environnement social est:`)
+
+cleanDataF$qualitesocial <- NA
+
+cleanDataF$qualitesocial[dataFemmes$`En général, diriez-vous que la qualité de l'environnement social est:` ==
+                           "Mauvaise"] <- 0
+cleanDataF$qualitesocial[dataFemmes$`En général, diriez-vous que la qualité de l'environnement social est:` ==
+                           "Médiocre"] <- 0.33
+cleanDataF$qualitesocial[dataFemmes$`En général, diriez-vous que la qualité de l'environnement social est:` ==
+                           "Bonne"] <- 0.66
+cleanDataF$qualitesocial[dataFemmes$`En général, diriez-vous que la qualité de l'environnement social est:` ==
+                           "Très bonne"] <- 1
+
+table(cleanDataF$qualitesocial)
+
+
+############################# environnement naturel ####################
+table(dataFemmes$`En général, diriez-vous que la qualité de l'environnement naturel est:`)
+
+cleanDataF$qualitenaturel <- NA
+
+cleanDataF$qualitenaturel[dataFemmes$`En général, diriez-vous que la qualité de l'environnement naturel est:` ==
+                            "Mauvaise"] <- 0
+cleanDataF$qualitenaturel[dataFemmes$`En général, diriez-vous que la qualité de l'environnement naturel est:` ==
+                            "Médiocre"] <- 0.33
+cleanDataF$qualitenaturel[dataFemmes$`En général, diriez-vous que la qualité de l'environnement naturel est:` ==
+                            "Bonne"] <- 0.66
+cleanDataF$qualitenaturel[dataFemmes$`En général, diriez-vous que la qualité de l'environnement naturel est:` ==
+                            "Très bonne"] <- 1
+
+table(cleanDataF$qualitenaturel)
+
+
+############################# santé générale ####################
+table(dataFemmes$`Selon vous, la santé générale de la communauté est :`)
+
+cleanDataF$santegeneralecommunaute <- NA
+
+cleanDataF$santegeneralecommunaute[dataFemmes$`Selon vous, la santé générale de la communauté est :` ==
+                                     "Mauvaise"] <- 0
+cleanDataF$santegeneralecommunaute[dataFemmes$`Selon vous, la santé générale de la communauté est :` ==
+                                     "Moyenne"] <- 0.25
+cleanDataF$santegeneralecommunaute[dataFemmes$`Selon vous, la santé générale de la communauté est :` ==
+                                     "Bonne"] <- 0.5
+cleanDataF$santegeneralecommunaute[dataFemmes$`Selon vous, la santé générale de la communauté est :` ==
+                                     "Très bonne"] <- 0.75
+cleanDataF$santegeneralecommunaute[dataFemmes$`Selon vous, la santé générale de la communauté est :` ==
+                                     "Excellente"] <- 1
+
+table(cleanDataF$santegeneralecommunaute)
+
+########################### amélioration socioéconomique ###############
+table(dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`)
+
+
+########################### formation risque ##################
+table(dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?`)
+
+cleanDataF$formationrisque <- NA
+
+cleanDataF$formationrisque[dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?` ==
+                             "Non"] <- "Non"
+cleanDataF$formationrisque[dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?` ==
+"Oui,Si oui, par qui et comment? - Étudiants universitaires"] <- "Oui, par des étudiants universitaires"
+cleanDataF$formationrisque[dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?` ==
+"Oui,Si oui, par qui et comment? - Gens de la région "] <- "Oui, par des gens de la région"
+cleanDataF$formationrisque[dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?` ==
+"Oui,Si oui, par qui et comment? - Gens de Mibladen"] <- "Oui, par des gens de Mibladen"
+cleanDataF$formationrisque[dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?` ==
+"Oui,Si oui, par qui et comment? - Presse ( interview)" |
+  dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?` == 
+"Oui,Si oui, par qui et comment? - Presse et interview"] <- "Oui, par des conférences de presse ou des interviews"
+
+table(cleanDataF$formationrisque)
+
+
+################################# préoccupation maternité ###################
+table(dataFemmes$`Si vous êtes enceinte ou prévoyez de l'être, avez-vous des préoccupations concernant l'exposition aux substances (et aux conditions de travail) liées à l'exploitation minière ?`)
+
+cleanDataF$preoccupationmaternite <- NA
+
+cleanDataF$preoccupationmaternite[dataFemmes$`Si vous êtes enceinte ou prévoyez de l'être, avez-vous des préoccupations concernant l'exposition aux substances (et aux conditions de travail) liées à l'exploitation minière ?` ==
+                                    "Non"] <- 0
+cleanDataF$preoccupationmaternite[dataFemmes$`Si vous êtes enceinte ou prévoyez de l'être, avez-vous des préoccupations concernant l'exposition aux substances (et aux conditions de travail) liées à l'exploitation minière ?` ==
+                                    "Oui"] <- 1
+
+table(cleanDataF$preoccupationmaternite)
+
+############################ complication maternité #####################
+table(dataFemmes$`Si vous êtes enceinte ou avez été enceinte, avez-vous eu des complications pendant la grossesse ou avec la santé de votre enfant depuis que vous travaillez ou vivez près de la mine ?`)
+
+cleanDataF$complicationmaternite <- NA
+
+cleanDataF$complicationmaternite[dataFemmes$`Si vous êtes enceinte ou avez été enceinte, avez-vous eu des complications pendant la grossesse ou avec la santé de votre enfant depuis que vous travaillez ou vivez près de la mine ?` ==
+                                   "Non"] <- 0
+cleanDataF$complicationmaternite[dataFemmes$`Si vous êtes enceinte ou avez été enceinte, avez-vous eu des complications pendant la grossesse ou avec la santé de votre enfant depuis que vous travaillez ou vivez près de la mine ?` ==
+                                   "Oui"] <- 1
+
+table(cleanDataF$complicationmaternite)
+
+############################ problèmes menstruels #################
+table(dataFemmes$`Avez-vous eu des problèmes menstruels depuis que vous travaillez ou vivez près de la mine ?`)
+
+cleanDataF$problememenstruel <- NA
+
+cleanDataF$problememenstruel[dataFemmes$`Avez-vous eu des problèmes menstruels depuis que vous travaillez ou vivez près de la mine ?` ==
+                               "Non"] <- 0
+cleanDataF$problememenstruel[dataFemmes$`Avez-vous eu des problèmes menstruels depuis que vous travaillez ou vivez près de la mine ?` ==
+                               "Oui"] <- 1
+
+table(cleanDataF$problememenstruel)
+
+############################ problème fertilité ##################
+table(dataFemmes$`Avez-vous déjà rencontré des problèmes de fertilité ou de grossesse vous soupçonnez être liés à l'exposition à l'exploitation minière ?`)
+
+cleanDataF$problemefertilite <- NA
+
+cleanDataF$problemefertilite[dataFemmes$`Avez-vous déjà rencontré des problèmes de fertilité ou de grossesse vous soupçonnez être liés à l'exposition à l'exploitation minière ?` ==
+                               "Non"] <- 0
+cleanDataF$problemefertilite[dataFemmes$`Avez-vous déjà rencontré des problèmes de fertilité ou de grossesse vous soupçonnez être liés à l'exposition à l'exploitation minière ?` ==
+                               "Oui"] <- 1
+
+table(cleanDataF$problemefertilite)
+
+
+############################ stress travail #################
+table(dataFemmes$`Ressentez-vous du stress ou de l'anxiété liés à votre propre travail ou au travail de votre famille dans l'exploitation minière ?`)
+
+cleanDataF$stresstravail <- NA
+
+cleanDataF$stresstravail[dataFemmes$`Ressentez-vous du stress ou de l'anxiété liés à votre propre travail ou au travail de votre famille dans l'exploitation minière ?` ==
+                           "Non"] <- 0
+cleanDataF$stresstravail[dataFemmes$`Ressentez-vous du stress ou de l'anxiété liés à votre propre travail ou au travail de votre famille dans l'exploitation minière ?` ==
+                           "Oui"] <- 1
+
+table(cleanDataF$stresstravail)
+
+
+############################ stress économie ##################
+table(dataFemmes$`Ressentez-vous du stress ou de l'anxiété en raison de votre situation économique ou de celle de votre famille?`)
+
+cleanDataF$stresseconomique <- NA
+
+cleanDataF$stresseconomique[dataFemmes$`Ressentez-vous du stress ou de l'anxiété en raison de votre situation économique ou de celle de votre famille?` ==
+                              "Non"] <- 0
+cleanDataF$stresseconomique[dataFemmes$`Ressentez-vous du stress ou de l'anxiété en raison de votre situation économique ou de celle de votre famille?` ==
+                              "Oui"] <- 1
+
+table(cleanDataF$stresseconomique)
+
+########################## sentiment dépression ####################
+table(dataFemmes$`Ressentez-vous un sentiment de désespoir ou de dépression lié aux conditions de travail et de vie dans la communauté?`)
+
+cleanDataF$desespoircommunaute <- NA
+
+cleanDataF$desespoircommunaute[dataFemmes$`Ressentez-vous un sentiment de désespoir ou de dépression lié aux conditions de travail et de vie dans la communauté?` ==
+                                 "Non"] <- 0
+cleanDataF$desespoircommunaute[dataFemmes$`Ressentez-vous un sentiment de désespoir ou de dépression lié aux conditions de travail et de vie dans la communauté?` ==
+                                 "Oui"] <- 1
+
+table(cleanDataF$desespoircommunaute)
+
+########################### santé mentale ##################
+table(dataFemmes$`Avez-vous le sentiment que votre santé mentale a été impactée par l'exploitation minière ?`)
+
+cleanDataF$santementale <- NA
+
+cleanDataF$santementale[dataFemmes$`Avez-vous le sentiment que votre santé mentale a été impactée par l'exploitation minière ?` ==
+                          "Non"] <- 0
+cleanDataF$santementale[dataFemmes$`Avez-vous le sentiment que votre santé mentale a été impactée par l'exploitation minière ?` ==
+                          "Oui"] <- 1
+
+
+########################### soutien mentale ####################
+table(dataFemmes$`Avez-vous accès à des ressources de soutien en santé mentale dans votre communauté ?`)
+
+cleanDataF$soutienmentale <- NA
+
+cleanDataF$soutienmentale[dataFemmes$`Avez-vous accès à des ressources de soutien en santé mentale dans votre communauté ?` ==
+                            "Non"] <- 0
+cleanDataF$soutienmentale[dataFemmes$`Avez-vous accès à des ressources de soutien en santé mentale dans votre communauté ?` ==
+                            "Oui"] <- 1
+
+table(cleanDataF$soutienmentale)
+
+
+########################## services santé reproductive ###############
+table(dataFemmes$`Avez-vous accès à des services de santé reproductive dans votre communauté (par exemple, le contrôle des naissances, le dépistage du cancer du sein et du col de l'utérus, les soins prénatals et postnataux)?`)
+
+cleanDataF$servicereproductif <- NA
+
+cleanDataF$servicereproductif[dataFemmes$`Avez-vous accès à des services de santé reproductive dans votre communauté (par exemple, le contrôle des naissances, le dépistage du cancer du sein et du col de l'utérus, les soins prénatals et postnataux)?` ==
+                                "Non"] <- "Non"
+cleanDataF$servicereproductif[dataFemmes$`Avez-vous accès à des services de santé reproductive dans votre communauté (par exemple, le contrôle des naissances, le dépistage du cancer du sein et du col de l'utérus, les soins prénatals et postnataux)?` ==
+"Non,Si non, où accédez-vous à ces services? - 15 km"] <- "Non, les services les plus près sont à 15 km"
+cleanDataF$servicereproductif[dataFemmes$`Avez-vous accès à des services de santé reproductive dans votre communauté (par exemple, le contrôle des naissances, le dépistage du cancer du sein et du col de l'utérus, les soins prénatals et postnataux)?` ==
+"Non,Si non, où accédez-vous à ces services? - Midelt" |
+  dataFemmes$`Avez-vous accès à des services de santé reproductive dans votre communauté (par exemple, le contrôle des naissances, le dépistage du cancer du sein et du col de l'utérus, les soins prénatals et postnataux)?` ==
+  "Oui,Si non, où accédez-vous à ces services? - Midelt"] <- "Non, les services les plus près sont à Midelt"
+
+table(cleanDataF$servicereproductif)
+
+
+####################### accès produits d'hygiène #################
+table(dataFemmes$`Avez-vous accès à des produits d'hygiène féminine de base (par exemple, serviettes hygiéniques, tampons) dans votre communauté?`)
+
+cleanDataF$accesproduithygiene <- NA
+
+cleanDataF$accesproduithygiene[dataFemmes$`Avez-vous accès à des produits d'hygiène féminine de base (par exemple, serviettes hygiéniques, tampons) dans votre communauté?` ==
+                                 "Non"] <- 0
+
+table(cleanDataF$accesproduithygiene)
+
+####################### victime violence sexiste #################
+table(dataFemmes$`Avez-vous ou une autre femme de votre famille été victime de violence ou de discrimination en raison de votre sexe dans votre communauté?`)
+
+cleanDataF$victimesexisme <- NA
+
+cleanDataF$victimesexisme[dataFemmes$`Avez-vous ou une autre femme de votre famille été victime de violence ou de discrimination en raison de votre sexe dans votre communauté?` == 
+                            "Non"] <- 0
+cleanDataF$victimesexisme[dataFemmes$`Avez-vous ou une autre femme de votre famille été victime de violence ou de discrimination en raison de votre sexe dans votre communauté?` == 
+                            "Oui"] <- 1
+
+table(cleanDataF$victimesexisme)
+
+####################### soutien violence sexiste #################
+table(dataFemmes$`Avez-vous accès à des services de soutien en cas de violence sexiste (par exemple, un centre de conseil, un abri, des services juridiques) dans votre communauté?`)
+
+cleanDataF$soutienviolencesexiste <- NA
+
+cleanDataF$soutienviolencesexiste[dataFemmes$`Avez-vous accès à des services de soutien en cas de violence sexiste (par exemple, un centre de conseil, un abri, des services juridiques) dans votre communauté?` ==
+                                    "Non"] <- "Non"
+cleanDataF$soutienviolencesexiste[dataFemmes$`Avez-vous accès à des services de soutien en cas de violence sexiste (par exemple, un centre de conseil, un abri, des services juridiques) dans votre communauté?` ==
+"Non,Si non, où accédez-vous à ces services? - 15 km"] <- "Non, les services les plus près sont à 15 km"
+cleanDataF$soutienviolencesexiste[dataFemmes$`Avez-vous accès à des services de soutien en cas de violence sexiste (par exemple, un centre de conseil, un abri, des services juridiques) dans votre communauté?` ==
+"Non,Si non, où accédez-vous à ces services? - Midelt"] <- "Non, les services les plus près sont à Midelt"
+
+
+table(cleanDataF$soutienviolencesexiste)
+
