@@ -405,8 +405,55 @@ table(cleanData$revenuprincipal)
 table(dataH$`Avez-vous accès à des services de santé?`)
 
 
+cleanData$accessoinsante <- NA
 
+cleanData$accessoinsante[dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non"] <- "Non"
+cleanData$accessoinsante[dataH$`Avez-vous accès à des services de santé?` ==
+                   "Non,Si non, à quelle distance? - 3 km" |
+                     dataH$`Avez-vous accès à des services de santé?` ==
+                     "Non,Si non, à quelle distance? - 5 km" |
+                     dataH$`Avez-vous accès à des services de santé?` ==
+                     "Non,Si non, à quelle distance? - 10 km" |
+                     dataH$`Avez-vous accès à des services de santé?` ==
+                     "Non,Si non, à quelle distance? - 15 km" |
+                     dataH$`Avez-vous accès à des services de santé?` ==
+                     "Oui,Si non, à quelle distance? - 15 km" |
+                     dataH$`Avez-vous accès à des services de santé?` ==
+        "Oui,Si non, à quelle distance? - 15 km à Midelt ( soins complets)" |
+          dataH$`Avez-vous accès à des services de santé?` ==
+          "Non,Si non, à quelle distance? - 15 km à Midelt" |
+          dataH$`Avez-vous accès à des services de santé?` == 
+          "Non,Si non, à quelle distance? - 15 km Midelt"] <- "Non, les soins les plus proches sont à une distance maximale de 15 km"
 
+cleanData$accessoinsante[dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 20 km" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 22 km" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 25 km" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 27 km" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 30 km"] <- "Non, les soins les plus proches sont à une distance entre 16 et 30 km"
+
+cleanData$accessoinsante[dataH$`Avez-vous accès à des services de santé?`==
+                           "Non,Si non, à quelle distance? - 32 km" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 32km" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 43" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 43 km" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 60" |
+                           dataH$`Avez-vous accès à des services de santé?` ==
+                           "Non,Si non, à quelle distance? - 60 km"] <- "Non, les soins les plus proches sont à une distance de plus de 31 km"
+
+cleanData$accessoinsante[dataH$`Avez-vous accès à des services de santé?` ==
+                           "Oui"] <- "Oui"
+
+table(cleanData$accessoinsante)
 
 ########################### Assurance maladie ##################
 table(dataH$`Avez vous une assurance médicale?`)
@@ -611,8 +658,44 @@ table(dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chroniq
 
 cleanData$maladiechronique <- NA
 
-cleanData$maladiechronique[]
+cleanData$maladiechronique <- as.integer(grepl("Colon|colon", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
 
+cleanData$maladiechronique <- as.integer(grepl("Douleurs à genou", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Estomac|estomac", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Neurologique", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Problème au yeux|Sensibilité au yeux", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Problème de dos|Dos", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Sciatique", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Diabète", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Maladie rénales", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Maladies respiratoires", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("rhumatisme|Rhumatisme", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Silicose", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
+
+cleanData$maladiechronique <- as.integer(grepl("Non", dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanData$maladiechronique)
 
 ############################## Problèmes respiratoires ##############
 table(dataH$`Avez-vous des problèmes respiratoires?`)
@@ -722,11 +805,17 @@ table(cleanData$douleursmusculaires)
 
 
 ######################## Blessure dans les 12 dernier mois ###################
+
+######################## petit hic de code ########################
 table(dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`)
 
 cleanData$blessurerecentes <- NA
 
+cleanData$blessurerecentes <- as.integer(grepl("À la main|Casseur à jambe et main|Blessure à la main|Blessures à la main|Blessures à la main et jambe|Blessures à la main et tête|Blessures à la main, dos|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessures à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessures à la mine, tête, jambe", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes)
 
+cleanData$blessurerecente <- as.integer(grepl("Casseur à jambe et main|Blessé à jambe|Blessé à la jambe|Blessures à jambe|Blessures à la jambe|Blessures à la main et jambe|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessure à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessure à la mine, tête, jambe|Casseur à la jambe et les blessures|Casseurs (jambe)", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes)
 
 
 

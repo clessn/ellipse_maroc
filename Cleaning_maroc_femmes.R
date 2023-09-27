@@ -268,7 +268,29 @@ table(cleanDataF$toilette)
 ########################## Revenus principals #####################
 table(dataFemmes$`Quelles sont vos sources de revenus principales?`)
 
+cleanDataF$revenusprincipales <- NA
 
+cleanDataF$revenusprincipales <- as.integer(grepl("Agriculture", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales)
+
+cleanDataF$revenusprincipales <- as.integer(grepl("Aides publiques ou privées", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales)
+
+cleanDataF$revenusprincipales <- as.integer(grepl("Fils|Marinet fils|Marie et fils", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales)
+
+
+cleanDataF$revenusprincipales <- as.integer(grepl("Le mari|Le Mari|Mari|Marinet fils|Le Marie|Marie|Marie et fils", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales)
+
+cleanDataF$revenusprincipales <- as.integer(grepl("Nièce", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales)
+
+cleanDataF$revenusprincipales <- as.integer(grepl("Épargne retraite", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales)
+
+cleanDataF$revenusprincipales <- as.integer(grepl("Mines", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales)
 
 ########################### Montant revenus annuels ##################
 table(dataFemmes$`Quel est le montant total de vos revenus annuels?`)
@@ -285,7 +307,25 @@ table(cleanDataF$ses_revenu)
 ############################# services de santé #################
 table(dataFemmes$`Avez-vous accès à des services de santé?`)
 
+cleanDataF$accessoinsante <- NA
 
+cleanDataF$accessoinsante[dataFemmes$`Avez-vous accès à des services de santé?` ==
+                            "Non"] <- "Non"
+cleanDataF$accessoinsante[dataFemmes$`Avez-vous accès à des services de santé?` ==
+                            "Oui"] <- "Oui"
+cleanDataF$accessoinsante[dataFemmes$`Avez-vous accès à des services de santé?` ==
+                            "Non,Si non, à quelle distance? - 15km" |
+                            dataFemmes$`Avez-vous accès à des services de santé?` ==
+                            "Oui,Si non, à quelle distance? - 15 km" |
+                            dataFemmes$`Avez-vous accès à des services de santé?` ==
+                            "Non,Si non, à quelle distance? - 15 km"] <- "Non, les services les plus proches sont à une distance de 15 km"
+cleanDataF$accessoinsante[dataFemmes$`Avez-vous accès à des services de santé?` ==
+                            "Non,Si non, à quelle distance? - 30 km" |
+                            dataFemmes$`Avez-vous accès à des services de santé?` ==
+                            "Non,Si non, à quelle distance? - 30km"] <- "Non, les services les plus proches sont à une distance de 30 km"
+
+
+table(cleanDataF$accessoinsante)
 ############################ assurance médicale #######################
 table(dataFemmes$`Avez vous une assurance médicale?`)
 
@@ -414,7 +454,28 @@ table(cleanDataF$maladiecardiovasculaire)
 ########################### maladies chroniques ########################
 table(dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`)
 
+cleanDataF$maladiechronique <- NA
 
+cleanDataF$maladiechronique <- as.integer(grepl("Colon", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
+
+cleanDataF$maladiechronique <- as.integer(grepl("Hémorroïde", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
+
+cleanDataF$maladiechronique <- as.integer(grepl("Kyste sébacé", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
+
+cleanDataF$maladiechronique <- as.integer(grepl("Diabète", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
+
+cleanDataF$maladiechronique <- as.integer(grepl("Maladies respiratoires", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
+
+cleanDataF$maladiechronique <- as.integer(grepl("Maladie rénales", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
+
+cleanDataF$maladiechronique <- as.integer(grepl("Non", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
 ############################ problèmes respiratoires ####################
 table(dataFemmes$`Avez-vous des problèmes respiratoires?`)
 
@@ -455,7 +516,22 @@ table(cleanDataF$problemepeau)
 ########################### grepl ? ##########################
 table(dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`)
 
+cleanDataF$problemeneurologique <- NA
 
+cleanDataF$problemeneurologique <- as.integer(grepl("Maux de tête", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique)
+
+cleanDataF$problemeneurologique <- as.integer(grepl("Vertiges", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique)
+
+cleanDataF$problemeneurologique <- as.integer(grepl("Douleurs dans les oreilles", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique)
+
+cleanDataF$problemeneurologique <- as.integer(grepl("Syncope", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique)
+
+cleanDataF$problemeneurologique <- as.integer(grepl("Non", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique)
 ######################## problèmes digestifs #######################
 table(dataFemmes$`Avez-vous des problèmes digestifs?`)
 
