@@ -202,23 +202,16 @@ cleanData$logementprincipal[dataH$`Où est votre logement principal?` ==
 cleanData$logementprincipal[dataH$`Où est votre logement principal?` ==
 "Province de Midelt,Précisez la commune - Kerando"] <- "Province de Midelt, Kerando"
 cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-                    "Province de Midelt,Précisez la commune - Miblden" |
-                      dataH$`Où est votre logement principal?`== "Province de
-       Midelt,Précisez la commune - Mibladen"] <- "Province de Midelt, Mibladen"  
+         "Province de Midelt,Précisez la commune - Miblden" |
+                      dataH$`Où est votre logement principal?`== "Province de Midelt,Précisez la commune - Mibladen"] <- "Province de Midelt, Mibladen"  
 cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-                          "Province de Midelt,Précisez la commune - Riche"] <-
-                                                    "Province de Midelt, Riche"
+                          "Province de Midelt,Précisez la commune - Riche"] <- "Province de Midelt, Riche"
 cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-                        "Province de Midelt,Précisez la commune - Amrssid"] <-
-                                        "Province de Midelt, Amersid"
+                        "Province de Midelt,Précisez la commune - Amrssid"] <- "Province de Midelt, Amersid"
 cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-                        "Province de Midelt,Précisez la commune - Gerama"] <-
-                                                "Province de Midelt, Gerama"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == "Province
-                            de Midelt,Précisez la commune - Nzala"] <- "Province
-                                                              de Midelt, Nzala"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == "Province
-          de Midelt,Précisez la commune - Zaida"] <- "Province de Midelt, Zaida"
+                        "Province de Midelt,Précisez la commune - Gerama"] <- "Province de Midelt, Gerama"
+cleanData$logementprincipal[dataH$`Où est votre logement principal?` == "Province de Midelt,Précisez la commune - Nzala"] <- "Province de Midelt, Nzala"
+cleanData$logementprincipal[dataH$`Où est votre logement principal?` == "Province de Midelt,Précisez la commune - Zaida"] <- "Province de Midelt, Zaida"
 
 table(cleanData$logementprincipal)                                                            
 
@@ -543,10 +536,15 @@ cleanData$ecolesecondaire[dataH$`Y a-t-il une école secondaire dans la communau
 
 table(cleanData$ecolesecondaire)
 ######################### système de transport ###################
+######################### difficile à coder ##################
 table(dataH$`Y a-t-il un système de transport collectif dans la communauté?`)
 
+cleanData$systemetransport <- NA
 
-
+cleanData$systemetransport[dataH$`Y a-t-il un système de transport collectif dans la communauté?` ==
+                             "Non"] <- "Non"
+cleanData$systemetransport[dataH$`Y a-t-il un système de transport collectif dans la communauté?` ==
+                             "Non"] <- "Non"
 ######################### Épicerie #######################
 table(dataH$`Où allez vous pour acheter l'épicerie?`)
 
@@ -814,10 +812,17 @@ cleanData$blessurerecentes <- NA
 cleanData$blessurerecentes <- as.integer(grepl("À la main|Casseur à jambe et main|Blessure à la main|Blessures à la main|Blessures à la main et jambe|Blessures à la main et tête|Blessures à la main, dos|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessures à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessures à la mine, tête, jambe", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
 table(cleanData$blessurerecentes)
 
-cleanData$blessurerecente <- as.integer(grepl("Casseur à jambe et main|Blessé à jambe|Blessé à la jambe|Blessures à jambe|Blessures à la jambe|Blessures à la main et jambe|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessure à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessure à la mine, tête, jambe|Casseur à la jambe et les blessures|Casseurs (jambe)", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+cleanData$blessurerecentes <- as.integer(grepl("Casseur à jambe et main|Blessé à jambe|Blessé à la jambe|Blessures à jambe|Blessures à la jambe|Blessures à la main et jambe|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessure à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessure à la mine, tête, jambe|Casseur à la jambe et les blessures|Casseurs (jambe)", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
 table(cleanData$blessurerecentes)
 
+cleanData$blessurerecentes <- as.integer(grepl("Blessé à l'épaule|épaule", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes)
 
+cleanData$blessurerecentes <- as.integer(grepl("dos", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes)
+
+cleanData$blessurerecentes <- as.integer(grepl("yeux", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes)
 
 ######################## Difficultés à dormir/insomnie ##################
 table(dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?`)
@@ -899,7 +904,7 @@ table(cleanData$perceptiondanger)
 cleanData$perceptiondanger <- as.integer(grepl("détérioration de la santé", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
 table(cleanData$perceptiondanger)
 
-cleanData$perceptiondanger <- as.integer(grepl("asthme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+cleanData$perceptiondanger <- as.integer(grepl("asthme|Asthme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
 table(cleanData$perceptiondanger)
 
 cleanData$perceptiondanger <- as.integer(grepl("problème neurologique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
@@ -1001,6 +1006,53 @@ table(cleanData$protocole)
 ####################### problème de santé courant communauté #############
 ###################### à cleaner sur le sens du monde #################
 table(dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`)
+
+cleanData$problemesantecommunaute <- NA
+
+cleanData$problemesantecommunaute <- as.integer(grepl("Accidents et blessures", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Problèmes de santé mentale", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Autres problèmes de santé chroniques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Rhumatisme|rhumatisme", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Silicose|silicose", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Troubles musculosquelettiques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Sciatique|sciatique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Paralysie", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Parkinson", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("problème neurologique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Casseurs", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Mort", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Problème d'articulation | Douleurs d'articulation | problème d'articulation", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute) ########### ************** ####################
+cleanData$problemesantecommunaute <- as.integer(grepl("dos", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("hypertension", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("yeux|vue", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("asthme|Asthme", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("problème auditif", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("Colon|colon", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("problème rénal|Problème rénal|Problème rénale", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute <- as.integer(grepl("estomac|Estomac", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute)
 
 
 ###################### risque bétail #####################

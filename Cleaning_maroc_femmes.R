@@ -18,8 +18,6 @@ cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "60 ou plus"] <- "60 ou
 table(cleanDataF$ses_age)
 
 ############### État civil #######
-
-################ les données ne sont pas les mêmes ############
 table(dataFemmes$`Quel est votre état civil ?`)
 
 cleanDataF$ses_etatcivil <- NA
@@ -40,7 +38,7 @@ table(cleanDataF$ses_etatcivil)
 table(dataF$Lieu)
 
 cleanDataF$ses_lieu <- NA
-cleanDataF$ses_lieu[dataFemmes$Lieu == "Ahouli" | dataF$Lieu == "Ksar Ahouli"] <- "Ahouli"
+cleanDataF$ses_lieu[dataFemmes$Lieu == "Ahouli" | dataFemmes$Lieu == "Ahou" | dataFemmes$Lieu == "AhouLi" | dataFemmes$Lieu == "Ahouliy"] <- "Ahouli"
 cleanDataF$ses_lieu[dataFemmes$Lieu == "Mibladen"] <- "Mibladen"
 
 table(cleanData$ses_lieu)
@@ -130,7 +128,24 @@ table(cleanDataF$niveauetude)
 ############################# logement principal ###################
 table(dataFemmes$`Où est votre logement principal?`)
 
+cleanDataF$logementprincipal <- NA
 
+cleanDataF$logementprincipal[dataFemmes$`Où est votre logement principal?` ==
+                               "Province de Midelt,Précisez la commune - Amrssid" |
+                               dataFemmes$`Où est votre logement principal?` ==
+                               "Province de Midelt,Précisez la commune - Amrssid Mibladen" |
+                               dataFemmes$`Où est votre logement principal?` ==
+                               "Province de Midelt,Précisez la commune - Amrssid- Mibladen" |
+                               dataFemmes$`Où est votre logement principal?` ==
+                               "Province de Midelt,Précisez la commune - Amrssid-Mibladen" |
+                               dataFemmes$`Où est votre logement principal?` ==
+                               "Province de Midelt,Précisez la commune - Commune Amrssid" |
+                               dataFemmes$`Où est votre logement principal?` ==
+                               "Province de Midelt,Précisez la commune - Commune Amrssid Mibladen" |
+                               dataFemmes$`Où est votre logement principal?` ==
+                               "Province de Midelt,Précisez la commune - Commune Mibladen" |
+                               dataFemmes$`Où est votre logement principal?` ==
+                               ""]
 
 
 ############################ Distance d'Ahouli #################
@@ -155,7 +170,16 @@ table(cleanDataF$membrefamilleensemble)
 ####################### nécessaire ?? ####################
 table(dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rendez-vous visite à votre famille?`)
 
+cleanDataF$visitefamille <- NA
 
+cleanDataF$visitefamille[dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rendez-vous visite à votre famille?` ==
+                           "Plusieurs fois par an"] <- "Je visite ma famille plusieurs fois par années"
+cleanDataF$visitefamille[dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rendez-vous visite à votre famille?` ==
+                           "Tous les jours"] <- "Je visite ma famille quotidiennement"
+cleanDataF$visitefamille[dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rendez-vous visite à votre famille?` ==
+                           "Une fois par semaine"] <- "Je visite ma famille hebdomadairement"
+
+table(cleanDataF$visitefamille)
 
 ######################### pièce habitable ###################
 table(dataFemmes$`Quel est le nombre de pièce habitable de votre logement?`)
@@ -391,6 +415,16 @@ table(cleanDataF$ecolesecondaire)
 ############################### système de transport collectif ################
 table(dataFemmes$`Y a-t-il un système de transport collectif dans la communauté?`)
 
+cleanDataF$systemetransport <- NA
+
+cleanDataF$systemetransport <- as.integer(grepl("Non", dataFemmes$`Y a-t-il un système de transport collectif dans la communauté?`))
+table(cleanDataF$systemetransport)
+cleanDataF$systemetransport <- as.integer(grepl("15 km", dataFemmes$`Y a-t-il un système de transport collectif dans la communauté?`))
+table(cleanDataF$systemetransport)
+cleanDataF$systemetransport <- as.integer(grepl("30 km|30km", dataFemmes$`Y a-t-il un système de transport collectif dans la communauté?`))
+table(cleanDataF$systemetransport)
+cleanDataF$systemetransport <- as.integer(grepl("Fréquent|Fréquente|fr", dataFemmes$`Y a-t-il un système de transport collectif dans la communauté?`))
+table(cleanDataF$systemetransport)
 
 ############################## Épicerie #################
 table(dataFemmes$`Où allez vous pour acheter l'épicerie?`)
@@ -476,6 +510,8 @@ table(cleanDataF$maladiechronique)
 
 cleanDataF$maladiechronique <- as.integer(grepl("Non", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
 table(cleanDataF$maladiechronique)
+
+
 ############################ problèmes respiratoires ####################
 table(dataFemmes$`Avez-vous des problèmes respiratoires?`)
 
@@ -513,7 +549,6 @@ table(cleanDataF$problemepeau)
 
 
 ############################ problèmes neurologiques ##################
-########################### grepl ? ##########################
 table(dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`)
 
 cleanDataF$problemeneurologique <- NA
@@ -532,6 +567,7 @@ table(cleanDataF$problemeneurologique)
 
 cleanDataF$problemeneurologique <- as.integer(grepl("Non", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
 table(cleanDataF$problemeneurologique)
+
 ######################## problèmes digestifs #######################
 table(dataFemmes$`Avez-vous des problèmes digestifs?`)
 
@@ -1005,4 +1041,45 @@ cleanDataF$soutienviolencesexiste[dataFemmes$`Avez-vous accès à des services d
 
 
 table(cleanDataF$soutienviolencesexiste)
+
+
+
+###################### opportunités égales #####################
+table(dataFemmes$`Pensez-vous que l'exploitation minière offre des opportunités égales pour les femmes et les hommes ?`)
+
+cleanDataF$opportunitesegales <- NA
+
+cleanDataF$opportunitesegales[dataFemmes$`Pensez-vous que l'exploitation minière offre des opportunités égales pour les femmes et les hommes ?` ==
+                                "Non"] <- 0
+cleanDataF$opportunitesegales[dataFemmes$`Pensez-vous que l'exploitation minière offre des opportunités égales pour les femmes et les hommes ?` ==
+                                "Oui"] <- 1
+
+table(cleanDataF$opportunitesegales)
+
+
+####################### emplois femmes #######################
+table(dataFemmes$`Quelle est votre opinion sur les opportunités d'emploi pour les femmes dans votre communauté ?`)
+
+cleanDataF$opportunitesemploisfemmes <- NA
+
+cleanDataF$opportunitesemploisfemmes[dataFemmes$`Quelle est votre opinion sur les opportunités d'emploi pour les femmes dans votre communauté ?` ==
+                                       "Très insatisfaisante"] <- 0
+cleanDataF$opportunitesemploisfemmes[dataFemmes$`Quelle est votre opinion sur les opportunités d'emploi pour les femmes dans votre communauté ?` ==
+                                       "Insatisfaisante"] <- 0.5
+cleanDataF$opportunitesemploisfemmes[dataFemmes$`Quelle est votre opinion sur les opportunités d'emploi pour les femmes dans votre communauté ?` ==
+                                       "Satisfaisante"] <- 1
+
+table(cleanDataF$opportunitesemploisfemmes)
+
+######################### participation décisions économiques ################à
+table(dataFemmes$`Participez-vous aux décisions économiques de votre foyer (par exemple, comment dépenser l'argent, combien d'argent économiser)?`)
+
+cleanDataF$participationeconomique <- NA
+
+cleanDataF$participationeconomique[dataFemmes$`Participez-vous aux décisions économiques de votre foyer (par exemple, comment dépenser l'argent, combien d'argent économiser)?` ==
+                                     "Non"] <- 0
+cleanDataF$participationeconomique[dataFemmes$`Participez-vous aux décisions économiques de votre foyer (par exemple, comment dépenser l'argent, combien d'argent économiser)?` ==
+                                     "Oui"] <- 1
+
+table(cleanDataF$participationeconomique)
 
