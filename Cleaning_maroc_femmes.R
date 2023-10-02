@@ -439,17 +439,17 @@ table(cleanDataF$epicerie)
 ########################## santé générale ###################
 table(dataFemmes$`Comment évalueriez-vous votre santé générale?`)
 
-cleanDataF$santegenerale <- NA
+cleanDataF$ses_santegenerale <- NA
 
-cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+cleanDataF$ses_santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
                            "Mauvaise"] <- 0
-cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+cleanDataF$ses_santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
                            "Médiocre"] <- 0.25
-cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+cleanDataF$ses_santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
                            "Bonne"] <- 0.5
-cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+cleanDataF$ses_santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
                            "Très bonne"] <- 0.75
-cleanDataF$santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
+cleanDataF$ses_santegenerale[dataFemmes$`Comment évalueriez-vous votre santé générale?` ==
                            "Excellente"] <- 1
 
 table(cleanDataF$santegenerale)

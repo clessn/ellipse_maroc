@@ -876,6 +876,7 @@ table(cleanData$anneeexperience)
 
 
 ######################## Perception du danger ###################
+####################### à compléter ####################
 table(dataH$`Connaissez-vous les dangers de l'extraction du plomb?`)
 
 cleanData$perceptiondanger <- NA
@@ -1186,6 +1187,7 @@ table(cleanData$santegeneralecommunaute)
 
 ######################## amélioration sanitaire communautée#################
 ###################### questions ouvertes rough ##################
+###################### nuage de points ? #######################
 table(dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`)
 
 
