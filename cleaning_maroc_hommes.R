@@ -1,7 +1,7 @@
 library(tidyverse)
 library(readxl)
 
-dataH <- read_xlsx("data_femmes.xlsx")
+dataH <- read_xlsx("Data_hommes.xlsx",sheet = "Responses")
 
 
 cleanData <- data.frame(id= dataH$`ID de la réponse`)
@@ -1238,3 +1238,4 @@ cleanData$santementale[dataH$`Avez-vous le sentiment que votre santé mentale a 
                          "Oui"] <- 1
 
 table(cleanData$santementale)
+

@@ -1,7 +1,7 @@
 library(tidyverse)
 library(readxl)
 
-dataFemmes <- read_xlsx("Vrais_data_femmes.xlsx")
+dataFemmes <- read_xlsx("Vrais_data_femmes_.xlsx", sheet = "Responses")
 
 cleanDataF <- data.frame(id= dataFemmes$`ID de la réponse`)
 
