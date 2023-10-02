@@ -67,16 +67,12 @@ table(dataH$`Quel est votre état civil ?`)
 
 cleanData$ses_etatcivil <- NA
 
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Célibataire"
-                        ] <- "Célibataire"
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Divorcé/séparé"
-] <- "Divorcé/séparé"
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Marié"
-] <- "Marié"
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"
-] <- "Veuf"
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Célibataire"] <- 0.66
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Divorcé/séparé"] <- 0.33
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Marié"] <- 1
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"] <- 0
 
-table(cleanData$ses_étatcivil)
+table(cleanData$ses_etatcivil)
 
 ################## nb enfants ##################
 table(dataH$`Combien d'enfants avez-vous ?`)
@@ -98,19 +94,18 @@ table(cleanData$ses_enfants)
 ###################### Statut professionel actuel ####################
 table(dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`)
 
-cleanData$statutTravail <- NA
+cleanData$ses_statutTravail <- NA
 
-cleanData$statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
+cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
                         == "Employé,Retraité"] <- "Employé maintenant retraité"
-cleanData$statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
+cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
                        == "Retraité"] <- "Retraité"
-cleanData$statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
+cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
                        == "Travailleur autonome"] <- " Travailleur autonome"
-cleanData$statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
-                       == "Travailleur autonome,Retraité"] <- "Travailleur
-                                                  autonome maintenant retraité"
+cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
+                       == "Travailleur autonome,Retraité"] <- "Travailleur autonome maintenant retraité"
 
-table(cleanData$statutTravail)
+table(cleanData$ses_statutTravail)
 
 
 ####################### Provenance ############################
@@ -300,15 +295,15 @@ table(dataH$`Combien de fois rendez-vous visite à votre famille?`)
 cleanData$visitefamille <- NA
 
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Plusieurs fois par mois"] <- "Plusieurs fois par mois"
+                          "Plusieurs fois par mois"] <- 0.75
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Plusieurs fois par semaine"] <- "Plusieurs fois par semaine"
+                          "Plusieurs fois par semaine"] <- 0.5
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Tous les jours"] <- "Tous les jours"
+                          "Tous les jours"] <- 1
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Une fois par mois"] <- "Une fois par mois"
+                          "Une fois par mois"] <- 0
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Une fois par semaine"] <- "Une fois par semaine"
+                          "Une fois par semaine"] <- 0.25
 
 table(cleanData$visitefamille)
 
@@ -357,13 +352,13 @@ table(dataH$`Est-ce que le logement a des toilettes?`)
 cleanData$toilette <- NA
 
 cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` == 
-                     "Non"] <- "Non"
+                     "Non"] <- 0
 cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` ==
-                     "Oui, à l'extérieur"] <- "Oui, à l'extérieur"
-cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` ==
-                     "Oui, dans la maison"] <- "Oui, dans la maison"
-cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` ==
-                     "Oui, dans la maison,Oui, à l'extérieur"] <- "Oui, dans la maison et à l'extérieur"
+                     "Oui, à l'extérieur" | 
+                     dataH$`Est-ce que le logement a des toilettes?` ==
+                     "Oui, dans la maison" |
+                     dataH$`Est-ce que le logement a des toilettes?` ==
+                     "Oui, dans la maison,Oui, à l'extérieur"] <- 1
 
 table(cleanData$toilette)
 
@@ -373,26 +368,19 @@ table(dataH$`Quelles sont vos sources de revenus principales?`)
 
 cleanData$revenuprincipal <- NA
 
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Agriculture"] <- "Agriculture"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Mines,Agriculture"] <- "Mines,Agriculture"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Mines,Autre (veuillez spécifier) - Artisans"] <- "Mines,Artisanat"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Agriculture,Élevage"] <- "Agriculture,Élevage"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Mines,Agriculture,Élevage"] <- "Mines,Agriculture,Élevage"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Mines,Commerce"] <- "Mines,Commerce"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Mines"] <- "Mines"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Mines,Aides publiques ou privées"] <- "Mines,Aides publiques ou privées"
-cleanData$revenuprincipal[dataH$`Quelles sont vos sources de revenus principales?` == 
-                            "Mines,Élevage"] <- "Mines,Élevage"
-
-table(cleanData$revenuprincipal)
+cleanData$revenuprincipal <- as.integer(grepl("Agriculture", dataH$`Quelles sont vos sources de revenus principales?`)) 
+table(cleanData$revenuprincipal)              
+       
+cleanData$revenuprincipal <- as.integer(grepl("Mines", dataH$`Quelles sont vos sources de revenus principales?`)) 
+table(cleanData$revenuprincipal)  
+cleanData$revenuprincipal <- as.integer(grepl("Artisans", dataH$`Quelles sont vos sources de revenus principales?`)) 
+table(cleanData$revenuprincipal) 
+cleanData$revenuprincipal <- as.integer(grepl("Élevage", dataH$`Quelles sont vos sources de revenus principales?`)) 
+table(cleanData$revenuprincipal) 
+cleanData$revenuprincipal <- as.integer(grepl("Commerce", dataH$`Quelles sont vos sources de revenus principales?`)) 
+table(cleanData$revenuprincipal) 
+cleanData$revenuprincipal <- as.integer(grepl("Aides publiques ou privées", dataH$`Quelles sont vos sources de revenus principales?`)) 
+table(cleanData$revenuprincipal) 
 
 ##############################  accès services de santé #################
 table(dataH$`Avez-vous accès à des services de santé?`)
