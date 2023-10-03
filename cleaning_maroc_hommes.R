@@ -319,7 +319,6 @@ table(cleanData$toilette)
 ################################ revenus principal ####################
 table(dataH$`Quelles sont vos sources de revenus principales?`)
 
-<<<<<<< HEAD
 # Agriculture
 cleanData$revenuprincipal_agriculture <- NA
 cleanData$revenuprincipal_agriculture <- as.integer(grepl("Agriculture", dataH$`Quelles sont vos sources de revenus principales?`))
