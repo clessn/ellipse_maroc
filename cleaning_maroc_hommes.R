@@ -1,8 +1,9 @@
+# Packages ----------------------------------------------------------------
 library(tidyverse)
 library(readxl)
 
+# Data --------------------------------------------------------------------
 dataH <- read_xlsx("Data_hommes.xlsx",sheet = "Responses")
-
 
 cleanData <- data.frame(id= dataH$`ID de la réponse`)
 
@@ -11,12 +12,18 @@ cleanData <- data.frame(id= dataH$`ID de la réponse`)
 table(dataH$`Quel âge avez-vous ?`)
 
 cleanData$ses_age <- NA
-cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "18 - 20 ans"] <- "18 à 20 ans"
-cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "21 - 29 ans"] <- "21 à 29 ans"
-cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "30 - 39 ans"] <- "30 à 39 ans"
-cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "40-49"] <- "40 à 49 ans"
-cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "50-59"] <- "50 à 59 ans"
-cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "60 ou plus"] <- "60 ans ou plus"
+cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "18 - 20 ans"] <- "18_20"
+cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "21 - 29 ans"] <- "21_29"
+cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "30 - 39 ans"] <- "30_39"
+cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "40-49"] <- "40_49"
+cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "50-59"] <- "50_59"
+cleanData$ses_age[dataH$`Quel âge avez-vous ?` == "60 ou plus"] <- "60+"
+table(cleanData$ses_age)
+cleanData$ses_age <- factor(cleanData$ses_age,
+                            ordered = TRUE,
+                            levels = c("18_20", "21_29", "30_39",
+                                       "40_49", "50_59", "60+"))
+
 table(cleanData$ses_age)
 
 
@@ -27,7 +34,8 @@ cleanData$ses_lieu <- NA
 cleanData$ses_lieu[dataH$Lieu == "Ahou" | dataH$Lieu == "Ahouli" | dataH$Lieu ==
                      "AhouLi" | dataH$Lieu == "Ahouliy"] <- "Ahouli"
 cleanData$ses_lieu[dataH$Lieu == "Mibladen"] <- "Mibladen"
-table((cleanData$ses_lieu))
+cleanData$ses_lieu <- factor(cleanData$ses_lieu)
+table(cleanData$ses_lieu)
 
 ########################### Revenu ###################
 table(dataH$`Quel est le montant total de vos revenus annuels?`)
@@ -36,14 +44,17 @@ cleanData$ses_revenu <- NA
 cleanData$ses_revenu[dataH$`Quel est le montant total de vos revenus annuels?` 
                      == "0 à 2000 dirhams" |
                        dataH$`Quel est le montant total de vos revenus annuels?`
-                     == "2001 à 5000 dirhams"] <- "faible"
+                     == "2001 à 5000 dirhams"] <- "low"
 cleanData$ses_revenu[dataH$`Quel est le montant total de vos revenus annuels?` 
                      == "5001 à 7000 dirhams" |
                        dataH$`Quel est le montant total de vos revenus annuels?`
-                     == "7001 à 10 000 dirhams"] <- "moyen"
+                     == "7001 à 10 000 dirhams"] <- "mid"
 cleanData$ses_revenu[dataH$`Quel est le montant total de vos revenus annuels?`==
-                       "Plus de 10 000 dirhams"] <- "élevé"
+                       "Plus de 10 000 dirhams"] <- "high"
+cleanData$ses_revenu <- factor(cleanData$ses_revenu, ordered = TRUE,
+                               levels = c("low", "mid", "high"))
 table(cleanData$ses_revenu)
+unique(cleanData$ses_revenu)
 
 
 ############ Qualité environnement travail ########
@@ -66,12 +77,11 @@ table(cleanData$qualiteTravail)
 table(dataH$`Quel est votre état civil ?`)
 
 cleanData$ses_etatcivil <- NA
-
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Célibataire"] <- "Célibataire"
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Divorcé/séparé"] <- "Divorcé/séparé"
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Marié"] <- "Marié"
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"] <- "Veuf"
-
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Célibataire"] <- "celib"
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Divorcé/séparé"] <- "divorce"
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Marié"] <- "marie"
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"] <- "veuf"
+cleanData$ses_etatcivil <- factor(cleanData$ses_etatcivil)
 table(cleanData$ses_etatcivil)
 
 ################## nb enfants ##################
@@ -79,8 +89,8 @@ table(dataH$`Combien d'enfants avez-vous ?`)
 
 cleanData$ses_enfants <- NA
 
-cleanData$ses_enfants[is.na(dataH$`Combien d'enfants avez-vous ?`)] <- "0"
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "1"] <- "1"
+cleanData$ses_enfants[is.na(dataH$`Combien d'enfants avez-vous ?`)] <- 0
+cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "1"] <- 1
 
 cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "2" |
                         dataH$`Combien d'enfants avez-vous ?` == "3"] <- "2-3"
@@ -95,16 +105,15 @@ table(cleanData$ses_enfants)
 table(dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`)
 
 cleanData$ses_statutTravail <- NA
-
 cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
-                        == "Employé,Retraité"] <- "Employé maintenant retraité"
+                        == "Employé,Retraité"] <- "employe_retraite"
 cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
-                       == "Retraité"] <- "Retraité"
+                       == "Retraité"] <- "retraite"
 cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
-                       == "Travailleur autonome"] <- " Travailleur autonome"
+                       == "Travailleur autonome"] <- " autonome"
 cleanData$ses_statutTravail[dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`
-                       == "Travailleur autonome,Retraité"] <- "Travailleur autonome maintenant retraité"
-
+                       == "Travailleur autonome,Retraité"] <- "autonome_retraite"
+cleanData$ses_statutTravail <- factor(cleanData$ses_statutTravail)
 table(cleanData$ses_statutTravail)
 
 
@@ -133,11 +142,6 @@ cleanData$ses_lang_ang <- NA
 cleanData$ses_lang_espagnol <- NA
 cleanData$ses_lang_allem <- NA
 
-votre_vecteur <- c("Amar,Francais", "Francais", "Anglais et Francais", "Espagnol")
-
-resultat <- as.integer(grepl("Francais", votre_vecteur))
-resultat <- as.integer(grepl("Amazgigh", votre_vecteur))
-
 cleanData$ses_lang_fr <- as.integer(grepl("Français", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
 table(cleanData$ses_lang_fr)
 
@@ -157,7 +161,6 @@ table(cleanData$ses_lang_espagnol)
 table(dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`)
 
 cleanData$niveauetude <- NA
-
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
                       == "Enseignement postsecondaire"] <- "Enseignement postsecondaire"
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
