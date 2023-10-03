@@ -235,31 +235,10 @@ table(cleanData$nombrepiecehabitable)
 table(dataH$`Combien de personnes vivent dans le logement ?`)
 
 cleanData$nbpersonnelogement <- NA
-
-cleanData$nbpersonnelogement[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- "0"
-cleanData$nbpersonnelogement[dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "1" |
-                       dataH$`Combien de personnes vivent dans le logement ?` ==
-                              "2" ] <- "1 - 2"
-cleanData$nbpersonnelogement[dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "3" |
-                               dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "4" ] <- "3 - 4"
-cleanData$nbpersonnelogement[dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "5" |
-                               dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "6" ] <- "5 - 6"
-cleanData$nbpersonnelogement[dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "7" |
-                               dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "8" ] <- "7 - 8"
-cleanData$nbpersonnelogement[dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "9" |
-                               dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "10" ] <- "9 - 10"
-cleanData$nbpersonnelogement[dataH$`Combien de personnes vivent dans le logement ?` ==
-                               "20"] <- "11 ou plus" 
-
+cleanData$nbpersonnelogement <- as.numeric(dataH$`Combien de personnes vivent dans le logement ?`)
+cleanData$nbpersonnelogement[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- 0
+ 
+class(cleanData$nbpersonnelogement)
 table(cleanData$nbpersonnelogement)
 
 
@@ -328,8 +307,8 @@ cleanData$toilette <- NA
 cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` == 
                      "Non"] <- 0
 cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` ==
-                     "Oui, à l'extérieur" | 
-                     dataH$`Est-ce que le logement a des toilettes?` ==
+                     "Oui, à l'extérieur"] <- 0.5 
+cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` ==
                      "Oui, dans la maison" |
                      dataH$`Est-ce que le logement a des toilettes?` ==
                      "Oui, dans la maison,Oui, à l'extérieur"] <- 1
@@ -340,21 +319,35 @@ table(cleanData$toilette)
 ################################ revenus principal ####################
 table(dataH$`Quelles sont vos sources de revenus principales?`)
 
-cleanData$revenuprincipal <- NA
+# Agriculture
+cleanData$revenuprincipal_agriculture <- NA
+cleanData$revenuprincipal_agriculture <- as.integer(grepl("Agriculture", dataH$`Quelles sont vos sources de revenus principales?`))
+table(cleanData$revenuprincipal_agriculture)
 
-cleanData$revenuprincipal <- as.integer(grepl("Agriculture", dataH$`Quelles sont vos sources de revenus principales?`)) 
-table(cleanData$revenuprincipal)              
-       
-cleanData$revenuprincipal <- as.integer(grepl("Mines", dataH$`Quelles sont vos sources de revenus principales?`)) 
-table(cleanData$revenuprincipal)  
-cleanData$revenuprincipal <- as.integer(grepl("Artisans", dataH$`Quelles sont vos sources de revenus principales?`)) 
-table(cleanData$revenuprincipal) 
-cleanData$revenuprincipal <- as.integer(grepl("Élevage", dataH$`Quelles sont vos sources de revenus principales?`)) 
-table(cleanData$revenuprincipal) 
-cleanData$revenuprincipal <- as.integer(grepl("Commerce", dataH$`Quelles sont vos sources de revenus principales?`)) 
-table(cleanData$revenuprincipal) 
-cleanData$revenuprincipal <- as.integer(grepl("Aides publiques ou privées", dataH$`Quelles sont vos sources de revenus principales?`)) 
-table(cleanData$revenuprincipal) 
+# Mines
+cleanData$revenuprincipal_mines <- NA
+cleanData$revenuprincipal_mines <- as.integer(grepl("Mines", dataH$`Quelles sont vos sources de revenus principales?`))
+table(cleanData$revenuprincipal_mines)
+
+# Artisans
+cleanData$revenuprincipal_artisanat <- NA
+cleanData$revenuprincipal_artisanat <- as.integer(grepl("Artisans", dataH$`Quelles sont vos sources de revenus principales?`))
+table(cleanData$revenuprincipal_artisanat)
+
+# Élevage
+cleanData$revenuprincipal_elevage <- NA
+cleanData$revenuprincipal_elevage <- as.integer(grepl("Élevage", dataH$`Quelles sont vos sources de revenus principales?`))
+table(cleanData$revenuprincipal_elevage)
+
+# Commerce
+cleanData$revenuprincipal_commerce <- NA
+cleanData$revenuprincipal_commerce <- as.integer(grepl("Commerce", dataH$`Quelles sont vos sources de revenus principales?`))
+table(cleanData$revenuprincipal_commerce)
+
+# Aides publiques ou privées
+cleanData$revenuprincipal_aides <- NA
+cleanData$revenuprincipal_aides <- as.integer(grepl("Aides publiques ou privées", dataH$`Quelles sont vos sources de revenus principales?`))
+table(cleanData$revenuprincipal_aides)
 
 ##############################  accès services de santé #################
 table(dataH$`Avez-vous accès à des services de santé?`)
@@ -509,38 +502,32 @@ cleanData$systemetransport[dataH$`Y a-t-il un système de transport collectif da
                              "Non"] <- "Non"
 ######################### Épicerie #######################
 table(dataH$`Où allez vous pour acheter l'épicerie?`)
+# Initialisation des variables à 0
+cleanData$epicerie_midelt <- 0
+cleanData$epicerie_boumia <- 0
+cleanData$epicerie_nzala <- 0
+cleanData$epicerie_rich <- 0
+cleanData$epicerie_zaida <- 0
+cleanData$epicerie_beram <- 0
+cleanData$epicerie_missour <- 0
 
-cleanData$epicerie <- NA
+# Remplissage des variables en utilisant grepl()
+cleanData$epicerie_midelt[grepl("Midelt", dataH$`Où allez vous pour acheter l'épicerie?`)] <- 1
+cleanData$epicerie_boumia[grepl("Boumia", dataH$`Où allez vous pour acheter l'épicerie?`)] <- 1
+cleanData$epicerie_nzala[grepl("Nzala", dataH$`Où allez vous pour acheter l'épicerie?`)] <- 1
+cleanData$epicerie_rich[grepl("Rich", dataH$`Où allez vous pour acheter l'épicerie?`)] <- 1
+cleanData$epicerie_zaida[grepl("Zaîda", dataH$`Où allez vous pour acheter l'épicerie?`)] <- 1
+cleanData$epicerie_beram[grepl("Beram", dataH$`Où allez vous pour acheter l'épicerie?`)] <- 1
+cleanData$epicerie_missour[grepl("Missour", dataH$`Où allez vous pour acheter l'épicerie?`)] <- 1
 
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == "Midelt"] <-
-                                                                      "Midelt"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                      "Midelt,Si autre, laquelle? - Boumia"] <- "Midelt,Boumia"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Si autre, laquelle? - Nzala"] <- "Midelt,Nzala"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Si autre, laquelle? - Riche"] <- "Midelt,Rich"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Zaîda"] <- "Midelt,Zaîda"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Si autre, laquelle? - Boumia"] <- "Boumia"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Zaîda"] <- "Zaîda"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Si autre, laquelle? - Beram"] <- "Midelt,Beram"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Si autre, laquelle? - Missour"] <- "Midelt,Missour"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Si autre, laquelle? - Rich, Nzala" |
-                     dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Si autre, laquelle? - Riche, Nzala"] <- "Midelt,Rich,Nzala"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Midelt,Zaîda,Si autre, laquelle? - Boumia"] <- 
-                                                        "Midelt,Zaîda,Boumia"
-cleanData$epicerie[dataH$`Où allez vous pour acheter l'épicerie?` == 
-                     "Si autre, laquelle? - Rich"] <- "Rich"
-
-table(cleanData$epicerie)
+# Affichage des résultats
+table(cleanData$epicerie_midelt)
+table(cleanData$epicerie_boumia)
+table(cleanData$epicerie_nzala)
+table(cleanData$epicerie_rich)
+table(cleanData$epicerie_zaida)
+table(cleanData$epicerie_beram)
+table(cleanData$epicerie_missour)
 
 ############################# Santé générale ####################
 table(dataH$`Comment évalueriez-vous votre santé générale?`)
