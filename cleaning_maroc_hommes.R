@@ -162,15 +162,18 @@ table(dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`)
 
 cleanData$niveauetude <- NA
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
-                      == "Enseignement postsecondaire"] <- "Enseignement postsecondaire"
+                      == "Enseignement postsecondaire"] <- "postsecondaire"
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
-                      == "Enseignement primaire"] <- "Enseignement primaire"
+                      == "Enseignement primaire"] <- "primaire"
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
-                      == "Enseignement secondaire"] <- "Enseignement secondaire"
+                      == "Enseignement secondaire"] <- "secondaire"
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
-                      == "Sans diplôme"] <- "Sans diplôme"
-
+                      == "Sans diplôme"] <- "Sans_diplome"
+cleanData$niveauetude <- factor(cleanData$niveauetude, ordered = TRUE,
+                                levels = c("Sans_diplome", "primaire", "secondaire", "postsecondaire"))
 table(cleanData$niveauetude)
+unique(cleanData$niveauetude)
+
 
 ########################### Distance d'Ahouli ######################
 
@@ -202,19 +205,19 @@ table(dataH$`Quel est le nombre de pièce habitable de votre logement?`)
 cleanData$nombrepiecehabitable <- NA
 
 cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "1"] <- "1"
+                                 "1"] <- 1
 cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "2"] <- "2"
+                                 "2"] <- 2
 cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "3"] <- "3"
+                                 "3"] <- 3
 cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "4"] <- "4"
+                                 "4"] <- 4
 cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "5"] <- "5"
+                                 "5"] <- 5
 cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "6"] <- "6"
+                                 "6"] <- 6
 cleanData$nombrepiecehabitable[dataH$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "7"] <- "7"
+                                 "7"] <- 7
 
 table(cleanData$nombrepiecehabitable)
 
