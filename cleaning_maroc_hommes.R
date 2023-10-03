@@ -319,7 +319,6 @@ table(cleanData$toilette)
 ################################ revenus principal ####################
 table(dataH$`Quelles sont vos sources de revenus principales?`)
 
-<<<<<<< HEAD
 # Agriculture
 cleanData$revenuprincipal_agriculture <- NA
 cleanData$revenuprincipal_agriculture <- as.integer(grepl("Agriculture", dataH$`Quelles sont vos sources de revenus principales?`))
@@ -502,6 +501,8 @@ cleanData$systemetransport[dataH$`Y a-t-il un système de transport collectif da
                              "Non"] <- "Non"
 cleanData$systemetransport[dataH$`Y a-t-il un système de transport collectif dans la communauté?` ==
                              "Non"] <- "Non"
+
+
 ######################### Épicerie #######################
 table(dataH$`Où allez vous pour acheter l'épicerie?`)
 # Initialisation des variables à 0
@@ -1001,10 +1002,10 @@ cleanData$impact_betail[dataH[["Quelles sont les risques en santé environnement
                                                       "Mauvaise"] <- 0
 
 cleanData$impact_betail[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
-                       "Médiocre"] <- 0.5
+                       "Médiocre"] <- 0.33
 
 cleanData$impact_betail[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Impact sur le bétail]"]] == 
-                       "Bonne"] <- 1
+                       "Bonne"] <- 0.66
 
 table(cleanData$impact_betail)
 
