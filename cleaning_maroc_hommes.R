@@ -341,10 +341,8 @@ table(cleanData$toilette)
 table(dataH$`Quelles sont vos sources de revenus principales?`)
 
 cleanData$revenuprincipal <- NA
-
 cleanData$revenuprincipal <- as.integer(grepl("Agriculture", dataH$`Quelles sont vos sources de revenus principales?`)) 
 table(cleanData$revenuprincipal)              
-       
 cleanData$revenuprincipal <- as.integer(grepl("Mines", dataH$`Quelles sont vos sources de revenus principales?`)) 
 table(cleanData$revenuprincipal)  
 cleanData$revenuprincipal <- as.integer(grepl("Artisans", dataH$`Quelles sont vos sources de revenus principales?`)) 
