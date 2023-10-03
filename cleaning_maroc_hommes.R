@@ -186,6 +186,16 @@ cleanData$distanceahouli <- as.numeric(cleanData$distanceahouli)
 table(cleanData$distanceahouli)
 hist(cleanData$distanceahouli)
 
+######### Distance entre d'où venez vous et mine ########## 
+table(dataH$`Calcul distance Mine d'Ahouli`)
+cleanData$distanceahouli_provenance <- NA
+cleanData$distanceahouli_provenance <- gsub(",", ".", dataH$`Calcul distance Mine d'Ahouli`)
+cleanData$distanceahouli_provenance <- gsub("[^0-9.]", "", cleanData$distanceahouli_provenance)
+cleanData$distanceahouli_provenance <- as.numeric(cleanData$distanceahouli_provenance)
+table(cleanData$distanceahouli_provenance)
+hist(cleanData$distanceahouli_provenance)
+
+
 ############################ Vivez vous avec les membres de votre famille ###############
 table(dataH$`Vivez-vous avec les membres de votre famille?`)
 
