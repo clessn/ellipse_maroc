@@ -248,15 +248,15 @@ table(dataH$`Combien de fois rendez-vous visite à votre famille?`)
 cleanData$visitefamille <- NA
 
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Plusieurs fois par mois"] <- 0.75
+                          "Plusieurs fois par mois"] <- 0.25
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Plusieurs fois par semaine"] <- 0.5
+                          "Plusieurs fois par semaine"] <- 0.75
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
                           "Tous les jours"] <- 1
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
                           "Une fois par mois"] <- 0
 cleanData$visitefamille[dataH$`Combien de fois rendez-vous visite à votre famille?` ==
-                          "Une fois par semaine"] <- 0.25
+                          "Une fois par semaine"] <- 0.5
 
 table(cleanData$visitefamille)
 
@@ -319,6 +319,7 @@ table(cleanData$toilette)
 ################################ revenus principal ####################
 table(dataH$`Quelles sont vos sources de revenus principales?`)
 
+<<<<<<< HEAD
 # Agriculture
 cleanData$revenuprincipal_agriculture <- NA
 cleanData$revenuprincipal_agriculture <- as.integer(grepl("Agriculture", dataH$`Quelles sont vos sources de revenus principales?`))
@@ -348,6 +349,7 @@ table(cleanData$revenuprincipal_commerce)
 cleanData$revenuprincipal_aides <- NA
 cleanData$revenuprincipal_aides <- as.integer(grepl("Aides publiques ou privées", dataH$`Quelles sont vos sources de revenus principales?`))
 table(cleanData$revenuprincipal_aides)
+
 
 ##############################  accès services de santé #################
 table(dataH$`Avez-vous accès à des services de santé?`)
