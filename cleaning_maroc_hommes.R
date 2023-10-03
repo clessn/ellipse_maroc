@@ -67,10 +67,10 @@ table(dataH$`Quel est votre état civil ?`)
 
 cleanData$ses_etatcivil <- NA
 
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Célibataire"] <- 0.66
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Divorcé/séparé"] <- 0.33
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Marié"] <- 1
-cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"] <- 0
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Célibataire"] <- "Célibataire"
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Divorcé/séparé"] <- "Divorcé/séparé"
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Marié"] <- "Marié"
+cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"] <- "Veuf"
 
 table(cleanData$ses_etatcivil)
 
@@ -168,48 +168,6 @@ cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous aye
                       == "Sans diplôme"] <- "Sans diplôme"
 
 table(cleanData$niveauetude)
-
-######################### Logement principal ##########################
-
-######################### Autres problèmes ######################
-table(dataH$`Où est votre logement principal?`)
-
-cleanData$logementprincipal <- NA
-
-cleanData$logementprincipal[dataH$`Où est votre logement principal?`== 
-   "Autre province,Précisez la commune - Missour" |
- dataH$`Où est votre logement principal?` == 
- "Province de Midelt,Précisez la commune - Missour"] <- "Province de Midelt, Missour"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?`== 
-                       "Province de Midelt,Précisez la commune - Ait ayach" |
-                         dataH$`Où est votre logement principal?` == 
- "Province de Midelt,Précisez la commune - Ait Aache"] <-"Province de Midelt, Ait ayach"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?`== 
-                        "Province de Midelt,Précisez la commune - Ait izdey" |
-dataH$`Où est votre logement principal?` == "Province de Midelt,Précisez la commune - Ait Izdeg"] <-
-"Province de Midelt, Ait izdeg"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?`== 
-                      "Province de Midelt,Précisez la commune - Ait oumghar" |
-dataH$`Où est votre logement principal?` == "Provincede Midelt,Précisez la commune - Ait omghar"] <- 
- "Province de Midelt, Ait oumghar"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` ==
-"Province de Midelt,Précisez la commune - Commune Tiaalaline"] <- "Province de Midelt, Tiaalaline"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` ==
-"Province de Midelt,Précisez la commune - Kerando"] <- "Province de Midelt, Kerando"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-         "Province de Midelt,Précisez la commune - Miblden" |
-                      dataH$`Où est votre logement principal?`== "Province de Midelt,Précisez la commune - Mibladen"] <- "Province de Midelt, Mibladen"  
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-                          "Province de Midelt,Précisez la commune - Riche"] <- "Province de Midelt, Riche"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-                        "Province de Midelt,Précisez la commune - Amrssid"] <- "Province de Midelt, Amersid"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == 
-                        "Province de Midelt,Précisez la commune - Gerama"] <- "Province de Midelt, Gerama"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == "Province de Midelt,Précisez la commune - Nzala"] <- "Province de Midelt, Nzala"
-cleanData$logementprincipal[dataH$`Où est votre logement principal?` == "Province de Midelt,Précisez la commune - Zaida"] <- "Province de Midelt, Zaida"
-
-table(cleanData$logementprincipal)                                                            
-
 
 ########################### Distance d'Ahouli ######################
 
@@ -592,13 +550,10 @@ table(dataH$`Est-ce que vous consommez de l'alcool?`)
 cleanData$consommationalcool <- NA
 
 cleanData$consommationalcool[dataH$`Est-ce que vous consommez de l'alcool?` == 
-                               "Non"] <- "Non"
+                               "Non"] <- 0
 cleanData$consommationalcool[dataH$`Est-ce que vous consommez de l'alcool?` == 
-     "Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Rarement"] <-
-                                                             "Oui,rarement"
-cleanData$consommationalcool[dataH$`Est-ce que vous consommez de l'alcool?` == 
-"Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Régulièrement"] <-
-                                                      "Oui,régulièrement"
+     "Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Rarement" |
+      dataH$`Est-ce que vous consommez de l'alcool?` ==  "Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Régulièrement"] <- 1
 
 table(cleanData$consommationalcool)
 
@@ -609,13 +564,13 @@ table(dataH$`Fumez-vous du tabac?`)
 
 cleanData$tabac <- NA
 
-cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non"] <- "Non"
+cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non"] <- 0
 cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Occasionnellement" |
-                  dataH$`Fumez-vous du tabac?`== "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Occasionnellement"] <- "Oui, occasionnellement"
+                  dataH$`Fumez-vous du tabac?`== "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Occasionnellement"] <- 0.33 
 cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement" |
                   dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement" |
-                  dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement ( par le nez ? )"] <- "Oui, quotidiennement"
-cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Oui"] <- "Oui"
+                  dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement ( par le nez ? )"] <- 0.66
+cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Oui"] <- 1
 
 table(cleanData$tabac)
 
@@ -624,16 +579,13 @@ table(dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovascula
 
 cleanData$maladiecardiovasculaire <- NA
 
-cleanData$maladiecardiovasculaire[dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                    "Non"] <- "Non"
-cleanData$maladiecardiovasculaire[dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                    "Hypertension"] <- "Hypertension"
-cleanData$maladiecardiovasculaire[dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                    "Hypertension,Maladie coronarienne"] <- 
-                                      "Hypertension,maladie coronarienne"
-cleanData$maladiecardiovasculaire[dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                    "Maladie coronarienne"] <- "Maladie coronarienne"
+cleanData$maladiecardiovasculaire <- as.integer(grepl("Non", dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`))
+table(cleanData$maladiecardiovasculaire)
 
+cleanData$maladiecardiovasculaire <- as.integer(grepl("Hypertension", dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`))
+table(cleanData$maladiecardiovasculaire)
+
+cleanData$maladiecardiovasculaire <- as.integer(grepl("Maladie coronarienne", dataH$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`))
 table(cleanData$maladiecardiovasculaire)
 
 
@@ -688,20 +640,19 @@ table(dataH$`Avez-vous des problèmes respiratoires?`)
 
 cleanData$maladierespiratoire <- NA
 
-cleanData$maladierespiratoire[dataH$`Avez-vous des problèmes respiratoires?` ==
-                                 "Non"] <- "Non"
-cleanData$maladierespiratoire[dataH$`Avez-vous des problèmes respiratoires?` ==
-                                "Asthme"] <- "Asthme"
-cleanData$maladierespiratoire[dataH$`Avez-vous des problèmes respiratoires?` ==
-       "Asthme,Autre (veuillez spécifier) - Sensible aux yeux ( poussière)"] <-
-                "Asthme,sensibilité aux yeux causée par la poussière"
-cleanData$maladierespiratoire[dataH$`Avez-vous des problèmes respiratoires?` ==
-                                "Asthme,Bronchite"] <- "Asthme,bronchite"
-cleanData$maladierespiratoire[dataH$`Avez-vous des problèmes respiratoires?` ==
-                      "Autre (veuillez spécifier) - Amygdalite"] <- "Amygdalite"
-cleanData$maladierespiratoire[dataH$`Avez-vous des problèmes respiratoires?` ==
-                                "Bronchite"] <- "Bronchite"
+cleanData$maladierespiratoire <- as.integer(grepl("Non", dataH$`Avez-vous des problèmes respiratoires?`))
+table(cleanData$maladierespiratoire)
 
+cleanData$maladierespiratoire <- as.integer(grepl("Asthme", dataH$`Avez-vous des problèmes respiratoires?`))
+table(cleanData$maladierespiratoire)
+
+cleanData$maladierespiratoire <- as.integer(grepl("Sensible aux yeux", dataH$`Avez-vous des problèmes respiratoires?`))
+table(cleanData$maladierespiratoire)
+
+cleanData$maladierespiratoire <- as.integer(grepl("Bronchite", dataH$`Avez-vous des problèmes respiratoires?`))
+table(cleanData$maladierespiratoire)
+
+cleanData$maladierespiratoire <- as.integer(grepl("Amygdalite", dataH$`Avez-vous des problèmes respiratoires?`))
 table(cleanData$maladierespiratoire)
 
 
@@ -751,26 +702,19 @@ table(cleanData$problemeneuro)
 ################################ Problèmes digestifs #####################
 table(dataH$`Avez-vous des problèmes digestifs?`)
 
-cleanData$problemedigestif <- NA
+cleanData$problemedigestif_douleurabdo <- NA
 
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == "Non"] <- "Non"
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Douleurs abdominales"] <- "Douleurs abdominales"
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Nausées,Douleurs abdominales"] <- 
-                                                  "Nausées,douleurs abdominales"
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == 
-"Nausées,Vomissements,Douleurs abdominales"] <- "Nausées,Vomissements,Douleurs abdominales"
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Vomissements"] <- "Vomissements"
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Nausées"] <- "Nausées"
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == 
-                  "Nausées,Vomissements"] <- "Nausées,vomissements"
-cleanData$problemedigestif[dataH$`Avez-vous des problèmes digestifs?` == 
-    "Vomissements,Douleurs abdominales"] <- "Vomissements,douleurs abdominales"
+cleanData$problemedigestif_douleurabdo[dataH$`Avez-vous des problèmes digestifs?` == "Non"] <- 0
+cleanData$problemedigestif_douleurabdo[dataH$`Avez-vous des problèmes digestifs?` == 
+                             "Douleurs abdominales" | dataH$`Avez-vous des problèmes digestifs?` == 
+                             "Nausées,Douleurs abdominales" | dataH$`Avez-vous des problèmes digestifs?` == 
+"Nausées,Vomissements,Douleurs abdominales" | dataH$`Avez-vous des problèmes digestifs?` == 
+                             "Vomissements" | dataH$`Avez-vous des problèmes digestifs?` == 
+                             "Nausées" | dataH$`Avez-vous des problèmes digestifs?` == 
+                  "Nausées,Vomissements" | dataH$`Avez-vous des problèmes digestifs?` == 
+    "Vomissements,Douleurs abdominales"] <- 1
 
-table(cleanData$problemedigestif)
+table(cleanData$problemedigestif_douleurabdo)
 
 ####################### Douleurs musculaires/articulaires ##################
 table(dataH$`Avez-vous des douleurs musculaires ou articulaires fréquentes?`)
@@ -818,11 +762,10 @@ table(dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?`)
 cleanData$troublesommeil <- NA
 
 cleanData$troublesommeil[dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` == 
-                           "Non"] <- "Non"
+                           "Non"] <- 0
 cleanData$troublesommeil[dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` == 
-"Oui, j'ai des difficultés à dormir"] <- "Oui, j'éprouve des difficultés à dormir"
-cleanData$troublesommeil[dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` == 
-                "Oui, je souffre d'insomnie"] <- "Oui, je souffre d'insomnie"
+"Oui, j'ai des difficultés à dormir" | dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` == 
+                "Oui, je souffre d'insomnie"] <- 1
 
 table(cleanData$troublesommeil)
 
@@ -1177,6 +1120,50 @@ table(cleanData$santegeneralecommunaute)
 ###################### questions ouvertes rough ##################
 ###################### nuage de points ? #######################
 table(dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`)
+
+cleanData$ameliorationsituationeco <- NA
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Alternative économique par des terres agricoles | Alternative économique ( redémarrage de la mine) |Alternative économique |pâturage", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Hôpital|Ambulance|Médecin|médicaux|Médicaments|Première secours à Mibladen|Contrôle et suivie de silicose à Mibladen|Équipements médicaux à Mibladen|Équipements d'utilité publique|Dispensaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("École secondaire|Transport scolaire|Classe préscolaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Route et ponts|Route|Pavage des rues|Aménagement de la route|Transport|Bus|Transport publique|Aménagement de la route Mibladen- Ahouli|Aménagement de la route Mibladen Ahouli|Pavage des rues", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Réseau de communication|Réseau et internet|Réseau de communication et internet à Ahouli|Électricité à Ahouli|Réseau", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Offres d’emploi|Offres d’emploi pour la jeunesse", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Redémarrage de la mine|redémarrage de la mine avec de bon conditions|Restauration du site Ahouli|muséologique|musélogique", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Promouvoir le tourisme à Mibladen|Promouvoir de tourisme Ahouli et Mibladen|Promouvoir de tourisme|Promouvoir de tourisme à Mibladen|Promouvoir de tourisme Ahouli|Promouvoir de tourisme à Mibladen et Ahouli", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Soutien des coopératives féminines|Promouvoir des coopératives féminines|Coopératives féminines", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Plaque publique", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Permission minière au mineurs|Permission au mineurs|Protection juridique des mineurs|Cadre législatif|Soutien des mineurs|Cadre législatif des mineurs|Soutien aux mineurs par les airs compresseurs", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Conteneurs des déchets|Des conteneurs des déchets|Dépotoir|Gestion des déchets", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Réhabilitation|Réhabilitations des maisons", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
+
+cleanData$ameliorationsituationeco <- as.integer(grepl("Soutien des projets d’élevage", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco)
 
 
 ###################### stress travail ################
