@@ -89,17 +89,12 @@ table(dataH$`Combien d'enfants avez-vous ?`)
 
 cleanData$ses_enfants <- NA
 
+cleanData$ses_enfants <- as.numeric(dataH$`Combien d'enfants avez-vous ?`)
 cleanData$ses_enfants[is.na(dataH$`Combien d'enfants avez-vous ?`)] <- 0
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "1"] <- 1
 
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "2" |
-                        dataH$`Combien d'enfants avez-vous ?` == "3"] <- "2-3"
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "4" |
-                        dataH$`Combien d'enfants avez-vous ?` == "5"] <- "4-5"
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "6" |
-                        dataH$`Combien d'enfants avez-vous ?` == "7"] <- "6-7"
-
+class(cleanData$ses_enfants)
 table(cleanData$ses_enfants)
+
 
 ###################### Statut professionel actuel ####################
 table(dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`)
@@ -168,9 +163,9 @@ cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous aye
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
                       == "Enseignement secondaire"] <- "secondaire"
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
-                      == "Sans diplôme"] <- "Sans_diplome"
+                      == "Sans diplôme"] <- "sans_diplome"
 cleanData$niveauetude <- factor(cleanData$niveauetude, ordered = TRUE,
-                                levels = c("Sans_diplome", "primaire", "secondaire", "postsecondaire"))
+                                levels = c("sans_diplome", "primaire", "secondaire", "postsecondaire"))
 table(cleanData$niveauetude)
 unique(cleanData$niveauetude)
 

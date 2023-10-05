@@ -9,13 +9,20 @@ cleanDataF <- data.frame(id= dataFemmes$`ID de la réponse`)
 table(dataFemmes$`Quel âge avez-vous ?`)
 
 cleanDataF$ses_age <- NA
-cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "18 - 20 ans"] <- "18 à 20 ans"
-cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "21 - 29 ans"] <- "21 à 29 ans"
-cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "30 - 39 ans"] <- "30 à 39 ans"
-cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "40-49"] <- "40 à 49 ans"
-cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "50-59"] <- "50 à 59 ans"
-cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "60 ou plus"] <- "60 ou plus"
+cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "18 - 20 ans"] <- "18_20"
+cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "21 - 29 ans"] <- "21_29"
+cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "30 - 39 ans"] <- "30_39"
+cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "40-49"] <- "40_49"
+cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "50-59"] <- "50_59"
+cleanDataF$ses_age[dataFemmes$`Quel âge avez-vous ?` == "60 ou plus"] <- "60+"
+
+cleanDataF$ses_age <- factor(cleanDataF$ses_age,
+                            ordered = TRUE,
+                            levels = c("18_20", "21_29", "30_39",
+                                       "40_49", "50_59", "60+"))
+
 table(cleanDataF$ses_age)
+
 
 ############### État civil #######
 table(dataFemmes$`Quel est votre état civil ?`)
@@ -23,13 +30,13 @@ table(dataFemmes$`Quel est votre état civil ?`)
 cleanDataF$ses_etatcivil <- NA
 
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Célibataire"
-] <- "Célibataire"
+] <- "celib"
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Divorcée/séparée"
-] <- "Divorcée/séparée"
+] <- "divorcee"
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Mariée"
-] <- "Mariée"
+] <- "mariee"
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Veuve"
-] <- "Veuve"
+] <- "veuve"
 
 table(cleanDataF$ses_etatcivil)
 
@@ -51,13 +58,13 @@ table(dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux vot
 cleanDataF$statutTravail <- NA
 
 cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
-                           "Femme au foyer"] <- "Femme au foyer"
+                           "Femme au foyer"] <- "femme_foyer"
 cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
-                           "Travailleuse autonome"] <- "Travailleuse autonome"
+                           "Travailleuse autonome"] <- "travailleuse_autonome"
 cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
-                           "Sans emploi - ne recherche pas d'emploi"] <- "Ne recherche pas d'emploi"
+                           "Sans emploi - ne recherche pas d'emploi"] <- "cherche_pas_emploi"
 cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
-                           "Sans emploi - recherche un emploi"] <- "Recherche un emploi"
+                           "Sans emploi - recherche un emploi"] <- "cherche_emploi"
 
 table(cleanDataF$statutTravail)
 
@@ -67,15 +74,10 @@ table(dataFemmes$`Combien d'enfants avez-vous ?`)
 
 cleanDataF$ses_enfants <- NA
 
-cleanDataF$ses_enfants[is.na(dataFemmes$`Combien d'enfants avez-vous ?`)] <- "0"
-cleanDataF$ses_enfants[dataFemmes$`Combien d'enfants avez-vous ?` == "1"] <- "1"
-cleanDataF$ses_enfants[dataFemmes$`Combien d'enfants avez-vous ?` == "2" |
-                        dataFemmes$`Combien d'enfants avez-vous ?` == "3"] <- "2-3"
-cleanDataF$ses_enfants[dataFemmes$`Combien d'enfants avez-vous ?` == "4" |
-                        dataFemmes$`Combien d'enfants avez-vous ?` == "5"] <- "4-5"
-cleanDataF$ses_enfants[dataFemmes$`Combien d'enfants avez-vous ?` == "6" |
-                        dataFemmes$`Combien d'enfants avez-vous ?` == "10"] <- "6-10"
+cleanDataF$ses_enfants <- as.numeric(dataFemmes$`Combien d'enfants avez-vous ?`)
+cleanDataF$ses_enfants[is.na(dataFemmes$`Combien d'enfants avez-vous ?`)] <- 0
 
+class(cleanDataF$ses_enfants)
 table(cleanDataF$ses_enfants)
 
 ##################### Provenance ###################
@@ -114,13 +116,16 @@ table(dataFemmes$`Quel est le plus haut niveau d'études que vous ayez atteint ?
 cleanDataF$niveauetude <- NA
 
 cleanDataF$niveauetude[dataFemmes$`Quel est le plus haut niveau d'études que vous ayez atteint ?` ==
-                         "Sans diplôme"] <- "Sans diplôme"
+                         "Sans diplôme"] <- "sans_diplome"
 cleanDataF$niveauetude[dataFemmes$`Quel est le plus haut niveau d'études que vous ayez atteint ?` ==
-                         "Enseignement primaire"] <- "Enseignement primaire"
+                         "Enseignement primaire"] <- "primaire"
 cleanDataF$niveauetude[dataFemmes$`Quel est le plus haut niveau d'études que vous ayez atteint ?` ==
-                         "Enseignement secondaire"] <- "Enseignement secondaire"
+                         "Enseignement secondaire"] <- "secondaire"
 cleanDataF$niveauetude[dataFemmes$`Quel est le plus haut niveau d'études que vous ayez atteint ?` ==
-                         "Enseignement postsecondaire"] <- "Enseignement postsecondaire"
+                         "Enseignement postsecondaire"] <- "postsecondaire"
+
+cleanDataF$niveauetude <- factor(cleanDataF$niveauetude, ordered = TRUE,
+                                levels = c("sans_diplome", "primaire", "secondaire", "postsecondaire"))
 
 table(cleanDataF$niveauetude)
 
@@ -173,11 +178,11 @@ table(dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rende
 cleanDataF$visitefamille <- NA
 
 cleanDataF$visitefamille[dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rendez-vous visite à votre famille?` ==
-                           "Plusieurs fois par an"] <- "Je visite ma famille plusieurs fois par années"
+                           "Plusieurs fois par an"] <- 0
 cleanDataF$visitefamille[dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rendez-vous visite à votre famille?` ==
-                           "Tous les jours"] <- "Je visite ma famille quotidiennement"
+                           "Tous les jours"] <- 1
 cleanDataF$visitefamille[dataFemmes$`Si vous ne vivez pas avec votre famille, combien de fois rendez-vous visite à votre famille?` ==
-                           "Une fois par semaine"] <- "Je visite ma famille hebdomadairement"
+                           "Une fois par semaine"] <- 0.5
 
 table(cleanDataF$visitefamille)
 
@@ -187,19 +192,19 @@ table(dataFemmes$`Quel est le nombre de pièce habitable de votre logement?`)
 cleanDataF$nombrepiecehabitable <- NA
 
 cleanDataF$nombrepiecehabitable[dataFemmes$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "1"] <- "1"
+                                 "1"] <- 1
 cleanDataF$nombrepiecehabitable[dataFemmes$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "2"] <- "2"
+                                 "2"] <- 2
 cleanDataF$nombrepiecehabitable[dataFemmes$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "3"] <- "3"
+                                 "3"] <- 3
 cleanDataF$nombrepiecehabitable[dataFemmes$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "4"] <- "4"
+                                 "4"] <- 4
 cleanDataF$nombrepiecehabitable[dataFemmes$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "5"] <- "5"
+                                 "5"] <- 5
 cleanDataF$nombrepiecehabitable[dataFemmes$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "6"] <- "6"
+                                 "6"] <- 6
 cleanDataF$nombrepiecehabitable[dataFemmes$`Quel est le nombre de pièce habitable de votre logement?` ==
-                                 "7"] <- "7"
+                                 "7"] <- 7
 
 table(cleanDataF$nombrepiecehabitable)
 
@@ -212,29 +217,11 @@ table(dataFemmes$`Combien de personnes vivent dans le logement ?`)
 
 cleanDataF$nbpersonnelogement <- NA 
 
-cleanDataF$nbpersonnelogement[dataFemmes$`Combien de personnes vivent dans le logement ?` ==
-                                "1" |
-                                dataFemmes$`Combien de personnes vivent dans le logement ?`==
-                                "2"] <- "1 - 2"
-cleanDataF$nbpersonnelogement[dataFemmes$`Combien de personnes vivent dans le logement ?` ==
-                                "3" |
-                                dataFemmes$`Combien de personnes vivent dans le logement ?`==
-                                "4"] <- "3 - 4"
-cleanDataF$nbpersonnelogement[dataFemmes$`Combien de personnes vivent dans le logement ?` ==
-                                "5" |
-                                dataFemmes$`Combien de personnes vivent dans le logement ?`==
-                                "6"] <- "5 - 6"
-cleanDataF$nbpersonnelogement[dataFemmes$`Combien de personnes vivent dans le logement ?` ==
-                                "7" |
-                                dataFemmes$`Combien de personnes vivent dans le logement ?`==
-                                "8"] <- "7 - 8"
-cleanDataF$nbpersonnelogement[dataFemmes$`Combien de personnes vivent dans le logement ?` ==
-                                "9" |
-                                dataFemmes$`Combien de personnes vivent dans le logement ?` ==
-                                "20"] <- "9 ou plus"
+cleanDataF$nbpersonnelogement <- as.numeric(dataFemmes$`Combien de personnes vivent dans le logement ?`)
+cleanDataF$nbpersonnelogement[is.na(dataFemmes$`Combien de personnes vivent dans le logement ?`)] <- 0
 
+class(cleanDataF$nbpersonnelogement)
 table(cleanDataF$nbpersonnelogement)
-
 
 
 ######################### réparation majeure ####################
@@ -280,11 +267,11 @@ table(dataFemmes$`Est-ce que le logement a des toilettes?`)
 cleanDataF$toilette <- NA
 
 cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
-                      "Non"] <- "Non"
+                      "Non"] <- 0
 cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
-                      "Oui, à l'extérieur"] <- "Oui, à l'extérieur"
+                      "Oui, à l'extérieur"] <- 0.5
 cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
-                      "Oui, dans la maison"] <- "Oui, dans la maison"
+                      "Oui, dans la maison"] <- 1
 
 table(cleanDataF$toilette)
 
@@ -292,29 +279,26 @@ table(cleanDataF$toilette)
 ########################## Revenus principals #####################
 table(dataFemmes$`Quelles sont vos sources de revenus principales?`)
 
-cleanDataF$revenusprincipales <- NA
+cleanDataF$revenusprincipales_agriculture <- NA
+cleanDataF$revenusprincipales_aides <- NA
+cleanDataF$revenusprincipales_famille <- NA
+cleanDataF$revenusprincipales_epargne <- NA
+cleanDataF$revenusprincipales_mine <- NA
 
-cleanDataF$revenusprincipales <- as.integer(grepl("Agriculture", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales)
+cleanDataF$revenusprincipales_agriculture <- as.integer(grepl("Agriculture", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales_agriculture)
 
-cleanDataF$revenusprincipales <- as.integer(grepl("Aides publiques ou privées", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales)
+cleanDataF$revenusprincipales_aides <- as.integer(grepl("Aides publiques ou privées", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales_aides)
 
-cleanDataF$revenusprincipales <- as.integer(grepl("Fils|Marinet fils|Marie et fils", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales)
+cleanDataF$revenusprincipales_famille <- as.integer(grepl("Le mari|Le Mari|Mari|Marinet fils|Le Marie|Marie|Marie et fils|Nièce", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales_famille)
 
+cleanDataF$revenusprincipales_epargne <- as.integer(grepl("Épargne retraite", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales_epargne)
 
-cleanDataF$revenusprincipales <- as.integer(grepl("Le mari|Le Mari|Mari|Marinet fils|Le Marie|Marie|Marie et fils", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales)
-
-cleanDataF$revenusprincipales <- as.integer(grepl("Nièce", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales)
-
-cleanDataF$revenusprincipales <- as.integer(grepl("Épargne retraite", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales)
-
-cleanDataF$revenusprincipales <- as.integer(grepl("Mines", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales)
+cleanDataF$revenusprincipales_mine <- as.integer(grepl("Mines", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenusprincipales_mine)
 
 ########################### Montant revenus annuels ##################
 table(dataFemmes$`Quel est le montant total de vos revenus annuels?`)
@@ -322,9 +306,9 @@ table(dataFemmes$`Quel est le montant total de vos revenus annuels?`)
 cleanDataF$ses_revenu <- NA
 
 cleanDataF$ses_revenu[dataFemmes$`Quel est le montant total de vos revenus annuels?` ==
-                        "0 à 2000 dirhams"] <- "0 à 2000 dirhams"
+                        "0 à 2000 dirhams"] <- "faible"
 cleanDataF$ses_revenu[dataFemmes$`Quel est le montant total de vos revenus annuels?` ==
-                        "2001 à 5000 dirhams"] <- "2001 à 5000 dirhams"
+                        "2001 à 5000 dirhams"] <- "moyen"
 
 table(cleanDataF$ses_revenu)
 
@@ -471,42 +455,52 @@ table(cleanDataF$consultationmedicale)
 ########################## Maladie cardiovasculaire ###################
 table(dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`)
 
-cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                     "Non"] <- "Non"
-cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                     "Hypertension"] <- "Hypertension"
-cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                     "Hypertension,Maladie coronarienne"] <- "Hypertension,maladie coronarienne"
-cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                     "Autre (veuillez spécifier) - Anémie"] <- "Anémie"
-cleanDataF$maladiecardiovasculaire[dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?` ==
-                                     "Hypertension,Autre (veuillez spécifier) - Fatigue"] <- "Hypertension,fatigue"
+cleanDataF$maladiecardiovasculaire <- NA
+cleanDataF$maladiecardiovasculaire_hypertension <- NA
+cleanDataF$maladiecardiovasculaire_coronarienne <- NA
+cleanDataF$maladiecardiovasculaire_fatigue <- NA
 
-table(cleanDataF$maladiecardiovasculaire)
+cleanDataF$maladiecardiovasculaire <- as.integer(grepl("Non",dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`)) 
+table(cleanDataF$maladiecardiovasculaire)    
+
+cleanDataF$maladiecardiovasculaire_hypertension <- as.integer(grepl("Hypertension",dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`)) 
+table(cleanDataF$maladiecardiovasculaire_hypertension)    
+
+cleanDataF$maladiecardiovasculaire_coronarienne <- as.integer(grepl("Maladie coronarienne|Anémie",dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`)) 
+table(cleanDataF$maladiecardiovasculaire_coronarienne)    
+
+cleanDataF$maladiecardiovasculaire_fatigue <- as.integer(grepl("Fatigue",dataFemmes$`Avez-vous déjà été diagnostiqué avec une maladie cardiovasculaire?`)) 
+table(cleanDataF$maladiecardiovasculaire_fatigue)    
 
 
 ########################### maladies chroniques ########################
 table(dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`)
 
 cleanDataF$maladiechronique <- NA
+cleanDataF$maladiechronique_colon <- NA
+cleanDataF$maladiechronique_hemorroide <- NA
+cleanDataF$maladiechronique_kyste <- NA
+cleanDataF$maladiechronique_diabete <- NA
+cleanDataF$maladiechronique_respiratoire <- NA
+cleanDataF$maladiechronique_rein <- NA
 
-cleanDataF$maladiechronique <- as.integer(grepl("Colon", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
-table(cleanDataF$maladiechronique)
+cleanDataF$maladiechronique_colon <- as.integer(grepl("Colon", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique_colon)
 
-cleanDataF$maladiechronique <- as.integer(grepl("Hémorroïde", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
-table(cleanDataF$maladiechronique)
+cleanDataF$maladiechronique_hemorroide <- as.integer(grepl("Hémorroïde", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique_hemorroide)
 
-cleanDataF$maladiechronique <- as.integer(grepl("Kyste sébacé", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
-table(cleanDataF$maladiechronique)
+cleanDataF$maladiechronique_kyste <- as.integer(grepl("Kyste sébacé", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique_kyste)
 
-cleanDataF$maladiechronique <- as.integer(grepl("Diabète", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
-table(cleanDataF$maladiechronique)
+cleanDataF$maladiechronique_diabete <- as.integer(grepl("Diabète", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique_diabete)
 
-cleanDataF$maladiechronique <- as.integer(grepl("Maladies respiratoires", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
-table(cleanDataF$maladiechronique)
+cleanDataF$maladiechronique_respiratoire <- as.integer(grepl("Maladies respiratoires", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique_respiratoire)
 
-cleanDataF$maladiechronique <- as.integer(grepl("Maladie rénales", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
-table(cleanDataF$maladiechronique)
+cleanDataF$maladiechronique_rein <- as.integer(grepl("Maladie rénales", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique_rein)
 
 cleanDataF$maladiechronique <- as.integer(grepl("Non", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
 table(cleanDataF$maladiechronique)
@@ -516,25 +510,27 @@ table(cleanDataF$maladiechronique)
 table(dataFemmes$`Avez-vous des problèmes respiratoires?`)
 
 cleanDataF$maladierespiratoire <- NA
+cleanDataF$maladierespiratoire_asthme <- NA
+cleanDataF$maladierespiratoire_bronchite <- NA
+cleanDataF$maladierespiratoire_rhume <- NA
 
-cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
-                                 "Non"] <- "Non"
-cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
-                                 "Asthme"] <- "Asthme"
-cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
-                                 "Bronchite"] <- "Bronchite"
-cleanDataF$maladierespiratoire[dataFemmes$`Avez-vous des problèmes respiratoires?` ==
-                                 "Autre (veuillez spécifier) - Rhume"] <- "Rhume"
-
+cleanDataF$maladierespiratoire <- as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes respiratoires?`))
 table(cleanDataF$maladierespiratoire)
+cleanDataF$maladierespiratoire_asthme <- as.integer(grepl("Asthme",dataFemmes$`Avez-vous des problèmes respiratoires?`))
+table(cleanDataF$maladierespiratoire_asthme)
+cleanDataF$maladierespiratoire_bronchite <- as.integer(grepl("Bronchite",dataFemmes$`Avez-vous des problèmes respiratoires?`))
+table(cleanDataF$maladierespiratoire_bronchite)
+cleanDataF$maladierespiratoire_rhume <- as.integer(grepl("Rhume",dataFemmes$`Avez-vous des problèmes respiratoires?`))
+table(cleanDataF$maladierespiratoire_rhume)
 
 ############################### problèmes de peau #######################
 table(dataFemmes$`Avez-vous des problèmes de peau?`)
 
 cleanDataF$problemepeau <- NA
 
-cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
-                          "Non"] <- "Non"
+cleanDataF$problemepeau <- as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes de peau?`))
+table(cleanDataF$problemepeau)
+
 cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
                           "Démangeaisons"] <- "Démangeaisons"
 cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
