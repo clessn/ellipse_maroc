@@ -527,39 +527,41 @@ table(cleanDataF$maladierespiratoire_rhume)
 table(dataFemmes$`Avez-vous des problèmes de peau?`)
 
 cleanDataF$problemepeau <- NA
+cleanDataF$problemepeau_demangeaisons <- NA
+cleanDataF$problemepeau_eruptions_cutanees <- NA
+cleanDataF$problemepeau_kyste <- NA
 
 cleanDataF$problemepeau <- as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes de peau?`))
 table(cleanDataF$problemepeau)
-
-cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
-                          "Démangeaisons"] <- "Démangeaisons"
-cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
-                          "Éruptions cutanées"] <- "Éruptions cutanées"
-cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
-                          "Éruptions cutanées,Démangeaisons"] <- "Éruptions cutanées,démangeaisons"
-cleanDataF$problemepeau[dataFemmes$`Avez-vous des problèmes de peau?` ==
-                          "Éruptions cutanées,Autre (veuillez spécifier) - Kyste sébacé"] <- "Éruptions cutanées,kyste sébacé"
-
-
-table(cleanDataF$problemepeau)
+cleanDataF$problemepeau_demangeaisons <- as.integer(grepl("Démangeaisons",dataFemmes$`Avez-vous des problèmes de peau?`))
+table(cleanDataF$problemepeau_demangeaisons)
+cleanDataF$problemepeau_eruptions_cutanees <- as.integer(grepl("Éruptions cutanées",dataFemmes$`Avez-vous des problèmes de peau?`))
+table(cleanDataF$problemepeau_eruptions_cutanees)
+cleanDataF$problemepeau_kyste <- as.integer(grepl("Kyste sébacé",dataFemmes$`Avez-vous des problèmes de peau?`))
+table(cleanDataF$problemepeau_kyste)
 
 
 ############################ problèmes neurologiques ##################
 table(dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`)
 
 cleanDataF$problemeneurologique <- NA
+cleanDataF$problemeneurologique_maux_de_tete <- NA
+cleanDataF$problemeneurologique_vertige <- NA
+cleanDataF$problemeneurologique_oreille <- NA
+cleanDataF$problemeneurologique_syncope <- NA
 
-cleanDataF$problemeneurologique <- as.integer(grepl("Maux de tête", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique)
 
-cleanDataF$problemeneurologique <- as.integer(grepl("Vertiges", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique)
+cleanDataF$problemeneurologique_maux_de_tete <- as.integer(grepl("Maux de tête", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique_maux_de_tete)
 
-cleanDataF$problemeneurologique <- as.integer(grepl("Douleurs dans les oreilles", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique)
+cleanDataF$problemeneurologique_vertige <- as.integer(grepl("Vertiges", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique_vertige)
 
-cleanDataF$problemeneurologique <- as.integer(grepl("Syncope", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique)
+cleanDataF$problemeneurologique_oreille <- as.integer(grepl("Douleurs dans les oreilles", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique_oreille)
+
+cleanDataF$problemeneurologique_syncope <- as.integer(grepl("Syncope", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneurologique_syncope)
 
 cleanDataF$problemeneurologique <- as.integer(grepl("Non", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
 table(cleanDataF$problemeneurologique)
@@ -568,23 +570,18 @@ table(cleanDataF$problemeneurologique)
 table(dataFemmes$`Avez-vous des problèmes digestifs?`)
 
 cleanDataF$problemedigestif <- NA
+cleanDataF$problemedigestif_abdo <- NA
+cleanDataF$problemedigestif_vomissements <- NA
+cleanDataF$problemedigestif_nausees <- NA
 
-cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
-                              "Non"] <- "Non"
-cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
-                              "Douleurs abdominales"] <- "Douleurs abdominales"
-cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
-                              "Nausées,Vomissements"] <- "Nausées,vomissements"
-cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
-                              "Vomissements,Douleurs abdominales"] <- "Vomissements,douleurs abdominales"
-cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
-                              "Nausées,Douleurs abdominales"] <- "Nausées,douleurs abdominales"
-cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
-                              "Vomissements"] <- "Vomissements"
-cleanDataF$problemedigestif[dataFemmes$`Avez-vous des problèmes digestifs?` ==
-             "Nausées,Vomissements,Douleurs abdominales"] <- "Nausées,vomissements,douleurs abdominales"
-
+cleanDataF$problemedigestif <- as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes digestifs?`))
 table(cleanDataF$problemedigestif)
+cleanDataF$problemedigestif_abdo <- as.integer(grepl("Douleurs abdominales",dataFemmes$`Avez-vous des problèmes digestifs?`))
+table(cleanDataF$problemedigestif_abdo)
+cleanDataF$problemedigestif_vomissements <- as.integer(grepl("Vomissements",dataFemmes$`Avez-vous des problèmes digestifs?`))
+table(cleanDataF$problemedigestif_vomissements)
+cleanDataF$problemedigestif_nausees <- as.integer(grepl("Nausées",dataFemmes$`Avez-vous des problèmes digestifs?`))
+table(cleanDataF$problemedigestif_nausees)
 
 
 ############################# douleurs articulaires/musculaires #############
@@ -611,12 +608,12 @@ table(dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derni
 cleanDataF$blessurerecentes <- NA
 
 cleanDataF$blessurerecentes[dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
-                              "Non"] <- "Non"
+                              "Non"] <- 0
 cleanDataF$blessurerecentes[dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
                               "Oui, j'ai eu un accident au cours des 12 derniers mois,Si oui veuillez préciser quel type de blessure ou d'accident: - Chute de blocs au fond" |
                               dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
                               "Oui, j'ai eu une blessure au cours des 12 derniers mois,Si oui veuillez préciser quel type de blessure ou d'accident: - Chute de bloc au fond"
-                            ] <- "Oui, une chute de blocs au fond"
+                            ] <- 1
 
 
 table(cleanDataF$blessurerecentes)
@@ -628,11 +625,10 @@ table(dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomn
 cleanDataF$troublesommeil <- NA
 
 cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
-                            "Non"] <- "Non"
+                            "Non"] <- 0
 cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
-                            "Oui, je souffre d'insomnie"] <- "Oui, je souffre d'insomnie"
-cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
-                            "Oui, j'ai des difficultés à dormir"] <- "Oui, j'ai des difficultés à dormir"
+                            "Oui, je souffre d'insomnie" |dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
+                            "Oui, j'ai des difficultés à dormir"] <- 1
 
 
 
@@ -642,61 +638,74 @@ table(cleanDataF$troublesommeil)
 ################################### problème santé communauté ################
 table(dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté`)
 
-cleanDataF$santecommunaute <- NA
+cleanDataF$santecommunaute_accidents <- NA
+cleanDataF$santecommunaute_hypertension <- NA
+cleanDataF$santecommunaute_hemorroide <- NA
+cleanDataF$santecommunaute_digestif <- NA
+cleanDataF$santecommunaute_air_cardio <- NA
+cleanDataF$santecommunaute_rhumatisme <- NA
+cleanDataF$santecommunaute_muscle_squelette <- NA
+cleanDataF$santecommunaute_allergie <- NA
+cleanDataF$santecommunaute_fatigue <- NA
+cleanDataF$santecommunaute_mentale <- NA
+cleanDataF$santecommunaute_chronique <- NA
+cleanDataF$santecommunaute_maux_de_tete <- NA
+cleanDataF$santecommunaute_neurologique <- NA
+cleanDataF$santecommunaute_reins <- NA
+cleanDataF$santecommunaute_silicose <- NA
+cleanDataF$santecommunaute_diminution <- NA
+cleanDataF$santecommunaute_sciatique <- NA
 
-cleanDataF$santecommunaute <- as.integer(grepl("Accidents et blessures|ccidents et blessures", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_accidents <- as.integer(grepl("Accidents et blessures|ccidents et blessures", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_accidents)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Hypertension", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_hypertension <- as.integer(grepl("Hypertension", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_hypertension)
 
-cleanDataF$santecommunaute <- as.integer(grepl("hémorroïde|Hémorroïdes", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_hemorroide <- as.integer(grepl("hémorroïde|Hémorroïdes", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_hemorroide)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Problème digestif|Problème digestifs", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_digestif <- as.integer(grepl("Problème digestif|Problème digestifs", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_digestif)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_air_cardio <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_air_cardio)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Rhumatisme|rhumatisme", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_rhumatisme <- as.integer(grepl("Rhumatisme|rhumatisme", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_rhumatisme)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Troubles musculosquelettiques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_muscle_squelette <- as.integer(grepl("Troubles musculosquelettiques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_muscle_squelette)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Allergie|allergie", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_allergie <- as.integer(grepl("Allergie|allergie", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_allergie)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Fatigue", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_fatigue <- as.integer(grepl("Fatigue", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_fatigue)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Problèmes de santé mentale", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_mentale <- as.integer(grepl("Problèmes de santé mentale", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_mentale)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Accidents et blessures|ccidents et blessures", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_chronique <- as.integer(grepl("Autres problèmes de santé chroniques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_chronique)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Autres problèmes de santé chroniques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_maux_de_tete <- as.integer(grepl("Maux de tête", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_maux_de_tete)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Maux de tête", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_neurologique <- as.integer(grepl("Problème neurologique|Maladie neurologique", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_neurologique)
 
-cleanDataF$santecommunaute <- as.integer(grepl("Problème neurologique|Maladie neurologique", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_reins <- as.integer(grepl("problème rénal|Rénales", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_reins)
 
-cleanDataF$santecommunaute <- as.integer(grepl("problème rénal|Rénales", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_silicose <- as.integer(grepl("silicose|Silicose", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_silicose)
 
-cleanDataF$santecommunaute <- as.integer(grepl("silicose|Silicose", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_diminution <- as.integer(grepl("détérioration de la santé", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_diminution)
 
-cleanDataF$santecommunaute <- as.integer(grepl("détérioration de la santé", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
-
-cleanDataF$santecommunaute <- as.integer(grepl("sciatique", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute)
+cleanDataF$santecommunaute_sciatique <- as.integer(grepl("sciatique", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_sciatique)
 
 
 ####################################### problème qualité eau ################
@@ -789,9 +798,9 @@ cleanDataF$qualitetravail <- NA
 cleanDataF$qualitetravail[dataFemmes$`En général, diriez-vous que la qualité de l'environnement de travail est:` ==
                             "Mauvaise"] <- 0
 cleanDataF$qualitetravail[dataFemmes$`En général, diriez-vous que la qualité de l'environnement de travail est:` ==
-                            "Médiocre"] <- 0.5
+                            "Médiocre"] <- 0.33
 cleanDataF$qualitetravail[dataFemmes$`En général, diriez-vous que la qualité de l'environnement de travail est:` ==
-                            "Moyenne"] <- 1
+                            "Moyenne"] <- 0.66
 
 table(cleanDataF$qualitetravail)
 
