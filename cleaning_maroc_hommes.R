@@ -949,6 +949,40 @@ table(cleanData$dangerimpactlongterme)
 ################### À cleaner comme du monde #################
 table(dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`)
 
+cleanData$impact_long_terme_respiratoire <- NA
+cleanData$impact_long_terme_silicose <- NA
+cleanData$impact_long_terme_rein <- NA
+cleanData$impact_long_terme_rhumatisme <- NA
+cleanData$impact_long_terme_sciatique <- NA
+cleanData$impact_long_terme_accident <- NA
+cleanData$impact_long_terme_vue <- NA
+cleanData$impact_long_terme_audition <- NA
+cleanData$impact_long_terme_parkinson <- NA
+cleanData$impact_long_terme_sante <- NA
+cleanData$impact_long_terme_sommeil <- NA
+
+cleanData$impact_long_terme_respiratoire <- as.integer(grepl("Asthme|Problème respiratoire|Problème de poumons|Maladie respiratoire|Risque sur les poumons|asthme", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_respiratoire)
+cleanData$impact_long_terme_silicose <- as.integer(grepl("Silicose", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_silicose)
+cleanData$impact_long_terme_rein <- as.integer(grepl("Problème rénale|Rénale|Problème rénal|Problème rénaux|Problème reine", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_rein)
+cleanData$impact_long_terme_rhumatisme <- as.integer(grepl("Rhumatisme", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_rhumatisme)
+cleanData$impact_long_terme_sciatique <- as.integer(grepl("Sciatique|sciatique", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_sciatique)
+cleanData$impact_long_terme_accident <- as.integer(grepl("Accident et blessures|Accident/ blessures|Risque des accidents et blessures|Blessures", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_accident)
+cleanData$impact_long_terme_vue <- as.integer(grepl("Perte de la vue|Perte de vue|Baisse de vue", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_vue)
+cleanData$impact_long_terme_audition <- as.integer(grepl("Problème de auditif|Problème auditif|Problème de sens", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_audition)
+cleanData$impact_long_terme_silicose <- as.integer(grepl("Parkinson|parkinson", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_silicose)
+cleanData$impact_long_terme_sante <- as.integer(grepl("Courte espérance de vie|Détérioration de la santé|détérioration de la santé|Espérance de vie courte", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_sante)
+cleanData$impact_long_terme_sommeil <- as.integer(grepl("Fatigue|Insomnie", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_sommeil)
 
 ##################### problème santé à cause des mines ################
 table(dataH$`Avez-vous ou l'un de vos proches soufferts d'accidents ou de problèmes de santé à cause du travail dans les mines?`)
