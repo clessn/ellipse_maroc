@@ -731,22 +731,30 @@ table(cleanData$douleursmusculaires)
 ######################## petit hic de code ########################
 table(dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`)
 
-cleanData$blessurerecentes <- NA
+cleanData$blessurerecentes_main <- NA
+cleanData$blessurerecentes_jambe <- NA
+cleanData$blessurerecentes_epaule <- NA
+cleanData$blessurerecentes_dos <- NA
+cleanData$blessurerecentes_yeux <- NA
+cleanData$blessurerecentes_oreille <- NA
 
-cleanData$blessurerecentes <- as.integer(grepl("À la main|Casseur à jambe et main|Blessure à la main|Blessures à la main|Blessures à la main et jambe|Blessures à la main et tête|Blessures à la main, dos|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessures à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessures à la mine, tête, jambe", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_main <- as.integer(grepl("main", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_main)
 
-cleanData$blessurerecentes <- as.integer(grepl("Casseur à jambe et main|Blessé à jambe|Blessé à la jambe|Blessures à jambe|Blessures à la jambe|Blessures à la main et jambe|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessure à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessure à la mine, tête, jambe|Casseur à la jambe et les blessures|Casseurs (jambe)", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_jambe <- as.integer(grepl("jambe", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_jambe)
 
-cleanData$blessurerecentes <- as.integer(grepl("Blessé à l'épaule|épaule", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_epaule <- as.integer(grepl("épaule", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_epaule)
 
-cleanData$blessurerecentes <- as.integer(grepl("dos", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_dos <- as.integer(grepl("dos", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_dos)
 
-cleanData$blessurerecentes <- as.integer(grepl("yeux", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_yeux <- as.integer(grepl("yeux", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_yeux)
+
+cleanData$blessurerecentes_oreille <- as.integer(grepl("oreille", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_oreille)
 
 ######################## Difficultés à dormir/insomnie ##################
 table(dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?`)
@@ -782,11 +790,11 @@ cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la
                             dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
                             "1-3 ans"] <- "0_3"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "4-6 ans"] <- "4 - 6 ans"
+                            "4-6 ans"] <- "4_6"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "7-10 ans"] <- "7 - 10 ans"
+                            "7-10 ans"] <- "7_10"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "10 - 15 ans"] <- "10 - 15 ans"
+                            "10 - 15 ans"] <- "10_15"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
                             "> 20 ans"] <- "20+"
 
@@ -802,50 +810,82 @@ table(cleanData$anneeexperience)
 ####################### à compléter ####################
 table(dataH$`Connaissez-vous les dangers de l'extraction du plomb?`)
 
-cleanData$perceptiondanger <- NA
+cleanData$perceptiondanger_accidents <- NA
+cleanData$perceptiondanger_silicose <- NA
+cleanData$perceptiondanger_mort <- NA
+cleanData$percepetiondanger_respiratoire <- NA
+cleanData$perceptiondanger_eboulement <- NA
+cleanData$perceptiondanger_rhumatisme <- NA
+cleanData$perceptiondanger_sciatique <- NA
+cleanData$perceptiondanger_deterioration <- NA
+cleanData$perceptiondanger_asthme <- NA
+cleanData$perceptiondanger_neuro <- NA
+cleanData$perceptiondanger_articulation <- NA
+cleanData$perceptiondanger_hypertension <- NA
+cleanData$perceptiondanger_vision <- NA
+cleanData$perceptiondanger_audition <- NA
+cleanData$perceptiondanger_estomac <- NA
+cleanData$perceptiondanger_intestin <- NA
+cleanData$perceptiondanger_rein <- NA
+cleanData$perceptiondanger_toxicite <- NA
+cleanData$perceptiondanger_colon <- NA
 
-cleanData$perceptiondanger <- as.integer(grepl("Accident et blessures|risques des accidents et blessures|Blessures|accident et blessures|blessures et accidents ( éboulement)", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_accidents <- as.integer(grepl("Accident et blessures|risques des accidents et blessures|Blessures|accident et blessures|blessures et accidents ( éboulement)", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_accidents)
 
-cleanData$perceptiondanger <- as.integer(grepl("Silicose|silicose", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_silicose <- as.integer(grepl("Silicose|silicose", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_silicose)
 
-cleanData$perceptiondanger <- as.integer(grepl("mort", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_mort <- as.integer(grepl("mort", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_mort)
 
-cleanData$perceptiondanger <- as.integer(grepl("problème respiratoire ( poumons)|problème de poumons|poussière de poumons|Problème de poumons|problème respiratoire", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_respiratoire <- as.integer(grepl("problème respiratoire ( poumons)|problème de poumons|poussière de poumons|Problème de poumons|problème respiratoire", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_respiratoire)
 
-cleanData$perceptiondanger <- as.integer(grepl("risque d’éboulement|Éboulement|Risque d’éboulement|éboulement", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_eboulement <- as.integer(grepl("risque d’éboulement|Éboulement|Risque d’éboulement|éboulement", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_eboulement)
 
-cleanData$perceptiondanger <- as.integer(grepl("rhumatisme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_rhumatisme <- as.integer(grepl("rhumatisme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_rhumatisme)
 
-cleanData$perceptiondanger <- as.integer(grepl("sciatique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_sciatique <- as.integer(grepl("sciatique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_sciatique)
 
-cleanData$perceptiondanger <- as.integer(grepl("détérioration de la santé", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_deterioration <- as.integer(grepl("détérioration de la santé", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_deterioration)
 
-cleanData$perceptiondanger <- as.integer(grepl("asthme|Asthme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_asthme <- as.integer(grepl("asthme|Asthme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_asthme)
 
-cleanData$perceptiondanger <- as.integer(grepl("problème neurologique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_neuro <- as.integer(grepl("problème neurologique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_neuro)
 
-cleanData$perceptiondanger <- as.integer(grepl("problème d’articulation|problème articulations et musculaire|douleurs d’articulation", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_articulation <- as.integer(grepl("problème d’articulation|problème articulations et musculaire|douleurs d’articulation|dos", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_articulation)
 
-cleanData$perceptiondanger <- as.integer(grepl("hypertension", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_hypertension <- as.integer(grepl("hypertension", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_hypertension)
 
-cleanData$perceptiondanger <- as.integer(grepl("perte de la vue|accident et blessures baisse de vue|perte de la vue accident et blessures", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_vision <- as.integer(grepl("perte de la vue|accident et blessures baisse de vue|perte de la vue accident et blessures", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_vision)
 
+cleanData$perceptiondanger_audition <- as.integer(grepl("problème auditif", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_audition)
 
+cleanData$perceptiondanger_estomac <- as.integer(grepl("estomac", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_estomac)
 
+cleanData$perceptiondanger_intestin <- as.integer(grepl("instestins|intestin", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_intestin)
 
+cleanData$perceptiondanger_rein <- as.integer(grepl("problème rénale|rénal", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_rein)
+
+cleanData$perceptiondanger_toxicite <- as.integer(grepl("toxique|toxicité", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_toxicite)
+
+cleanData$perceptiondanger_colon <- as.integer(grepl("colon", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_colon)
 
 ####################### Suivi médical ####################
 table(dataH$`Avez-vous accès à un suivi médical régulier pour détecter et traiter les problèmes de santé liés à l'exposition au plomb et aux conditions de travail dans la mine?`)

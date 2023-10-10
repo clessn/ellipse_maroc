@@ -861,9 +861,86 @@ table(cleanDataF$santegeneralecommunaute)
 ########################### amélioration socioéconomique ###############
 table(dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`)
 
+cleanDataF$ameliorationsituationeco_alteco <- NA
+cleanDataF$ameliorationsituationeco_sante <- NA
+cleanDataF$ameliorationsituationeco_ecole <- NA
+cleanDataF$ameliorationsituationeco_transport <- NA
+cleanDataF$ameliorationsituationeco_comms <- NA
+cleanDataF$ameliorationsituationeco_travail <- NA
+cleanDataF$ameliorationsituationeco_soutien_femme <- NA
+cleanDataF$ameliorationsituationeco_public <- NA
+cleanDataF$ameliorationsituationeco_dechets <- NA
+cleanDataF$ameliorationsituationeco_rehab <- NA
+cleanDataF$ameliorationsituationeco_propriete <- NA
+cleanDataF$ameliorationsituationeco_vert <- NA
+cleanDataF$ameliorationsituationeco_amusement_enfant <- NA
+cleanDataF$ameliorationsituationeco_eau_potable <- NA
+cleanDataF$ameliorationsituationeco_securite <- NA
+cleanDataF$ameliorationsituationeco_souk <- NA
+cleanDataF$ameliorationsituationeco_installation <- NA
+cleanDataF$ameliorationsituationeco_supermarche <- NA
+cleanDataF$ameliorationsituationeco_alphabetisation <- NA
+
+cleanDataF$ameliorationsituationeco_alteco <- as.integer(grepl("Aide financière", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_alteco)
+
+cleanDataF$ameliorationsituationeco_sante <- as.integer(grepl("Hôpital|Ambulance|Médecin|médicaux|Médicaments|Première secours à Mibladen|Contrôle et suivie de silicose à Mibladen|Équipements médicaux à Mibladen|Équipements d'utilité publique|Dispensaire", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_sante)
+
+cleanDataF$ameliorationsituationeco_ecole <- as.integer(grepl("École secondaire|Transport scolaire|Classe préscolaire", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_ecole)
+
+cleanDataF$ameliorationsituationeco_transport <- as.integer(grepl("Route et ponts|Route|Pavage des rues|Aménagement de la route|Transport|Bus|Transport publique|Aménagement de la route Mibladen- Ahouli|Aménagement de la route Mibladen Ahouli|Pavage des rues", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_transport)
+
+cleanDataF$ameliorationsituationeco_comms <- as.integer(grepl("Réseau de communication|Réseau et internet|Réseau de communication et internet à Ahouli|Électricité à Ahouli|Réseau", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_comms)
+
+cleanDataF$ameliorationsituationeco_travail <- as.integer(grepl("Offres d’emploi|Offres d’emploi pour la jeunesse", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_travail)
+
+cleanDataF$ameliorationsituationeco_soutien_femme <- as.integer(grepl("Soutien des coopératives féminines|Promouvoir des coopératives féminines|Coopératives féminines", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_soutien_femme)
+
+cleanDataF$ameliorationsituationeco_public <- as.integer(grepl("Plaque publique|Panneaux de publicité", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_public)
+
+cleanDataF$ameliorationsituationeco_dechets <- as.integer(grepl("Conteneurs des déchets|Des conteneurs des déchets|Dépotoir|Gestion des déchets", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_dechets)
+
+cleanDataF$ameliorationsituationeco_rehab <- as.integer(grepl("Réhabilitation|Réhabilitations des maisons", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_rehab)
+
+cleanDataF$ameliorationsituationeco_propriete <- as.integer(grepl("Titre de propriété des maisons", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_propriete)
+
+cleanDataF$ameliorationsituationeco_vert <- as.integer(grepl("Plantation et reboisement à Mibladen|Reboisement et plantation à Mibladen|Problème de forestiers|Plantation et reboisement des jardins de Mibladen|Jardin public", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_vert)
+
+cleanDataF$ameliorationsituationeco_amusement_enfant <- as.integer(grepl("Parc de joue aux enfants|Pace de joue des enfants|Terrains de football pour les enfants|Maisons de jeunesses|Activités sportives au enfant|Centre de loisirs", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_amusement_enfant)
+
+cleanDataF$ameliorationsituationeco_eau_potable <- as.integer(grepl("L’eau potable|Traitement de l’eau potable|Eau potable|Filtration et traitement de l’eau potable|Problème de l’assainissement|l’eau", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_eau_potable)
+
+cleanDataF$ameliorationsituationeco_securite <- as.integer(grepl("Sécurité|gendarmerie|police", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_securite)
+
+cleanDataF$ameliorationsituationeco_souk <- as.integer(grepl("Suq hebdomadaire|Souq", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_souk)
+
+cleanDataF$ameliorationsituationeco_installation <- as.integer(grepl("Hamame publique|prière", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_installation)
+
+cleanDataF$ameliorationsituationeco_supermarche <- as.integer(grepl("Supermarchés", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_supermarche)
+
+cleanDataF$ameliorationsituationeco_alphabetisation <- as.integer(grepl("Alphabétisation|Analphabétisme|alphabétisation", dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanDataF$ameliorationsituationeco_alphabetisation)
 
 ########################### formation risque ##################
 table(dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?`)
+
 
 cleanDataF$formationrisque <- NA
 
