@@ -89,17 +89,12 @@ table(dataH$`Combien d'enfants avez-vous ?`)
 
 cleanData$ses_enfants <- NA
 
+cleanData$ses_enfants <- as.numeric(dataH$`Combien d'enfants avez-vous ?`)
 cleanData$ses_enfants[is.na(dataH$`Combien d'enfants avez-vous ?`)] <- 0
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "1"] <- 1
 
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "2" |
-                        dataH$`Combien d'enfants avez-vous ?` == "3"] <- "2-3"
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "4" |
-                        dataH$`Combien d'enfants avez-vous ?` == "5"] <- "4-5"
-cleanData$ses_enfants[dataH$`Combien d'enfants avez-vous ?` == "6" |
-                        dataH$`Combien d'enfants avez-vous ?` == "7"] <- "6-7"
-
+class(cleanData$ses_enfants)
 table(cleanData$ses_enfants)
+
 
 ###################### Statut professionel actuel ####################
 table(dataH$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`)
@@ -168,9 +163,9 @@ cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous aye
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
                       == "Enseignement secondaire"] <- "secondaire"
 cleanData$niveauetude[dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`
-                      == "Sans diplôme"] <- "Sans_diplome"
+                      == "Sans diplôme"] <- "sans_diplome"
 cleanData$niveauetude <- factor(cleanData$niveauetude, ordered = TRUE,
-                                levels = c("Sans_diplome", "primaire", "secondaire", "postsecondaire"))
+                                levels = c("sans_diplome", "primaire", "secondaire", "postsecondaire"))
 table(cleanData$niveauetude)
 unique(cleanData$niveauetude)
 
@@ -557,9 +552,8 @@ cleanData$consommationalcool <- NA
 
 cleanData$consommationalcool[dataH$`Est-ce que vous consommez de l'alcool?` == 
                                "Non"] <- 0
-cleanData$consommationalcool[dataH$`Est-ce que vous consommez de l'alcool?` == 
-     "Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Rarement" |
-      dataH$`Est-ce que vous consommez de l'alcool?` ==  "Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Régulièrement"] <- 1
+cleanData$consommationalcool[dataH$`Est-ce que vous consommez de l'alcool?` == "Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Rarement"] <- 0.5
+cleanData$consommationalcool[dataH$`Est-ce que vous consommez de l'alcool?` ==  "Oui,Si oui, à quelle fréquence? (Rarement; Régulièrement) - Régulièrement"] <- 1
 
 table(cleanData$consommationalcool)
 
@@ -575,8 +569,8 @@ cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non,Si oui (à quelle fréquenc
                   dataH$`Fumez-vous du tabac?`== "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Occasionnellement"] <- 0.33 
 cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Non,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement" |
                   dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement" |
-                  dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement ( par le nez ? )"] <- 0.66
-cleanData$tabac[dataH$`Fumez-vous du tabac?` == "Oui"] <- 1
+                  dataH$`Fumez-vous du tabac?` == "Oui,Si oui (à quelle fréquence : Occasionnellement; Quelques fois par semaine; Quotidiennement) - Quotidiennement ( par le nez ? )" |
+                  dataH$`Fumez-vous du tabac?` == "Oui"] <- 1
 
 table(cleanData$tabac)
 
@@ -666,61 +660,55 @@ table(cleanData$maladierespiratoire)
 table(dataH$`Avez-vous des problèmes de peau?`)
 
 cleanData$problemepeau <- NA
+cleanData$problemepeau_allergie <- NA
+cleanData$problemepeau_autre <- NA
+cleanData$problemepeau_demangeaisons <- NA
+cleanData$problemepeau_eruptions <- NA
+cleanData$problemepeau_squelette <- NA
+cleanData$problemepeau <- as.integer(grepl("Non",dataH$`Avez-vous des problèmes de peau?`))
+table(cleanData$problemepeau)
+cleanData$problemepeau <- as.integer(grepl("Autre",dataH$`Avez-vous des problèmes de peau?`))
+table(cleanData$problemepeau)
+cleanData$problemepeau_allergie <- as.integer(grepl("Allergie", dataH$`Avez-vous des problèmes de peau?`))
+table(cleanData$problemepeau_allergie)
+cleanData$problemepeau_demangeaisons <- as.integer(grepl("Démangeaisons",dataH$`Avez-vous des problèmes de peau?`))
+table(cleanData$problemepeau)
+cleanData$problemepeau_eruptions <- as.integer(grepl("Éruptions cutanées",dataH$`Avez-vous des problèmes de peau?`))
+table(cleanData$problemepeau_eruptions)
+cleanData$problemepeau_squelette <- as.integer(grepl("Squelette",dataH$`Avez-vous des problèmes de peau?`))
+table(cleanData$problemepeau_squelette)
 
-cleanData$problemepeau[dataH$`Avez-vous des problèmes de peau?` == "Non"] <- "Non"
-cleanData$problemepeau[dataH$`Avez-vous des problèmes de peau?` ==
-                         "Autre (veuillez spécifier)"] <- "Autre"
-cleanData$problemepeau[dataH$`Avez-vous des problèmes de peau?` == 
-                         "Autre (veuillez spécifier) - Allergie"] <- "Allergie"
-cleanData$problemepeau[dataH$`Avez-vous des problèmes de peau?` == 
-                         "Démangeaisons"] <- "Démangeaisons"
-cleanData$problemepeau[dataH$`Avez-vous des problèmes de peau?` == 
-                         "Éruptions cutanées"] <- "Éruptions cutanées"
-cleanData$problemepeau[dataH$`Avez-vous des problèmes de peau?` == 
-       "Éruptions cutanées,Démangeaisons"] <- "Éruptions cutanées,démangeaisons"
-cleanData$problemepeau[dataH$`Avez-vous des problèmes de peau?` == 
-"Éruptions cutanées,Démangeaisons,Autre (veuillez spécifier) - Squelette ( dos)"
-] <- "Éruptions cutanées,démengeaisons,squellete (dos)"
-
-table(cleanData$problèmepeau)
 
 ############################# problèmes neurologiques ##################
 table(dataH$`Avez-vous des antécédents de problèmes neurologiques?`)
 
 cleanData$problemeneuro <- NA
+cleanData$problemeneuro_parkinson <- NA
+cleanData$problemeneuro_maux_de_tete <- NA
+cleanData$problemeneuro_vertige <- NA
 
-cleanData$problemeneuro[dataH$`Avez-vous des antécédents de problèmes neurologiques?` ==
-                          "Non"] <- "Non"
-cleanData$problemeneuro[dataH$`Avez-vous des antécédents de problèmes neurologiques?` ==
-                   "Autre (veuillez spécifier) - Parkinson"] <- "Parkinson"
-cleanData$problemeneuro[dataH$`Avez-vous des antécédents de problèmes neurologiques?` ==
-                          "Maux de tête"] <- "Maux de tête"
-cleanData$problemeneuro[dataH$`Avez-vous des antécédents de problèmes neurologiques?` ==
-                          "Maux de tête,Vertiges" |
-              dataH$`Avez-vous des antécédents de problèmes neurologiques?`==
-    "Maux de tête,Vertiges,Autre (veuillez spécifier) - A cause de gaz"] <- 
-                                            "Maux de tête,vertige"
-cleanData$problemeneuro[dataH$`Avez-vous des antécédents de problèmes neurologiques?` ==
-                          "Vertiges"] <- "Vertige"
-
+cleanData$problemeneuro <- as.integer(grepl("Non", dataH$`Avez-vous des antécédents de problèmes neurologiques?`))
 table(cleanData$problemeneuro)
+cleanData$problemeneuro_parkinson <- as.integer(grepl("Parkinson", dataH$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanData$problemeneuro_parkinson)
+cleanData$problemeneuro_maux_de_tete <- as.integer(grepl("Maux de tête", dataH$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanData$problemeneuro_maux_de_tete)
+cleanData$problemeneuro_vertige <- as.integer(grepl("Vertiges", dataH$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanData$problemeneuro_vertige)
 
 ################################ Problèmes digestifs #####################
 table(dataH$`Avez-vous des problèmes digestifs?`)
 
+cleanData$problemedigestif <- NA
 cleanData$problemedigestif_douleurabdo <- NA
+cleanData$problemedigestif_nausees <- NA
 
-cleanData$problemedigestif_douleurabdo[dataH$`Avez-vous des problèmes digestifs?` == "Non"] <- 0
-cleanData$problemedigestif_douleurabdo[dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Douleurs abdominales" | dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Nausées,Douleurs abdominales" | dataH$`Avez-vous des problèmes digestifs?` == 
-"Nausées,Vomissements,Douleurs abdominales" | dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Vomissements" | dataH$`Avez-vous des problèmes digestifs?` == 
-                             "Nausées" | dataH$`Avez-vous des problèmes digestifs?` == 
-                  "Nausées,Vomissements" | dataH$`Avez-vous des problèmes digestifs?` == 
-    "Vomissements,Douleurs abdominales"] <- 1
-
+cleanData$problemedigestif <- as.integer(grepl("Non", dataH$`Avez-vous des problèmes digestifs?`))
+table(cleanData$problemedigestif)
+cleanData$problemedigestif_douleurabdo <- as.integer(grepl("Douleurs abdominales", dataH$`Avez-vous des problèmes digestifs?`))
 table(cleanData$problemedigestif_douleurabdo)
+cleanData$problemedigestif_nausees <- as.integer(grepl("Nausées|Vomissements", dataH$`Avez-vous des problèmes digestifs?`))
+table(cleanData$problemedigestif_nausees)
 
 ####################### Douleurs musculaires/articulaires ##################
 table(dataH$`Avez-vous des douleurs musculaires ou articulaires fréquentes?`)
@@ -745,22 +733,30 @@ table(cleanData$douleursmusculaires)
 ######################## petit hic de code ########################
 table(dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`)
 
-cleanData$blessurerecentes <- NA
+cleanData$blessurerecentes_main <- NA
+cleanData$blessurerecentes_jambe <- NA
+cleanData$blessurerecentes_epaule <- NA
+cleanData$blessurerecentes_dos <- NA
+cleanData$blessurerecentes_yeux <- NA
+cleanData$blessurerecentes_oreille <- NA
 
-cleanData$blessurerecentes <- as.integer(grepl("À la main|Casseur à jambe et main|Blessure à la main|Blessures à la main|Blessures à la main et jambe|Blessures à la main et tête|Blessures à la main, dos|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessures à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessures à la mine, tête, jambe", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_main <- as.integer(grepl("main", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_main)
 
-cleanData$blessurerecentes <- as.integer(grepl("Casseur à jambe et main|Blessé à jambe|Blessé à la jambe|Blessures à jambe|Blessures à la jambe|Blessures à la main et jambe|Blessures à la main, jambe|Blessures à la main, jambe, tête, dos|Blessure à la main, tête, dos, jambe|Blessures à la main, tête, jambe|Blessure à la mine, tête, jambe|Casseur à la jambe et les blessures|Casseurs (jambe)", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_jambe <- as.integer(grepl("jambe", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_jambe)
 
-cleanData$blessurerecentes <- as.integer(grepl("Blessé à l'épaule|épaule", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_epaule <- as.integer(grepl("épaule", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_epaule)
 
-cleanData$blessurerecentes <- as.integer(grepl("dos", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_dos <- as.integer(grepl("dos", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_dos)
 
-cleanData$blessurerecentes <- as.integer(grepl("yeux", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
-table(cleanData$blessurerecentes)
+cleanData$blessurerecentes_yeux <- as.integer(grepl("yeux", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_yeux)
+
+cleanData$blessurerecentes_oreille <- as.integer(grepl("oreille", dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
+table(cleanData$blessurerecentes_oreille)
 
 ######################## Difficultés à dormir/insomnie ##################
 table(dataH$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?`)
@@ -778,17 +774,13 @@ table(cleanData$troublesommeil)
 ########################## Où travaillez-vous ####################
 table(dataH$`Travaillez-vous dans:`)
 
-cleanData$lieudetravail <- NA
+cleanData$lieudetravail_Ahouli <- NA
+cleanData$lieudetravail_Mibladen <- NA
 
-cleanData$lieudetravail[dataH$`Travaillez-vous dans:` == "la mine d'Ahouli"] <-
-                                                            "La mine d'Ahouli"
-cleanData$lieudetravail[dataH$`Travaillez-vous dans:` == "la mine d'Ahouli,la mine de Mibleden"] <-
-  "La mine d'Ahouli et la mine de Mibladen"
-cleanData$lieudetravail[dataH$`Travaillez-vous dans:` == "la mine de Mibleden"] <-
-  "La mine de Mibladen"
-
-table(cleanData$lieudetravail)
-
+cleanData$lieudetravail_Ahouli <- as.integer(grepl("la mine d'Ahouli", dataH$`Travaillez-vous dans:`))
+table(cleanData$lieudetravail_Ahouli)
+cleanData$lieudetravail_Mibladen <- as.integer(grepl("la mine de Mibleden|la mine de Mibladen", dataH$`Travaillez-vous dans:`))
+table(cleanData$lieudetravail_Mibladen)
 
 ####################### Année d'expérience #################
 table(dataH$`Depuis combien de temps travaillez-vous dans la mine ?`)
@@ -798,16 +790,20 @@ cleanData$anneeexperience <- NA
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
                             "<1an" | 
                             dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "1-3 ans"] <- "0 - 3 ans"
+                            "1-3 ans"] <- "0_3"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "4-6 ans"] <- "4 - 6 ans"
+                            "4-6 ans"] <- "4_6"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "7-10 ans"] <- "7 - 10 ans"
+                            "7-10 ans"] <- "7_10"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "10 - 15 ans"] <- "10 - 15 ans"
+                            "10 - 15 ans"] <- "10_15"
 cleanData$anneeexperience[dataH$`Depuis combien de temps travaillez-vous dans la mine ?` ==
-                            "> 20 ans"] <- "Plus de 20 ans"
+                            "> 20 ans"] <- "20+"
 
+cleanData$anneeexperience <- factor(cleanData$anneeexperience,
+                            ordered = TRUE,
+                            levels = c("0_3", "4_6", "7_10",
+                                       "10_15", "20+"))
 table(cleanData$anneeexperience)
 
 
@@ -816,50 +812,82 @@ table(cleanData$anneeexperience)
 ####################### à compléter ####################
 table(dataH$`Connaissez-vous les dangers de l'extraction du plomb?`)
 
-cleanData$perceptiondanger <- NA
+cleanData$perceptiondanger_accidents <- NA
+cleanData$perceptiondanger_silicose <- NA
+cleanData$perceptiondanger_mort <- NA
+cleanData$percepetiondanger_respiratoire <- NA
+cleanData$perceptiondanger_eboulement <- NA
+cleanData$perceptiondanger_rhumatisme <- NA
+cleanData$perceptiondanger_sciatique <- NA
+cleanData$perceptiondanger_deterioration <- NA
+cleanData$perceptiondanger_asthme <- NA
+cleanData$perceptiondanger_neuro <- NA
+cleanData$perceptiondanger_articulation <- NA
+cleanData$perceptiondanger_hypertension <- NA
+cleanData$perceptiondanger_vision <- NA
+cleanData$perceptiondanger_audition <- NA
+cleanData$perceptiondanger_estomac <- NA
+cleanData$perceptiondanger_intestin <- NA
+cleanData$perceptiondanger_rein <- NA
+cleanData$perceptiondanger_toxicite <- NA
+cleanData$perceptiondanger_colon <- NA
 
-cleanData$perceptiondanger <- as.integer(grepl("Accident et blessures|risques des accidents et blessures|Blessures|accident et blessures|blessures et accidents ( éboulement)", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_accidents <- as.integer(grepl("Accident et blessures|risques des accidents et blessures|Blessures|accident et blessures|blessures et accidents ( éboulement)", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_accidents)
 
-cleanData$perceptiondanger <- as.integer(grepl("Silicose|silicose", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_silicose <- as.integer(grepl("Silicose|silicose", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_silicose)
 
-cleanData$perceptiondanger <- as.integer(grepl("mort", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_mort <- as.integer(grepl("mort", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_mort)
 
-cleanData$perceptiondanger <- as.integer(grepl("problème respiratoire ( poumons)|problème de poumons|poussière de poumons|Problème de poumons|problème respiratoire", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_respiratoire <- as.integer(grepl("problème respiratoire ( poumons)|problème de poumons|poussière de poumons|Problème de poumons|problème respiratoire", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_respiratoire)
 
-cleanData$perceptiondanger <- as.integer(grepl("risque d’éboulement|Éboulement|Risque d’éboulement|éboulement", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_eboulement <- as.integer(grepl("risque d’éboulement|Éboulement|Risque d’éboulement|éboulement", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_eboulement)
 
-cleanData$perceptiondanger <- as.integer(grepl("rhumatisme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_rhumatisme <- as.integer(grepl("rhumatisme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_rhumatisme)
 
-cleanData$perceptiondanger <- as.integer(grepl("sciatique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_sciatique <- as.integer(grepl("sciatique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_sciatique)
 
-cleanData$perceptiondanger <- as.integer(grepl("détérioration de la santé", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_deterioration <- as.integer(grepl("détérioration de la santé", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_deterioration)
 
-cleanData$perceptiondanger <- as.integer(grepl("asthme|Asthme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_asthme <- as.integer(grepl("asthme|Asthme", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_asthme)
 
-cleanData$perceptiondanger <- as.integer(grepl("problème neurologique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_neuro <- as.integer(grepl("problème neurologique", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_neuro)
 
-cleanData$perceptiondanger <- as.integer(grepl("problème d’articulation|problème articulations et musculaire|douleurs d’articulation", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_articulation <- as.integer(grepl("problème d’articulation|problème articulations et musculaire|douleurs d’articulation|dos", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_articulation)
 
-cleanData$perceptiondanger <- as.integer(grepl("hypertension", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_hypertension <- as.integer(grepl("hypertension", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_hypertension)
 
-cleanData$perceptiondanger <- as.integer(grepl("perte de la vue|accident et blessures baisse de vue|perte de la vue accident et blessures", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
-table(cleanData$perceptiondanger)
+cleanData$perceptiondanger_vision <- as.integer(grepl("perte de la vue|accident et blessures baisse de vue|perte de la vue accident et blessures", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_vision)
 
+cleanData$perceptiondanger_audition <- as.integer(grepl("problème auditif", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_audition)
 
+cleanData$perceptiondanger_estomac <- as.integer(grepl("estomac", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_estomac)
 
+cleanData$perceptiondanger_intestin <- as.integer(grepl("instestins|intestin", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_intestin)
 
+cleanData$perceptiondanger_rein <- as.integer(grepl("problème rénale|rénal", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_rein)
+
+cleanData$perceptiondanger_toxicite <- as.integer(grepl("toxique|toxicité", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_toxicite)
+
+cleanData$perceptiondanger_colon <- as.integer(grepl("colon", dataH$`Connaissez-vous les dangers de l'extraction du plomb?`))
+table(cleanData$perceptiondanger_colon)
 
 ####################### Suivi médical ####################
 table(dataH$`Avez-vous accès à un suivi médical régulier pour détecter et traiter les problèmes de santé liés à l'exposition au plomb et aux conditions de travail dans la mine?`)
@@ -876,31 +904,38 @@ table(cleanData$suivimedical)
 ######################## Équipement de sécurité ################
 table(dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`)
 
-cleanData$equipement <- NA
+cleanData$equipement_casque <- NA
+cleanData$equipement_lampe <- NA
+cleanData$equipement_bottes <- NA
+cleanData$equipement_tenue <- NA
+cleanData$equipement_masque <- NA
+cleanData$equipement_gants <- NA
+cleanData$equipement_chapeau <- NA
+cleanData$equipement_lunettes <- NA
 
-cleanData$equipement <- as.integer(grepl("Casque|casque", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_casque <- as.integer(grepl("Casque|casque", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_casque)
 
-cleanData$equipement <- as.integer(grepl("Lampe|lamp|lampe|Lamp", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_lampe <- as.integer(grepl("Lampe|lamp|lampe|Lamp", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_lampe)
 
-cleanData$equipement <- as.integer(grepl("Bottes|botte|bottes", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_bottes <- as.integer(grepl("Bottes|botte|bottes", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_bottes)
 
-cleanData$equipement <- as.integer(grepl("tenu", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_tenue <- as.integer(grepl("tenu", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_tenue)
 
-cleanData$equipement <- as.integer(grepl("masque|Masque", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_masque <- as.integer(grepl("masque|Masque", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_masque)
 
-cleanData$equipement <- as.integer(grepl("gants|Gant|Gants", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_gants <- as.integer(grepl("gants|Gant|Gants", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_gants)
 
-cleanData$equipement <- as.integer(grepl("chapeau", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_chapeau <- as.integer(grepl("chapeau", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_chapeau)
 
-cleanData$equipement <- as.integer(grepl("lunettes", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
-table(cleanData$equipement)
+cleanData$equipement_lunettes <- as.integer(grepl("lunettes", dataH$`Utilisez-vous des équipements de sécurité ou de protection individuelle lors de votre travail dans la mine?`))
+table(cleanData$equipement_lunettes)
 
 ##################### impacts long terme préoccupations ##################
 table(dataH$`Selon vous, les impacts à long terme de l'extraction artisanale sur la santé des travailleurs sont-ils préoccupants?`)
@@ -916,6 +951,40 @@ table(cleanData$dangerimpactlongterme)
 ################### À cleaner comme du monde #################
 table(dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`)
 
+cleanData$impact_long_terme_respiratoire <- NA
+cleanData$impact_long_terme_silicose <- NA
+cleanData$impact_long_terme_rein <- NA
+cleanData$impact_long_terme_rhumatisme <- NA
+cleanData$impact_long_terme_sciatique <- NA
+cleanData$impact_long_terme_accident <- NA
+cleanData$impact_long_terme_vue <- NA
+cleanData$impact_long_terme_audition <- NA
+cleanData$impact_long_terme_parkinson <- NA
+cleanData$impact_long_terme_sante <- NA
+cleanData$impact_long_terme_sommeil <- NA
+
+cleanData$impact_long_terme_respiratoire <- as.integer(grepl("Asthme|Problème respiratoire|Problème de poumons|Maladie respiratoire|Risque sur les poumons|asthme", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_respiratoire)
+cleanData$impact_long_terme_silicose <- as.integer(grepl("Silicose", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_silicose)
+cleanData$impact_long_terme_rein <- as.integer(grepl("Problème rénale|Rénale|Problème rénal|Problème rénaux|Problème reine", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_rein)
+cleanData$impact_long_terme_rhumatisme <- as.integer(grepl("Rhumatisme", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_rhumatisme)
+cleanData$impact_long_terme_sciatique <- as.integer(grepl("Sciatique|sciatique", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_sciatique)
+cleanData$impact_long_terme_accident <- as.integer(grepl("Accident et blessures|Accident/ blessures|Risque des accidents et blessures|Blessures", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_accident)
+cleanData$impact_long_terme_vue <- as.integer(grepl("Perte de la vue|Perte de vue|Baisse de vue", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_vue)
+cleanData$impact_long_terme_audition <- as.integer(grepl("Problème de auditif|Problème auditif|Problème de sens", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_audition)
+cleanData$impact_long_terme_silicose <- as.integer(grepl("Parkinson|parkinson", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_silicose)
+cleanData$impact_long_terme_sante <- as.integer(grepl("Courte espérance de vie|Détérioration de la santé|détérioration de la santé|Espérance de vie courte", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_sante)
+cleanData$impact_long_terme_sommeil <- as.integer(grepl("Fatigue|Insomnie", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_sommeil)
 
 ##################### problème santé à cause des mines ################
 table(dataH$`Avez-vous ou l'un de vos proches soufferts d'accidents ou de problèmes de santé à cause du travail dans les mines?`)
@@ -945,52 +1014,73 @@ table(cleanData$protocole)
 ###################### à cleaner sur le sens du monde #################
 table(dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`)
 
-cleanData$problemesantecommunaute <- NA
+cleanData$problemesantecommunaute_accidents <- NA
+cleanData$problemesantecommunaute_mentale <- NA
+cleanData$problemesantecommunaute_chronique <- NA
+cleanData$problemesantecommunaute_respiratoire_cardio <- NA
+cleanData$problemesantecommunaute_rhumatisme <- NA
+cleanData$problemesantecommunaute_silicose <- NA
+cleanData$problemesantecommunaute_musuclosquelette <- NA
+cleanData$problemesantecommunaute_sciatique <- NA
+cleanData$problemesantecommunaute_paralysie <- NA
+cleanData$problemesantecommunaute_parkinson <- NA
+cleanData$problemesantecommunaute_neuro <- NA
+cleanData$problemesantecommunaute_cassure <- NA
+cleanData$problemesantecommunaute_mort <- NA
+cleanData$problemesantecommunaute_articulation <- NA
+cleanData$problemesantecommunaute_dos <- NA
+cleanData$problemesantecommunaute_hypertension <- NA
+cleanData$problemesantecommunaute_yeux <- NA
+cleanData$problemesantecommunaute_asthme <- NA
+cleanData$problemesantecommunaute_audition <- NA
+cleanData$problemesantecommunaute_colon <- NA
+cleanData$problemesantecommunaute_rein <- NA
+cleanData$problemesantecommunaute_estomac <- NA
 
-cleanData$problemesantecommunaute <- as.integer(grepl("Accidents et blessures", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Problèmes de santé mentale", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Autres problèmes de santé chroniques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Rhumatisme|rhumatisme", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Silicose|silicose", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Troubles musculosquelettiques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Sciatique|sciatique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Paralysie", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Parkinson", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("problème neurologique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Casseurs", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Mort", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Problème d'articulation | Douleurs d'articulation | problème d'articulation", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute) ########### ************** ####################
-cleanData$problemesantecommunaute <- as.integer(grepl("dos", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("hypertension", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("yeux|vue", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("asthme|Asthme", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("problème auditif", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("Colon|colon", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("problème rénal|Problème rénal|Problème rénale", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
-cleanData$problemesantecommunaute <- as.integer(grepl("estomac|Estomac", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$problemesantecommunaute)
+cleanData$problemesantecommunaute_accidents <- as.integer(grepl("Accidents et blessures", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_accidents)
+cleanData$problemesantecommunaute_mentale <- as.integer(grepl("Problèmes de santé mentale", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_mentale)
+cleanData$problemesantecommunaute_chronique <- as.integer(grepl("Autres problèmes de santé chroniques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_chronique)
+cleanData$problemesantecommunaute_respiratoire_cardio <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_respiratoire_cardio)
+cleanData$problemesantecommunaute_rhumatisme <- as.integer(grepl("Rhumatisme|rhumatisme", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_rhumatisme)
+cleanData$problemesantecommunaute_silicose <- as.integer(grepl("Silicose|silicose", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_silicose)
+cleanData$problemesantecommunaute_musuclosquelette <- as.integer(grepl("Troubles musculosquelettiques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_musuclosquelette)
+cleanData$problemesantecommunaute_sciatique <- as.integer(grepl("Sciatique|sciatique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_sciatique)
+cleanData$problemesantecommunaute_paralysie <- as.integer(grepl("Paralysie", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_paralysie)
+cleanData$problemesantecommunaute_parkinson <- as.integer(grepl("Parkinson", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_parkinson)
+cleanData$problemesantecommunaute_neuro <- as.integer(grepl("problème neurologique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_neuro)
+cleanData$problemesantecommunaute_cassure <- as.integer(grepl("Casseurs", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_cassure)
+cleanData$problemesantecommunaute_mort <- as.integer(grepl("Mort", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_mort)
+cleanData$problemesantecommunaute_articulation <- as.integer(grepl("Problème d’articulation|Douleurs d’articulation|problème d’articulation", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_articulation) 
+cleanData$problemesantecommunaute_dos <- as.integer(grepl("dos", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_dos)
+cleanData$problemesantecommunaute_hypertension <- as.integer(grepl("hypertension", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_hypertension)
+cleanData$problemesantecommunaute_yeux <- as.integer(grepl("yeux|vue", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_yeux)
+cleanData$problemesantecommunaute_asthme <- as.integer(grepl("asthme|Asthme", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_asthme)
+cleanData$problemesantecommunaute_audition <- as.integer(grepl("problème auditif", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_audition)
+cleanData$problemesantecommunaute_colon <- as.integer(grepl("Colon|colon", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_colon)
+cleanData$problemesantecommunaute_rein <- as.integer(grepl("problème rénal|Problème rénal|Problème rénale", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_rein)
+cleanData$problemesantecommunaute_estomac <- as.integer(grepl("estomac|Estomac", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$problemesantecommunaute_estomac)
 
 
 ###################### risque bétail #####################
@@ -1034,9 +1124,9 @@ cleanData$impact_qualiteeau <- NA
 cleanData$impact_qualiteeau[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
                               "Mauvaise"] <- 0
 cleanData$impact_qualiteeau[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
-                              "Médiocre"] <- 0.5
+                              "Médiocre"] <- 0.33
 cleanData$impact_qualiteeau[dataH[["Quelles sont les risques en santé environnementale qui pourraient être liés à la mine?  \r\n[Qualité de l’eau]"]] ==
-                              "Bonne"] <- 1
+                              "Bonne"] <- 0.66
 
 table(cleanData$impact_qualiteeau)
 
@@ -1123,55 +1213,114 @@ cleanData$santegeneralecommunaute[dataH$`Selon vous, la santé générale de la 
 table(cleanData$santegeneralecommunaute)
 
 ######################## amélioration sanitaire communautée#################
-###################### questions ouvertes rough ##################
+
 ###################### nuage de points ? #######################
 table(dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`)
 
-cleanData$ameliorationsituationeco <- NA
+cleanData$ameliorationsituationeco_alteco <- NA
+cleanData$ameliorationsituationeco_sante <- NA
+cleanData$ameliorationsituationeco_ecole <- NA
+cleanData$ameliorationsituationeco_transport <- NA
+cleanData$ameliorationsituationeco_comms <- NA
+cleanData$ameliorationsituationeco_travail <- NA
+cleanData$ameliorationsituationeco_mine <- NA
+cleanData$ameliorationsituationeco_tourisme <- NA
+cleanData$ameliorationsituationeco_soutien_femme <- NA
+cleanData$ameliorationsituationeco_public <- NA
+cleanData$ameliorationsituationeco_cadre_mineur <- NA
+cleanData$ameliorationsituationeco_dechets <- NA
+cleanData$ameliorationsituationeco_rehab <- NA
+cleanData$ameliorationsituationeco_elevage <- NA
+cleanData$ameliorationsituationeco_propriete <- NA
+cleanData$ameliorationsituationeco_vert <- NA
+cleanData$ameliorationsituationeco_amusement_enfant <- NA
+cleanData$ameliorationsituationeco_silicose <- NA
+cleanData$ameliorationsituationeco_eau_potable <- NA
+cleanData$ameliorationsituationeco_vente_mineraux <- NA
+cleanData$ameliorationsituationeco_usine <- NA
+cleanData$ameliorationsituationeco_bourse <- NA
+cleanData$ameliorationsituationeco_securite <- NA
+cleanData$ameliorationsituationeco_souk <- NA
+cleanData$ameliorationsituationeco_puit <- NA
+cleanData$ameliorationsituationeco_inondation <- NA
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Alternative économique par des terres agricoles | Alternative économique ( redémarrage de la mine) |Alternative économique |pâturage", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_alteco <- as.integer(grepl("Alternative économique par des terres agricoles | Alternative économique ( redémarrage de la mine) |Alternative économique |pâturage|Panneaux solaires pour les agriculteurs", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_alteco)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Hôpital|Ambulance|Médecin|médicaux|Médicaments|Première secours à Mibladen|Contrôle et suivie de silicose à Mibladen|Équipements médicaux à Mibladen|Équipements d'utilité publique|Dispensaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_sante <- as.integer(grepl("Hôpital|Ambulance|Médecin|médicaux|Médicaments|Première secours à Mibladen|Contrôle et suivie de silicose à Mibladen|Équipements médicaux à Mibladen|Équipements d'utilité publique|Dispensaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_sante)
 
 cleanData$ameliorationsituationeco <- as.integer(grepl("École secondaire|Transport scolaire|Classe préscolaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
 table(cleanData$ameliorationsituationeco)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Route et ponts|Route|Pavage des rues|Aménagement de la route|Transport|Bus|Transport publique|Aménagement de la route Mibladen- Ahouli|Aménagement de la route Mibladen Ahouli|Pavage des rues", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_transport <- as.integer(grepl("Route et ponts|Route|Pavage des rues|Aménagement de la route|Transport|Bus|Transport publique|Aménagement de la route Mibladen- Ahouli|Aménagement de la route Mibladen Ahouli|Pavage des rues", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_transport)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Réseau de communication|Réseau et internet|Réseau de communication et internet à Ahouli|Électricité à Ahouli|Réseau", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_comms <- as.integer(grepl("Réseau de communication|Réseau et internet|Réseau de communication et internet à Ahouli|Électricité à Ahouli|Réseau", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_comms)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Offres d’emploi|Offres d’emploi pour la jeunesse", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_travail <- as.integer(grepl("Offres d’emploi|Offres d’emploi pour la jeunesse", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_travail)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Redémarrage de la mine|redémarrage de la mine avec de bon conditions|Restauration du site Ahouli|muséologique|musélogique", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_mine <- as.integer(grepl("Redémarrage de la mine|redémarrage de la mine avec de bon conditions|Restauration du site Ahouli|muséologique|musélogique", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_mine)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Promouvoir le tourisme à Mibladen|Promouvoir de tourisme Ahouli et Mibladen|Promouvoir de tourisme|Promouvoir de tourisme à Mibladen|Promouvoir de tourisme Ahouli|Promouvoir de tourisme à Mibladen et Ahouli", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_tourisme <- as.integer(grepl("Promouvoir le tourisme à Mibladen|Promouvoir de tourisme Ahouli et Mibladen|Promouvoir de tourisme|Promouvoir de tourisme à Mibladen|Promouvoir de tourisme Ahouli|Promouvoir de tourisme à Mibladen et Ahouli|Complex tourisme", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_tourisme)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Soutien des coopératives féminines|Promouvoir des coopératives féminines|Coopératives féminines", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_soutien_femme <- as.integer(grepl("Soutien des coopératives féminines|Promouvoir des coopératives féminines|Coopératives féminines", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_soutien_femme)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Plaque publique", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_public <- as.integer(grepl("Plaque publique|Panneaux de publicité", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_public)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Permission minière au mineurs|Permission au mineurs|Protection juridique des mineurs|Cadre législatif|Soutien des mineurs|Cadre législatif des mineurs|Soutien aux mineurs par les airs compresseurs", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_cadre_mineur <- as.integer(grepl("Permission minière au mineurs|Permission au mineurs|Protection juridique des mineurs|Cadre législatif|Soutien des mineurs|Cadre législatif des mineurs|Soutien aux mineurs par les airs compresseurs", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_cadre_mineur)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Conteneurs des déchets|Des conteneurs des déchets|Dépotoir|Gestion des déchets", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_dechets <- as.integer(grepl("Conteneurs des déchets|Des conteneurs des déchets|Dépotoir|Gestion des déchets", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_dechets)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Réhabilitation|Réhabilitations des maisons", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_rehab <- as.integer(grepl("Réhabilitation|Réhabilitations des maisons", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_rehab)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("Soutien des projets d’élevage", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_elevage <- as.integer(grepl("Soutien des projets d’élevage|Soutie des éleveurs|Projet d’élevage", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_elevage)
 
+cleanData$ameliorationsituationeco_propriete <- as.integer(grepl("Titre de propriété des maisons", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_propriete)
 
+cleanData$ameliorationsituationeco_vert <- as.integer(grepl("Plantation et reboisement à Mibladen|Reboisement et plantation à Mibladen|Problème de forestiers|Plantation et reboisement des jardins de Mibladen|Jardin public", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_vert)
+
+cleanData$ameliorationsituationeco_amusement_enfant <- as.integer(grepl("Parc de joue aux enfants|Pace de joue des enfants|Terrains de football pour les enfants|Maisons de jeunesses|Activités sportives au enfant", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_amusement_enfant)
+
+cleanData$ameliorationsituationeco_silicose <- as.integer(grepl("Contrôle et suivie de silicose à Mibladen|Suivie et contrôle de silicose pour mineurs à Mibladen|Suivie et contrôle de silicose à Mibladen|Silicose", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_silicose)
+
+cleanData$ameliorationsituationeco_eau_potable <- as.integer(grepl("L’eau potable|Traitement de l’eau potable|Eau potable|Filtration et traitement de l’eau potable|Problème de l’assainissement", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_eau_potable)
+
+cleanData$ameliorationsituationeco_vente_mineraux <- as.integer(grepl("Vendre de plomb sans les intermédiaires|Vendre de produits sans les intermédiaires|Commercialisation de produit|Commercialisation de plomb sans les intermédiaires|Commercialisation de plomb et minéraux|Vendre de pb sans les intermédiaires", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_vente_mineraux)
+
+cleanData$ameliorationsituationeco_usine <- as.integer(grepl("ouverture des usines|usines…|usines", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_usine)
+
+cleanData$ameliorationsituationeco_bourse <- as.integer(grepl("Bourses des minéraux|Bourses des minéraux à Mibladen", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_bourse)
+
+cleanData$ameliorationsituationeco_securite <- as.integer(grepl("Sécurité", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_securite)
+
+cleanData$ameliorationsituationeco_souk <- as.integer(grepl("Suq hebdomadaire|Souq", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_souk)
+
+cleanData$ameliorationsituationeco_puit <- as.integer(grepl("Puits irrigation alimenté par l’énergie solaire|Les canaux d’irrigations pour terrains agricoles|Canaux d’irrigations|Les canaux d’irrigation", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_puit)
+
+cleanData$ameliorationsituationeco_inondation <- as.integer(grepl("Travaux d'aménagement contre d’inondations|Aménagement contre les inondations", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_inondation)
 ###################### stress travail ################
 table(dataH$`Ressentez-vous du stress ou de l'anxiété liés à votre propre travail ou au travail de votre famille dans l'exploitation minière ?`)
 
