@@ -231,7 +231,7 @@ table(dataH$`Combien de personnes vivent dans le logement ?`)
 
 cleanData$nbpersonnelogement <- NA
 cleanData$nbpersonnelogement <- as.numeric(dataH$`Combien de personnes vivent dans le logement ?`)
-cleanData$nbpersonnelogement[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- 0
+#cleanData$nbpersonnelogement[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- 0
  
 class(cleanData$nbpersonnelogement)
 table(cleanData$nbpersonnelogement)
@@ -297,18 +297,22 @@ table(cleanData$eaucourante)
 ############################### toilette #######################
 table(dataH$`Est-ce que le logement a des toilettes?`)
 
-cleanData$toilette <- NA
+cleanData$toilette_in_logement <- NA
 
-cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` == 
-                     "Non"] <- 0
-cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` ==
-                     "Oui, à l'extérieur"] <- 0.5 
-cleanData$toilette[dataH$`Est-ce que le logement a des toilettes?` ==
+cleanData$toilette_in_logement[dataH$`Est-ce que le logement a des toilettes?` == 
+                     "Non"] <- "no"
+cleanData$toilette_in_logement[dataH$`Est-ce que le logement a des toilettes?` ==
+                     "Oui, à l'extérieur"] <- "yes_outside"
+cleanData$toilette_in_logement[dataH$`Est-ce que le logement a des toilettes?` ==
                      "Oui, dans la maison" |
                      dataH$`Est-ce que le logement a des toilettes?` ==
-                     "Oui, dans la maison,Oui, à l'extérieur"] <- 1
-
-table(cleanData$toilette)
+                     "Oui, dans la maison,Oui, à l'extérieur"] <- "yes"
+cleanData$toilette_in_logement <- factor(cleanData$toilette_in_logement,
+                                         ordered = TRUE,
+                                         levels = c("no", "yes_outside",
+                                                    "yes"))
+table(cleanData$toilette_in_logement)
+unique(cleanData$toilette_in_logement)
 
 
 ################################ revenus principal ####################
