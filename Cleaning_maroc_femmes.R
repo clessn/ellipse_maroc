@@ -312,10 +312,12 @@ table(dataFemmes$`Quel est le montant total de vos revenus annuels?`)
 cleanDataF$ses_revenu <- NA
 
 cleanDataF$ses_revenu[dataFemmes$`Quel est le montant total de vos revenus annuels?` ==
-                        "0 à 2000 dirhams"] <- "faible"
+                        "0 à 2000 dirhams"] <- "low"
 cleanDataF$ses_revenu[dataFemmes$`Quel est le montant total de vos revenus annuels?` ==
-                        "2001 à 5000 dirhams"] <- "moyen"
+                        "2001 à 5000 dirhams"] <- "mid"
 
+cleanDataF$ses_revenu <- factor(cleanDataF$ses_revenu, ordered = TRUE,
+                               levels = c("low", "mid", "high"))
 table(cleanDataF$ses_revenu)
 
 ############################# services de santé #################
