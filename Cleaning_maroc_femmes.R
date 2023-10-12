@@ -42,13 +42,13 @@ table(cleanDataF$ses_etatcivil)
 
 
 ##################### Lieu ######################
-table(dataF$Lieu)
+table(dataFemmes$Lieu)
 
 cleanDataF$ses_lieu <- NA
 cleanDataF$ses_lieu[dataFemmes$Lieu == "Ahouli" | dataFemmes$Lieu == "Ahou" | dataFemmes$Lieu == "AhouLi" | dataFemmes$Lieu == "Ahouliy"] <- "Ahouli"
 cleanDataF$ses_lieu[dataFemmes$Lieu == "Mibladen"] <- "Mibladen"
 
-table(cleanData$ses_lieu)
+table(cleanDataF$ses_lieu)
 
 
 #################### Statut professionel actuel ##########
@@ -218,7 +218,7 @@ table(dataFemmes$`Combien de personnes vivent dans le logement ?`)
 cleanDataF$nbpersonnelogement <- NA 
 
 cleanDataF$nbpersonnelogement <- as.numeric(dataFemmes$`Combien de personnes vivent dans le logement ?`)
-cleanDataF$nbpersonnelogement[is.na(dataFemmes$`Combien de personnes vivent dans le logement ?`)] <- 0
+#cleanDataF$nbpersonnelogement[is.na(dataFemmes$`Combien de personnes vivent dans le logement ?`)] <- 0
 
 class(cleanDataF$nbpersonnelogement)
 table(cleanDataF$nbpersonnelogement)
@@ -264,16 +264,22 @@ table(cleanDataF$eaucourante)
 ############################ toilettes ###################
 table(dataFemmes$`Est-ce que le logement a des toilettes?`)
 
-cleanDataF$toilette <- NA
+cleanDataF$toilette_in_logement <- NA
 
-cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
-                      "Non"] <- 0
-cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
-                      "Oui, à l'extérieur"] <- 0.5
-cleanDataF$toilette[dataFemmes$`Est-ce que le logement a des toilettes?` ==
-                      "Oui, dans la maison"] <- 1
-
-table(cleanDataF$toilette)
+cleanDataF$toilette_in_logement[dataFemmes$`Est-ce que le logement a des toilettes?` == 
+                                 "Non"] <- "no"
+cleanDataF$toilette_in_logement[dataFemmes$`Est-ce que le logement a des toilettes?` ==
+                                 "Oui, à l'extérieur"] <- "yes_outside"
+cleanDataF$toilette_in_logement[dataFemmes$`Est-ce que le logement a des toilettes?` ==
+                                 "Oui, dans la maison" |
+                                 dataFemmes$`Est-ce que le logement a des toilettes?` ==
+                                 "Oui, dans la maison,Oui, à l'extérieur"] <- "yes"
+cleanDataF$toilette_in_logement <- factor(cleanDataF$toilette_in_logement,
+                                         ordered = TRUE,
+                                         levels = c("no", "yes_outside",
+                                                    "yes"))
+table(cleanDataF$toilette_in_logement)
+unique(cleanDataF$toilette_in_logement)
 
 
 ########################## Revenus principals #####################
@@ -1165,3 +1171,6 @@ cleanDataF$participationeconomique[dataFemmes$`Participez-vous aux décisions é
 
 table(cleanDataF$participationeconomique)
 
+
+
+saveRDS(cleanDataF,"Data/femmes.rds")

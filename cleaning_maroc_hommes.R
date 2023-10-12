@@ -809,7 +809,7 @@ cleanData$anneeexperience <- factor(cleanData$anneeexperience,
                             levels = c("0_3", "4_6", "7_10",
                                        "10_15", "20+"))
 table(cleanData$anneeexperience)
-
+unique(cleanData$anneeexperience)
 
 
 ######################## Perception du danger ###################
