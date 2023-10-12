@@ -999,6 +999,8 @@ cleanData$impact_long_terme_neuro <- as.integer(grepl("Problème neurologique|Pr
 table(cleanData$impact_long_terme_neuro)
 cleanData$impact_long_terme_dos <- as.integer(grepl("Problème de dos|Problème au dos|dos|Douleur de dos|Douleurs au dos|Le dos", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
 table(cleanData$impact_long_terme_dos)
+cleanData$impact_long_terme_articulation <- as.integer(grepl("Problème d’articulation et musculaire|Problème d’a", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_articulation)
 ##################### problème santé à cause des mines ################
 table(dataH$`Avez-vous ou l'un de vos proches soufferts d'accidents ou de problèmes de santé à cause du travail dans les mines?`)
 
@@ -1382,3 +1384,4 @@ cleanData$santementale[dataH$`Avez-vous le sentiment que votre santé mentale a 
 
 table(cleanData$santementale)
 
+saveRDS(cleanData,"Data/hommes.rds")
