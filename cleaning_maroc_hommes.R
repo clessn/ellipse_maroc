@@ -966,6 +966,10 @@ cleanData$impact_long_terme_audition <- NA
 cleanData$impact_long_terme_parkinson <- NA
 cleanData$impact_long_terme_sante <- NA
 cleanData$impact_long_terme_sommeil <- NA
+cleanData$impact_long_terme_rein <- NA
+cleanData$impact_long_terme_digestif <- NA
+cleanData$impact_long_terme_neuro <- NA
+cleanData$impact_long_terme_dos <- NA
 
 cleanData$impact_long_terme_respiratoire <- as.integer(grepl("Asthme|Problème respiratoire|Problème de poumons|Maladie respiratoire|Risque sur les poumons|asthme", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
 table(cleanData$impact_long_terme_respiratoire)
@@ -989,7 +993,12 @@ cleanData$impact_long_terme_sante <- as.integer(grepl("Courte espérance de vie|
 table(cleanData$impact_long_terme_sante)
 cleanData$impact_long_terme_sommeil <- as.integer(grepl("Fatigue|Insomnie", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
 table(cleanData$impact_long_terme_sommeil)
-
+cleanData$impact_long_terme_digestif <- as.integer(grepl("Estomac|Problème de la pareille digestive|estomac|intestin", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_digestif)
+cleanData$impact_long_terme_neuro <- as.integer(grepl("Problème neurologique|Problème de la mémoire", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_neuro)
+cleanData$impact_long_terme_dos <- as.integer(grepl("Problème de dos|Problème au dos|dos|Douleur de dos|Douleurs au dos|Le dos", dataH$`Selon vous, quels sont les impacts à long terme de l’extraction artisanale sur la santé des travailleurs et de la communauté?`))
+table(cleanData$impact_long_terme_dos)
 ##################### problème santé à cause des mines ################
 table(dataH$`Avez-vous ou l'un de vos proches soufferts d'accidents ou de problèmes de santé à cause du travail dans les mines?`)
 
