@@ -231,7 +231,7 @@ table(dataH$`Combien de personnes vivent dans le logement ?`)
 
 cleanData$nbpersonnelogement <- NA
 cleanData$nbpersonnelogement <- as.numeric(dataH$`Combien de personnes vivent dans le logement ?`)
-#cleanData$nbpersonnelogement[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- 0
+cleanData$nbpersonnelogement[is.na(dataH$`Combien de personnes vivent dans le logement ?`)] <- 0
  
 class(cleanData$nbpersonnelogement)
 table(cleanData$nbpersonnelogement)
