@@ -669,10 +669,11 @@ cleanData$problemepeau_autre <- NA
 cleanData$problemepeau_demangeaisons <- NA
 cleanData$problemepeau_eruptions <- NA
 cleanData$problemepeau_squelette <- NA
+
 cleanData$problemepeau <- as.integer(grepl("Non",dataH$`Avez-vous des problèmes de peau?`))
 table(cleanData$problemepeau)
-cleanData$problemepeau <- as.integer(grepl("Autre",dataH$`Avez-vous des problèmes de peau?`))
-table(cleanData$problemepeau)
+cleanData$problemepeau_autre <- as.integer(grepl("Autre",dataH$`Avez-vous des problèmes de peau?`))
+table(cleanData$problemepeau_autre)
 cleanData$problemepeau_allergie <- as.integer(grepl("Allergie", dataH$`Avez-vous des problèmes de peau?`))
 table(cleanData$problemepeau_allergie)
 cleanData$problemepeau_demangeaisons <- as.integer(grepl("Démangeaisons",dataH$`Avez-vous des problèmes de peau?`))
