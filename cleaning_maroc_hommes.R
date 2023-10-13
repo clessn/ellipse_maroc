@@ -1266,8 +1266,8 @@ table(cleanData$ameliorationsituationeco_alteco)
 cleanData$ameliorationsituationeco_sante <- as.integer(grepl("Hôpital|Ambulance|Médecin|médicaux|Médicaments|Première secours à Mibladen|Contrôle et suivie de silicose à Mibladen|Équipements médicaux à Mibladen|Équipements d'utilité publique|Dispensaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
 table(cleanData$ameliorationsituationeco_sante)
 
-cleanData$ameliorationsituationeco <- as.integer(grepl("École secondaire|Transport scolaire|Classe préscolaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
-table(cleanData$ameliorationsituationeco)
+cleanData$ameliorationsituationeco_ecole <- as.integer(grepl("École secondaire|Transport scolaire|Classe préscolaire", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
+table(cleanData$ameliorationsituationeco_ecole)
 
 cleanData$ameliorationsituationeco_transport <- as.integer(grepl("Route et ponts|Route|Pavage des rues|Aménagement de la route|Transport|Bus|Transport publique|Aménagement de la route Mibladen- Ahouli|Aménagement de la route Mibladen Ahouli|Pavage des rues", dataH$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`))
 table(cleanData$ameliorationsituationeco_transport)
