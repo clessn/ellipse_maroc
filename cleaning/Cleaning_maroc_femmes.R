@@ -1,7 +1,7 @@
 library(tidyverse)
 library(readxl)
 
-dataFemmes <- read_xlsx("Vrais_data_femmes_.xlsx", sheet = "Responses")
+dataFemmes <- read_xlsx("raw_data/Vrais_data_femmes_.xlsx", sheet = "Responses")
 
 cleanDataF <- data.frame(id= dataFemmes$`ID de la réponse`)
 
@@ -492,6 +492,9 @@ cleanDataF$maladiechronique_diabete <- NA
 cleanDataF$maladiechronique_respiratoire <- NA
 cleanDataF$maladiechronique_rein <- NA
 
+cleanDataF$maladiechronique <- 1 - as.integer(grepl("Non", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
+table(cleanDataF$maladiechronique)
+
 cleanDataF$maladiechronique_colon <- as.integer(grepl("Colon", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
 table(cleanDataF$maladiechronique_colon)
 
@@ -510,9 +513,6 @@ table(cleanDataF$maladiechronique_respiratoire)
 cleanDataF$maladiechronique_rein <- as.integer(grepl("Maladie rénales", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
 table(cleanDataF$maladiechronique_rein)
 
-cleanDataF$maladiechronique <- as.integer(grepl("Non", dataFemmes$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`))
-table(cleanDataF$maladiechronique)
-
 
 ############################ problèmes respiratoires ####################
 table(dataFemmes$`Avez-vous des problèmes respiratoires?`)
@@ -522,7 +522,7 @@ cleanDataF$maladierespiratoire_asthme <- NA
 cleanDataF$maladierespiratoire_bronchite <- NA
 cleanDataF$maladierespiratoire_rhume <- NA
 
-cleanDataF$maladierespiratoire <- as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes respiratoires?`))
+cleanDataF$maladierespiratoire <- 1 - as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes respiratoires?`))
 table(cleanDataF$maladierespiratoire)
 cleanDataF$maladierespiratoire_asthme <- as.integer(grepl("Asthme",dataFemmes$`Avez-vous des problèmes respiratoires?`))
 table(cleanDataF$maladierespiratoire_asthme)
@@ -530,6 +530,9 @@ cleanDataF$maladierespiratoire_bronchite <- as.integer(grepl("Bronchite",dataFem
 table(cleanDataF$maladierespiratoire_bronchite)
 cleanDataF$maladierespiratoire_rhume <- as.integer(grepl("Rhume",dataFemmes$`Avez-vous des problèmes respiratoires?`))
 table(cleanDataF$maladierespiratoire_rhume)
+cleanDataF$maladierespiratoire_amygdalite <- as.integer(grepl("Amygdalite", dataFemmes$`Avez-vous des problèmes respiratoires?`))
+table(cleanDataF$maladierespiratoire)
+
 
 ############################### problèmes de peau #######################
 table(dataFemmes$`Avez-vous des problèmes de peau?`)
@@ -539,7 +542,7 @@ cleanDataF$problemepeau_demangeaisons <- NA
 cleanDataF$problemepeau_eruptions_cutanees <- NA
 cleanDataF$problemepeau_kyste <- NA
 
-cleanDataF$problemepeau <- as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes de peau?`))
+cleanDataF$problemepeau <- 1 - as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes de peau?`))
 table(cleanDataF$problemepeau)
 cleanDataF$problemepeau_demangeaisons <- as.integer(grepl("Démangeaisons",dataFemmes$`Avez-vous des problèmes de peau?`))
 table(cleanDataF$problemepeau_demangeaisons)
@@ -552,27 +555,27 @@ table(cleanDataF$problemepeau_kyste)
 ############################ problèmes neurologiques ##################
 table(dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`)
 
-cleanDataF$problemeneurologique <- NA
-cleanDataF$problemeneurologique_maux_de_tete <- NA
-cleanDataF$problemeneurologique_vertige <- NA
-cleanDataF$problemeneurologique_oreille <- NA
-cleanDataF$problemeneurologique_syncope <- NA
+cleanDataF$problemeneuro <- NA
+cleanDataF$problemeneuro_maux_de_tete <- NA
+cleanDataF$problemeneuro_vertige <- NA
+cleanDataF$problemeneuro_oreille <- NA
+cleanDataF$problemeneuro_syncope <- NA
 
 
-cleanDataF$problemeneurologique_maux_de_tete <- as.integer(grepl("Maux de tête", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique_maux_de_tete)
+cleanDataF$problemeneuro <- 1 - as.integer(grepl("Non", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneuro)
 
-cleanDataF$problemeneurologique_vertige <- as.integer(grepl("Vertiges", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique_vertige)
+cleanDataF$problemeneuro_maux_de_tete <- as.integer(grepl("Maux de tête", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneuro_maux_de_tete)
 
-cleanDataF$problemeneurologique_oreille <- as.integer(grepl("Douleurs dans les oreilles", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique_oreille)
+cleanDataF$problemeneuro_vertige <- as.integer(grepl("Vertiges", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneuro_vertige)
 
-cleanDataF$problemeneurologique_syncope <- as.integer(grepl("Syncope", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique_syncope)
+cleanDataF$problemeneuro_oreille <- as.integer(grepl("Douleurs dans les oreilles", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneuro_oreille)
 
-cleanDataF$problemeneurologique <- as.integer(grepl("Non", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
-table(cleanDataF$problemeneurologique)
+cleanDataF$problemeneuro_syncope <- as.integer(grepl("Syncope", dataFemmes$`Avez-vous des antécédents de problèmes neurologiques?`))
+table(cleanDataF$problemeneuro_syncope)
 
 ######################## problèmes digestifs #######################
 table(dataFemmes$`Avez-vous des problèmes digestifs?`)
@@ -582,10 +585,10 @@ cleanDataF$problemedigestif_abdo <- NA
 cleanDataF$problemedigestif_vomissements <- NA
 cleanDataF$problemedigestif_nausees <- NA
 
-cleanDataF$problemedigestif <- as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes digestifs?`))
+cleanDataF$problemedigestif <- 1 - as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes digestifs?`))
 table(cleanDataF$problemedigestif)
-cleanDataF$problemedigestif_abdo <- as.integer(grepl("Douleurs abdominales",dataFemmes$`Avez-vous des problèmes digestifs?`))
-table(cleanDataF$problemedigestif_abdo)
+cleanDataF$problemedigestif_douleurabdo <- as.integer(grepl("Douleurs abdominales",dataFemmes$`Avez-vous des problèmes digestifs?`))
+table(cleanDataF$problemedigestif_douleurabdo)
 cleanDataF$problemedigestif_vomissements <- as.integer(grepl("Vomissements",dataFemmes$`Avez-vous des problèmes digestifs?`))
 table(cleanDataF$problemedigestif_vomissements)
 cleanDataF$problemedigestif_nausees <- as.integer(grepl("Nausées",dataFemmes$`Avez-vous des problèmes digestifs?`))
@@ -596,34 +599,21 @@ table(cleanDataF$problemedigestif_nausees)
 table(dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?`)
 
 cleanDataF$douleursmusculaires <- NA
+cleanDataF$douleursarticulaires <- NA
 
-cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
-                                 "Non"] <- "Non"
-cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
-"Oui, j'ai des douleurs articulaires fréquentes"] <- "Oui, j'ai des douleurs articulaires fréquentes"
-cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
-"Oui, j'ai des douleurs musculaires  fréquentes"] <- "Oui, j'ai des douleurs musculaires  fréquentes"
-cleanDataF$douleursmusculaires[dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?` ==
-"Oui, j'ai des douleurs musculaires  fréquentes,Oui, j'ai des douleurs articulaires fréquentes"] <- "Oui, j'ai des douleurs musculaires et articulaires fréquentes"
-
+cleanDataF$douleursmusculaires <- as.integer(grepl("musculaires",   dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?`))
+cleanDataF$douleursarticulaires <- as.integer(grepl("articulaires", dataFemmes$`Avez-vous des douleurs musculaires ou articulaires fréquentes?`))
 
 table(cleanDataF$douleursmusculaires)
+table(cleanDataF$douleursarticulaires)
 
 
-############################### blessures accidents dans 12 derniers mois
+############################### blessures accidents dans 12 derniers mois ####
 table(dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`)
 
 cleanDataF$blessurerecentes <- NA
 
-cleanDataF$blessurerecentes[dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
-                              "Non"] <- 0
-cleanDataF$blessurerecentes[dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
-                              "Oui, j'ai eu un accident au cours des 12 derniers mois,Si oui veuillez préciser quel type de blessure ou d'accident: - Chute de blocs au fond" |
-                              dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?` ==
-                              "Oui, j'ai eu une blessure au cours des 12 derniers mois,Si oui veuillez préciser quel type de blessure ou d'accident: - Chute de bloc au fond"
-                            ] <- 1
-
-
+cleanDataF$blessurerecentes <- 1 - as.integer(grepl("Non", dataFemmes$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`))
 table(cleanDataF$blessurerecentes)
 
 
@@ -637,8 +627,6 @@ cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou so
 cleanDataF$troublesommeil[dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
                             "Oui, je souffre d'insomnie" |dataFemmes$`Avez-vous des difficultés à dormir ou souffrez-vous d'insomnie?` ==
                             "Oui, j'ai des difficultés à dormir"] <- 1
-
-
 
 table(cleanDataF$troublesommeil)
 
