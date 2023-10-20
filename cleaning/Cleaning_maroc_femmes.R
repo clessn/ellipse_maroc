@@ -285,26 +285,26 @@ unique(cleanDataF$toilette_in_logement)
 ########################## Revenus principals #####################
 table(dataFemmes$`Quelles sont vos sources de revenus principales?`)
 
-cleanDataF$revenusprincipales_agriculture <- NA
-cleanDataF$revenusprincipales_aides <- NA
-cleanDataF$revenusprincipales_famille <- NA
-cleanDataF$revenusprincipales_epargne <- NA
-cleanDataF$revenusprincipales_mine <- NA
+cleanDataF$revenuprincipal_agriculture <- NA
+cleanDataF$revenuprincipal_aides <- NA
+cleanDataF$revenuprincipal_famille <- NA
+cleanDataF$revenuprincipal_epargne <- NA
+cleanDataF$revenuprincipal_mines <- NA
 
-cleanDataF$revenusprincipales_agriculture <- as.integer(grepl("Agriculture", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales_agriculture)
+cleanDataF$revenuprincipal_agriculture <- as.integer(grepl("Agriculture", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenuprincipal_agriculture)
 
-cleanDataF$revenusprincipales_aides <- as.integer(grepl("Aides publiques ou privées", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales_aides)
+cleanDataF$revenuprincipal_aides <- as.integer(grepl("Aides publiques ou privées", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenuprincipal_aides)
 
-cleanDataF$revenusprincipales_famille <- as.integer(grepl("Le mari|Le Mari|Mari|Marinet fils|Le Marie|Marie|Marie et fils|Nièce", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales_famille)
+cleanDataF$revenuprincipal_famille <- as.integer(grepl("Le mari|Le Mari|Mari|Marinet fils|Le Marie|Marie|Marie et fils|Nièce", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenuprincipal_famille)
 
-cleanDataF$revenusprincipales_epargne <- as.integer(grepl("Épargne retraite", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales_epargne)
+cleanDataF$revenuprincipal_epargne <- as.integer(grepl("Épargne retraite", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenuprincipal_epargne)
 
-cleanDataF$revenusprincipales_mine <- as.integer(grepl("Mines", dataFemmes$`Quelles sont vos sources de revenus principales?`))
-table(cleanDataF$revenusprincipales_mine)
+cleanDataF$revenuprincipal_mines <- as.integer(grepl("Mines", dataFemmes$`Quelles sont vos sources de revenus principales?`))
+table(cleanDataF$revenuprincipal_mines)
 
 ########################### Montant revenus annuels ##################
 table(dataFemmes$`Quel est le montant total de vos revenus annuels?`)
@@ -1161,6 +1161,15 @@ cleanDataF$participationeconomique[dataFemmes$`Participez-vous aux décisions é
 
 table(cleanDataF$participationeconomique)
 
+cleanDataF(dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`)
 
+cleanDataF$openameliorationeco <- dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?` 
+
+cleanDataF$openprobsantecourant <- dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté`
 
 saveRDS(cleanDataF,"Data/femmes.rds")
+
+
+
+######### question ouvertes ######
+cleanData(data$)

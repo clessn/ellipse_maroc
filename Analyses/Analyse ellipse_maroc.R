@@ -1,7 +1,8 @@
 
 ##### Load packages #####
 library(tidyverse)
-
+library(wordcloud)
+library(RColorBrewer)
 
 ### Load Data ####
 data <- readRDS("Data/data.rds")
@@ -150,6 +151,35 @@ ggsave("graphs/logement/eaucouranteXrevenu.png",
 
 
 
+### revenumineXsex ----------------------------------------------------------
+table(data$revenuprincipal_mines)
+table(data$ses_sex)
+############## Variable de contrôle ? #################
+graph <- data %>% 
+  group_by(ses_sex) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            nrevenuprincip_mine = sum(revenuprincipal_mines, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  mutate(prop = nrevenuprincip_mine/ngroup) %>% # créer une autre colonne avec la proportion #
+  drop_na()
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C","#8C564B","#E377C2", "#7F7F7F", "#BCBD22", "#17BECF")
+
+ggplot(graph, aes(x = ses_sex, y = prop * 100, fill = ses_sex)) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  geom_text(aes(label = paste0("n = ",ngroup)), vjust = -0.5, color = "black", size = 3) +  # Ajoute le nombre de répondants au-dessus des barres
+  scale_fill_manual(values = colors) +
+  clessnverse::theme_clean_light() +
+  labs(y = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "Revenu provenant de la \nmîne selon le sexe", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.x=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.x=element_text(angle=0, vjust=0.5, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.y=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0)) + # Centrer le titre du graphique
+  
+  ggsave("graphs/Revenus/revenuXsex.png",
+         width = 9,height = 7)
+
 
 ## service -----------------------------------------------------------------
 
@@ -278,6 +308,44 @@ ggplot(graph, aes(x = stresseconomique, y = prop * 100, fill = stresseconomique)
   
   ggsave("graphs/sante/troublesomXstresseco.png",
          width = 9,height = 7)
+
+
+### probcourantXsex ---------------------------------------------------------
+table(data_long$santecommunaute_accidents)
+table(data$ses_age)
+
+data_long <- data %>%
+  pivot_longer(
+    cols = starts_with("santecommunaute"),
+    names_to = "problemecourantcommunaute",
+    names_prefix = "problemecourantcommunaute_",
+    values_to = "valeur")
+
+graph <- data_long %>% 
+  group_by(ses_age, problemecourantcommunaute) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            nproblemecourantcommunaute = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+  mutate(prop = nproblemecourantcommunaute/ngroup,
+         ses_age = paste0(ses_age, "\nn = ", ngroup)) 
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+
+ggplot(graph, aes(x = prop * 100, y = reorder(problemecourantcommunaute, prop), fill = ses_age, label = ses_age, stat(count))) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  facet_wrap(~ses_age) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "L'âge du répondant selon sa perception\ndes problèmes de santé courant de la communauté", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0))
+
+ggsave("graphs/sante/probcourantXage.png",
+       width = 15,height = 13)
+
 ## perception --------------------------------------------------------------
 
 
@@ -349,10 +417,38 @@ ggplot(graph, aes(x = ses_age, y = prop * 100, fill = ses_age)) +
 ggsave("graphs/perceptions/amelioeco_ecoleXage.png",
        width = 15,height = 13)
 
+### desespoir  --------------------------------------------------------------
+table(data$desespoircommunaute)
+table(data$ses_age)
+
+graph <- data %>% 
+  group_by(ses_age) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            ndesespoir = sum(desespoircommunaute, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  mutate(prop = ndesespoir/ngroup) %>% # créer une autre colonne avec la proportion #
+  drop_na()
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C","#8C564B","#E377C2", "#7F7F7F", "#BCBD22", "#17BECF")
+
+ggplot(graph, aes(x = ses_age, y = prop * 100, fill = ses_age)) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  geom_text(aes(label = paste0("n = ",ngroup)), vjust = -0.5, color = "black", size = 3) +  # Ajoute le nombre de répondants au-dessus des barres
+  scale_fill_manual(values = colors) +
+  clessnverse::theme_clean_light() +
+  labs(y = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "Sentiment de désespoir dans la \ncommunauté selon l'âge", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.x=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.x=element_text(angle=0, vjust=0.5, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.y=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0)) + # Centrer le titre du graphique
+  
+  ggsave("graphs/perceptions/desespoirXage.png",
+         width = 9,height = 7)
 
 ### perception danger -------------------------------------------------------
 table(data$perceptiondanger_accidents)
-table(data$percepetiondanger_respiratoire)
+table(data$perceptiondanger_respiratoire)
 table(data$perceptiondanger_articulation)
 table(data$perceptiondanger_asthme)
 table(data$perceptiondanger_audition)
@@ -371,6 +467,7 @@ table(data$perceptiondanger_silicose)
 table(data$perceptiondanger_toxicite)
 table(data$perceptiondanger_vision)
 
+
 table(data$ses_age)
 
 graph <- data(
@@ -378,7 +475,7 @@ graph <- data(
   accidents = cleanData$perceptiondanger_accidents,
   silicose = cleanData$perceptiondanger_silicose,
   mort = cleanData$perceptiondanger_mort,
-  respiratoire = cleanData$percepetiondanger_respiratoire,
+  respiratoire = cleanData$perceptiondanger_respiratoire,
   articulation = cleanData$perceptiondanger_articulation,
   asthme = cleanData$perceptiondanger_asthme,
   audition = cleanData$perceptiondanger_audition,
@@ -441,3 +538,34 @@ ggplot(data, aes(x = distanceahouli_provenance, y = ses_age)) +
   labs(x = "Distance à Ahouli (provenance)", y = "Âge",  # Définir les titres des axes
        title = "Graphique à Nuage de Points",
        caption = "Source: Votre Source de Données")  # Définir la légende
+
+
+
+# CloudWord ---------------------------------------------------------------
+
+
+## CloudWord/probsante -----------------------------------------------------
+
+text <- c(data$openprobsantecourant)
+
+text <- gsub("[[:punct:]]", " ", text)
+
+docs <- Corpus(VectorSource(text))
+docs <- docs %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) 
+
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, c(stopwords("french"), 'veuillez',"autre","grand","spécifier","autres"))
+
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+
+wordcloud2(df)
+
+
+
+ggsave("graphs/cloudword/probsantecourant.png",
+       width = 15,height = 13)
