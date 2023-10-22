@@ -354,10 +354,61 @@ ggsave("graphs/sante/probcourantXage.png",
 
 
 ### danger_accidents --------------------------------------------------------
-table(data$perceptiondanger_accidents)
-table(data$ses)
+table(data_long$santecommunaute_accidents)
+table(data$niveauetude)
 
+data_long <- data %>%
+  pivot_longer(
+    cols = starts_with("perceptiondanger"),
+    names_to = "dangerextractionplomb",
+    names_prefix = "dangerextractionplomb_",
+    values_to = "valeur")
 
+graph <- data_long %>% 
+  group_by(niveauetude, dangerextractionplomb) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            ndangerextractionplomb = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+  mutate(prop = ndangerextractionplomb/ngroup,
+         niveauetude = paste0(niveauetude, "\nn = ", ngroup))
+
+graph <- data(
+  accidents = cleanData$perceptiondanger_accidents,
+  silicose = cleanData$perceptiondanger_silicose,
+  mort = cleanData$perceptiondanger_mort,
+  respiratoire = cleanData$perceptiondanger_respiratoire,
+  articulation = cleanData$perceptiondanger_articulation,
+  asthme = cleanData$perceptiondanger_asthme,
+  audition = cleanData$perceptiondanger_audition,
+  colon = cleanData$perceptiondanger_colon,
+  deterioration = cleanData$perceptiondanger_deterioration,
+  eboulement = cleanData$perceptiondanger_eboulement,
+  estomac = cleanData$perceptiondanger_estomac,
+  hypertension = cleanData$perceptiondanger_hypertension,
+  intestin = cleanData$perceptiondanger_intestin,
+  neuro = cleanData$perceptiondanger_neuro,
+  rein = cleanData$perceptiondanger_rein,
+  rhumatisme = cleanData$perceptiondanger_rhumatisme,
+  sciatique = cleanData$perceptiondanger_sciatique,
+  toxicite = cleanData$perceptiondanger_toxicite,
+  vision = cleanData$perceptiondanger_vision)
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+
+ggplot(graph, aes(x = prop * 100, y = reorder(dangerextractionplomb, prop), fill = niveauetude, label = niveauetude, stat(count))) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  facet_wrap(~niveauetude) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "Le niveau d'étude du répondant\nselon sa connaisance des dangers\nde l'extraction du plomb", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0))
+
+ggsave("graphs/perceptions/dangerplombXetude.png",
+       width = 20,height = 17)
 
 ### amelioration_travail ----------------------------------------------------
 table(data$ameliorationsituationeco_travail)
@@ -569,6 +620,7 @@ df <- data.frame(word = names(words),freq=words)
 
 wordcloud2(df)
 
+saveWidget(wordcloud, file = "wordcloud.html")
 
 print(wordcloud2(df))
 ggsave("graphs/cloudword/probsantecourant.png",
@@ -576,7 +628,7 @@ ggsave("graphs/cloudword/probsantecourant.png",
 
 
 
-#### openprobsante homme -----------------------------------------------------
+#### openprobsante homme/femme -----------------------------------------------------
 text_hommes <- data$openprobsantecourant[data$ses_sex == "homme"]
 text_femmes <- data$openprobsantecourant[data$ses_sex == "femme"]
 
@@ -670,6 +722,7 @@ words <- sort(rowSums(matrix),decreasing=TRUE)
 df <- data.frame(word = names(words),freq=words)
 
 wordcloud <- wordcloud2(df, shape = "pentagon")
+
 saveWidget(wordcloud, file = "wordcloud.html")
 
 ggsave("graphs/cloudword/opendanger.png",
