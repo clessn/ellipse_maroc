@@ -581,7 +581,7 @@ table(cleanDataF$problemeneuro_syncope)
 table(dataFemmes$`Avez-vous des problèmes digestifs?`)
 
 cleanDataF$problemedigestif <- NA
-cleanDataF$problemedigestif_abdo <- NA
+cleanDataF$problemedigestif_douleurabdo <- NA
 cleanDataF$problemedigestif_vomissements <- NA
 cleanDataF$problemedigestif_nausees <- NA
 
