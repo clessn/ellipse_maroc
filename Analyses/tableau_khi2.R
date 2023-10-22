@@ -94,6 +94,12 @@ for (i in 1:length(vis)){
   }
 }
 
+data$v_cramer <- round(data$v_cramer, digits = 4)
+rownames(data) <- NULL
+
+saveRDS(data, "shiny_khi2/khi2.rds")
+
+
 
 
 
