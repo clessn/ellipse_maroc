@@ -539,15 +539,15 @@ table(dataFemmes$`Avez-vous des problèmes de peau?`)
 
 cleanDataF$problemepeau <- NA
 cleanDataF$problemepeau_demangeaisons <- NA
-cleanDataF$problemepeau_eruptions_cutanees <- NA
+cleanDataF$problemepeau_eruptions <- NA
 cleanDataF$problemepeau_kyste <- NA
 
 cleanDataF$problemepeau <- 1 - as.integer(grepl("Non",dataFemmes$`Avez-vous des problèmes de peau?`))
 table(cleanDataF$problemepeau)
 cleanDataF$problemepeau_demangeaisons <- as.integer(grepl("Démangeaisons",dataFemmes$`Avez-vous des problèmes de peau?`))
 table(cleanDataF$problemepeau_demangeaisons)
-cleanDataF$problemepeau_eruptions_cutanees <- as.integer(grepl("Éruptions cutanées",dataFemmes$`Avez-vous des problèmes de peau?`))
-table(cleanDataF$problemepeau_eruptions_cutanees)
+cleanDataF$problemepeau_eruptions <- as.integer(grepl("Éruptions cutanées",dataFemmes$`Avez-vous des problèmes de peau?`))
+table(cleanDataF$problemepeau_eruptions)
 cleanDataF$problemepeau_kyste <- as.integer(grepl("Kyste sébacé",dataFemmes$`Avez-vous des problèmes de peau?`))
 table(cleanDataF$problemepeau_kyste)
 
@@ -1161,7 +1161,6 @@ cleanDataF$participationeconomique[dataFemmes$`Participez-vous aux décisions é
 
 table(cleanDataF$participationeconomique)
 
-cleanDataF(dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?`)
 
 cleanDataF$openameliorationeco <- dataFemmes$`Qu'est ce qui pourrait  améliorer la situation socioéconomique et sanitaire de la communauté?` 
 
@@ -1172,4 +1171,3 @@ saveRDS(cleanDataF,"Data/femmes.rds")
 
 
 ######### question ouvertes ######
-cleanData(data$)
