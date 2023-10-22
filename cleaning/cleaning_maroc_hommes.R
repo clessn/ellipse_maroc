@@ -152,6 +152,9 @@ table(cleanData$ses_lang_ang)
 cleanData$ses_lang_espagnol <- as.integer(grepl("Espagnol", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
 table(cleanData$ses_lang_espagnol)
 
+cleanData$ses_lang_arabe <- as.integer(grepl("Arabe", dataH$`Quelles sont les langues que vous maîtrisez ? (Plusieurs réponses possibles)`))
+table(cleanData$ses_lang_arabe)
+
 ######################## Niveau d'étude ###########################
 table(dataH$`Quel est le plus haut niveau d'études que vous ayez atteint ?`)
 
