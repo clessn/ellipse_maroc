@@ -372,26 +372,6 @@ graph <- data_long %>%
   mutate(prop = ndangerextractionplomb/ngroup,
          niveauetude = paste0(niveauetude, "\nn = ", ngroup))
 
-graph <- data(
-  accidents = cleanData$perceptiondanger_accidents,
-  silicose = cleanData$perceptiondanger_silicose,
-  mort = cleanData$perceptiondanger_mort,
-  respiratoire = cleanData$perceptiondanger_respiratoire,
-  articulation = cleanData$perceptiondanger_articulation,
-  asthme = cleanData$perceptiondanger_asthme,
-  audition = cleanData$perceptiondanger_audition,
-  colon = cleanData$perceptiondanger_colon,
-  deterioration = cleanData$perceptiondanger_deterioration,
-  eboulement = cleanData$perceptiondanger_eboulement,
-  estomac = cleanData$perceptiondanger_estomac,
-  hypertension = cleanData$perceptiondanger_hypertension,
-  intestin = cleanData$perceptiondanger_intestin,
-  neuro = cleanData$perceptiondanger_neuro,
-  rein = cleanData$perceptiondanger_rein,
-  rhumatisme = cleanData$perceptiondanger_rhumatisme,
-  sciatique = cleanData$perceptiondanger_sciatique,
-  toxicite = cleanData$perceptiondanger_toxicite,
-  vision = cleanData$perceptiondanger_vision)
 
 colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
 
@@ -405,10 +385,50 @@ ggplot(graph, aes(x = prop * 100, y = reorder(dangerextractionplomb, prop), fill
   theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
         axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
         axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
-        plot.title = element_text(hjust = 0))
+        plot.title = element_text(hjust = 0)) 
 
 ggsave("graphs/perceptions/dangerplombXetude.png",
        width = 20,height = 17)
+
+
+
+### dangerplomb/age ---------------------------------------------------------
+table(data_long$santecommunaute_accidents)
+table(data$ses_age)
+
+data_long <- data %>%
+  pivot_longer(
+    cols = starts_with("perceptiondanger"),
+    names_to = "dangerextractionplomb",
+    names_prefix = "dangerextractionplomb_",
+    values_to = "valeur")
+
+graph <- data_long %>% 
+  group_by(ses_age, dangerextractionplomb) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            ndangerextractionplomb = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+  mutate(prop = ndangerextractionplomb/ngroup,
+         ses_age = paste0(ses_age, "\nn = ", ngroup))
+
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+
+ggplot(graph, aes(x = prop * 100, y = reorder(dangerextractionplomb, prop), fill = ses_age, label = ses_age, stat(count))) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  facet_wrap(~ses_age) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "L'âge du répondant\nselon sa connaisance des dangers\nde l'extraction du plomb", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0)) 
+
+ggsave("graphs/perceptions/dangerplombXage.png",
+       width = 20,height = 17)
+
 
 ### amelioration_travail ----------------------------------------------------
 table(data$ameliorationsituationeco_travail)
@@ -497,7 +517,7 @@ ggplot(graph, aes(x = ses_age, y = prop * 100, fill = ses_age)) +
         axis.text.x=element_text(angle=0, vjust=0.5, hjust=0.5), # Rotation des labels de l'axe X
         axis.title.y=element_text(hjust=0.5), # Centrer le titre de l'axe Y
         plot.title = element_text(hjust = 0)) + # Centrer le titre du graphique
-  
+
   ggsave("graphs/perceptions/desespoirXage.png",
          width = 9,height = 7)
 
@@ -582,8 +602,47 @@ ggplot(graph, aes(x = prop * 100, y = reorder(ameliorationsituationeco, prop), f
   
   ggsave("graphs/perceptions/ameliosituationecoXage.png",
          width = 15,height = 13)
+
   
 
+### amelio/sex --------------------------------------------------------------
+table(data_long$ameliorationsituationeco)
+table(data$ses_sex)
+
+data_long <- data %>%
+    pivot_longer(
+      cols = starts_with("ameliorationsituationeco"),
+      names_to = "ameliorationsituationeco",
+      names_prefix = "ameliorationsituationeco_",
+      values_to = "valeur")
+  
+graph <- data_long %>% 
+    group_by(ses_sex, ameliorationsituationeco) %>% # prépare les prochaines données #
+    summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+              nameliorationsituationeco = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+    mutate(prop = nameliorationsituationeco/ngroup,
+           ses_sex = paste0(ses_sex, "\nn = ", ngroup)) # créer une autre colonne avec la proportion #
+  
+  colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+  
+ggplot(graph, aes(x = prop * 100, y = reorder(ameliorationsituationeco, prop), fill = ses_sex, label = ses_sex, stat(count))) +
+    geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+    facet_wrap(~ses_sex) +
+    clessnverse::theme_clean_light(base_size = 15) +
+    labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+         title = "Le sexe du répodant selon sa perception\ndes améliorations nécessaires dans sa communauté", # Titre du graphique
+         caption = "Source: Données Ahouli") + # Légende en bas à droite
+theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+          axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+          axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+          plot.title = element_text(hjust = 0))
+  
+  
+ggsave("graphs/perceptions/ameliosituationecoXsex.png",
+         width = 20,height = 15)
+  
+  
 # continue ----------------------------------------------------------------
 table(data$distanceahouli_provenance)
 table(data$ses_age)
