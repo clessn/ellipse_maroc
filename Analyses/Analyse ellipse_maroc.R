@@ -618,9 +618,9 @@ matrix <- as.matrix(dtm)
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
 
-wordcloud2(df)
+wordcloud6 <- wordcloud2(df)
 
-saveWidget(wordcloud, file = "wordcloud.html")
+saveWidget(wordcloud6, file = "wordcloud4.html")
 
 print(wordcloud2(df))
 ggsave("graphs/cloudword/probsantecourant.png",
@@ -676,13 +676,12 @@ ggsave("femmes_wordcloud.png", width = 15, height = 13)
 text <- data$openprobsantecourant
 text <- gsub("[[:punct:]]", " ", text)
 text <- tolower(text)
-
+table(data$ses_lieu)
 # Ajoutez des étiquettes pour les hommes et les femmes
-text_hommes <- paste("homme", text[data$sexe == "homme"], sep = " ")
-text_femmes <- paste("femme", text[data$sexe == "femme"], sep = " ")
-
+text_ahouli <- data$openprobsantecourant[data$ses_lieu == "Ahouli"]
+text_mibladen <- data$openprobsantecourant[data$ses_lieu == "Mibladen"]
 # Combinez les textes avec des étiquettes
-text_combined <- c(text_hommes, text_femmes)
+text_combined <- c(text_ahouli, text_mibladen)
 
 # Créez un corpus avec les textes combinés
 docs <- Corpus(VectorSource(text_combined))
@@ -697,10 +696,13 @@ docs <- tm_map(docs, stripWhitespace)
 # Créez le nuage de mots
 dtm <- DocumentTermMatrix(docs)
 words <- as.data.frame(as.table(dtm))
-colnames(words) <- c("Gender", "Word", "Frequency")
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+
+ ###colnames(words) <- c("Gender", "Word", "Frequency")
 
 # Générez le nuage de mots
-wordcloud2(words, color = "random-light", backgroundColor = "white")
+wordcloud2(words, color = "random-light")
 
 
 ### cloudword/danger --------------------------------------------------------
@@ -721,9 +723,9 @@ matrix <- as.matrix(dtm)
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
 
-wordcloud <- wordcloud2(df, shape = "pentagon")
+wordcloud3 <- wordcloud2(df, shape = "pentagon")
 
-saveWidget(wordcloud, file = "wordcloud.html")
+saveWidget(wordcloud3, file = "wordcloud3.html")
 
 ggsave("graphs/cloudword/opendanger.png",
        width = 15,height = 13)
