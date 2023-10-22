@@ -4,7 +4,8 @@ library(tidyr)
 library(rsconnect)
 
 ui <- fluidPage(
-  titlePanel("V de Cramer"),
+  titlePanel("Relations bivariées"),
+  h2("V de Cramer"),
   a("Pour en savoir plus sur le coefficient de Cramer", href = "https://towardsdatascience.com/contingency-tables-chi-squared-and-cramers-v-ada4f93ec3fd", target = "_blank"),
   p("Le coefficient de Cramer est une mesure statistique qui indique la force de la relation entre deux variables catégorielles. Les valeurs du coefficient de Cramer varient de 0 à 1, où 0 indique qu'il n'y a pas de relation entre les variables, et 1 indique une relation parfaite. Il est important de noter que le coefficient de Cramer ne donne pas d'informations sur la direction de la relation, il indique simplement sa force."),
   br(),
@@ -23,15 +24,15 @@ data <- as.data.frame(readRDS("khi2.rds") %>%
 names(data) <- gsub("ses_sex", "Sexe", names(data))
 names(data) <- gsub("ses_lieu", "Lieu", names(data))
 names(data) <- gsub("ses_revenu", "Revenu", names(data))
-names(data) <- gsub("revenuprincipal_mines", "Revenu principal mines", names(data))
+names(data) <- gsub("revenuprincipal_mines", "Revenu principal\nmines", names(data))
 names(data) <- gsub("ses_age", "Âge", names(data))
-names(data) <- gsub("niveauetude", "Niveau d'étude", names(data))
-names(data) <- gsub("ses_lang_fr", "Langue française", names(data))
-names(data) <- gsub("ses_lang_amaz", "Langue amazighe", names(data))
-names(data) <- gsub("ses_lang_darija", "Langue darija", names(data))
-names(data) <- gsub("ses_lang_arabe", "Langue arabe", names(data))
-names(data) <- gsub("ses_lang_ang", "Langue anglaise", names(data))
-names(data) <- gsub("nbpersonnelogement", "Nombre de personnes dans le logement", names(data))
+names(data) <- gsub("niveauetude", "Niveau\nd'étude", names(data))
+names(data) <- gsub("ses_lang_fr", "Langue\nfrançaise", names(data))
+names(data) <- gsub("ses_lang_amaz", "Langue\namazighe", names(data))
+names(data) <- gsub("ses_lang_darija", "Langue\ndarija", names(data))
+names(data) <- gsub("ses_lang_arabe", "Langue\narabe", names(data))
+names(data) <- gsub("ses_lang_ang", "Langue\nanglaise", names(data))
+names(data) <- gsub("nbpersonnelogement", "Nombre de\npersonnes dans\nle logement", names(data))
 
 
 vd_names <- c(
