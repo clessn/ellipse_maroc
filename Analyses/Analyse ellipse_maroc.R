@@ -5,7 +5,25 @@ library(RColorBrewer)
 ### Load Data ####
 data <- readRDS("Data/data.rds")
 
+# Marges d'erreur ---------------------------------------------------------
 
+z <- 2.58
+samples <- table(data$ses_lieu, data$ses_sex)
+pops <- matrix(data = c(70, 60, 300, 250),
+               nrow = 2, ncol = 2,
+               byrow = TRUE,
+               dimnames = list(c("Ahouli", "Mibladen"),
+                               c("female", "male")))
+samples["Ahouli","male"]
+pops["Ahouli","male"]
+
+
+calculate_me <- function(){
+  
+}
+
+
+  
 # Analyse -----------------------------------------------------------------
 
 
