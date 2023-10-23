@@ -7,6 +7,8 @@ library(wordcloud2)
 library(svglite)
 library(webshot)
 library(htmlwidgets)
+
+
 ### Load Data ####
 data <- readRDS("Data/data.rds")
 
@@ -159,7 +161,7 @@ docs <- docs %>%
   tm_map(removePunctuation) 
 
 docs <- tm_map(docs, content_transformer(tolower))
-docs <- tm_map(docs, removeWords, c(stopwords("french")))
+docs <- tm_map(docs, removeWords, c(stopwords("french"), "Ahouli", "Mibladen"))
 
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
