@@ -1,3 +1,16 @@
+##### Load packages #####
+library(tidyverse)
+library(wordcloud)
+library(RColorBrewer)
+library(tm)
+library(wordcloud2)
+library(svglite)
+library(webshot)
+library(htmlwidgets)
+### Load Data ####
+data <- readRDS("Data/data.rds")
+
+
 # CloudWord ---------------------------------------------------------------
 
 
