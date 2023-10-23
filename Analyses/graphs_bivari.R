@@ -100,3 +100,43 @@ ggplot(graph, aes(x = santegenerale, y = prop)) +
   geom_point() +
   geom_segment(aes(yend = high, y = low, xend = santegenerale))
   theme(strip.placement = "outside")
+  
+
+# santegenerale X revenu --------------------------------------------------
+
+### Code dplyr classique
+graph <- data %>% 
+    group_by(ses_lieu, ses_sex, ses_revenu, maladiecardiovasculaire) %>% # prépare les prochaines données #
+    summarise(nvalue = n(), .groups = "drop_last") %>% # nb de personnes qui ont mis 1 dans la case #
+    ungroup() %>% 
+    complete(ses_lieu, ses_sex, ses_revenu, maladiecardiovasculaire,
+             fill = list(nvalue = 0)) %>%
+    drop_na() %>% 
+    group_by(ses_lieu, ses_sex, ses_revenu) %>% 
+    mutate(ngroup = sum(nvalue),
+           prop = nvalue/ngroup) %>% # créer une autre colonne avec la proportion #
+    filter(maladiecardiovasculaire == 1)
+  
+### Ajouter la marge d'erreur à la dataframe
+graph$me <- NA
+for (i in 1:nrow(graph)){
+    graph$me[i] <- calculate_me(vd = "maladiecardiovasculaire", ### ici, changer la vd
+                                lieu = graph$ses_lieu[i],
+                                sex = graph$ses_sex[i])
+}
+  
+#### Soustraire et additionner la marge d'erreur à la proportion
+graph <- graph %>% 
+    mutate(low = prop - me,
+           high = prop + me)
+  
+ggplot(graph, aes(x = ses_revenu, y = prop)) +
+    facet_grid(rows = vars(ses_lieu),
+               cols = vars(ses_sex),
+               switch = "y") +
+    geom_bar(stat = "identity") +
+    geom_point() +
+    geom_segment(aes(yend = high, y = low, xend = ses_revenu)) +
+  coord_cartesian(ylim = c(0,1)) +
+  theme(strip.placement = "outside")
+  
