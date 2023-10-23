@@ -7,6 +7,7 @@ library(wordcloud2)
 library(svglite)
 library(webshot)
 library(htmlwidgets)
+library(ggwordcloud)
 ### Load Data ####
 data <- readRDS("Data/data.rds")
 
@@ -33,11 +34,9 @@ matrix <- as.matrix(dtm)
 words <- sort(rowSums(matrix),decreasing=TRUE) 
 df <- data.frame(word = names(words),freq=words)
 
-wordcloud6 <- wordcloud2(df)
+ggplot(df, aes(label = word, size = freq)) +
+  geom_text_wordcloud()
 
-saveWidget(wordcloud6, file = "wordcloud4.html")
-
-print(wordcloud2(df))
 ggsave("graphs/cloudword/probsantecourant.png",
        width = 47,height = 43, limitsize = FALSE)
 
