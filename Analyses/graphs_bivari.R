@@ -94,6 +94,8 @@ graph <- graph %>%
 
 colors <- c("#1F77B4", "#FF7F0E", "#2CA02C","#8C564B","#E377C2", "#7F7F7F", "#BCBD22", "#17BECF")
 
+breaks <- c(0.0, 0.25, 0.5, 0.75, 0.1)
+labels <- c("Médiocre", "Mauvaise", "Moyenne", "Bonne", "Très bonne")
 
 ggplot(graph, aes(x = santegenerale, y = prop*100, fill = ses_sex)) +
   facet_grid(rows = vars(ses_lieu),
@@ -102,12 +104,13 @@ ggplot(graph, aes(x = santegenerale, y = prop*100, fill = ses_sex)) +
   geom_bar(stat = "identity", show.legend = FALSE) +
   geom_text(aes(label = paste0("n = ", ngroup)), x = 0.75, y = 75, color = "black", size = 3) +
   scale_fill_manual(values = colors) +
+  scale_x_continuous(breaks = breaks, labels = labels) +
   clessnverse::theme_clean_light() +
   labs(y = "Proportion des répondants (%)",
        x = "Évaluation de la santé général de chacun",
        title = "Santé générale des répondants selon\n le sexe et le lieu de résidence",
        caption = "Source : Données Ahouli") +
-  theme(axis.title.x = element_text(vjust = 0.5),
+  theme(axis.title.x = element_text(hjust = 0.5),
         axis.text.x = element_text(angle=0, vjust = 0.5, hjust = 0.5),
         axis.title.y =element_text(hjust=0.5),
         plot.title = element_text(hjust = 0)) +
@@ -117,19 +120,7 @@ ggplot(graph, aes(x = santegenerale, y = prop*100, fill = ses_sex)) +
   
 ggsave("graphs/perceptions/santegenXlieuXsex.png",
        width = 15, height = 13)
-  
-  
-    geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
-    geom_text(aes(label = paste0("n = ",ngroup)), vjust = 0.5, color = "black", size = 3) +  # Ajoute le nombre de répondants au-dessus des barres
-    scale_fill_manual(values = colors) +
-    clessnverse::theme_clean_light() +
-    labs(y = "Proportion de répondants (%)", # Titre de l'axe Y
-         title = "Revenu provenant de la \nmîne selon le sexe", # Titre du graphique
-         caption = "Source: Données Ahouli") + # Légende en bas à droite
-    theme(axis.title.x=element_blank(), # Supprimer le titre de l'axe X
-          axis.text.x=element_text(angle=0, vjust=0.5, hjust=0.5), # Rotation des labels de l'axe X
-          axis.title.y=element_text(hjust=0.5), # Centrer le titre de l'axe Y
-          plot.title = element_text(hjust = 0)) + # Centrer le titre du graphique  
+
 
 # santegenerale X revenu --------------------------------------------------
 
@@ -159,13 +150,27 @@ graph <- graph %>%
     mutate(low = prop - me,
            high = prop + me)
   
-ggplot(graph, aes(x = ses_revenu, y = prop)) +
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C","#8C564B","#E377C2", "#7F7F7F", "#BCBD22", "#17BECF")
+
+
+ggplot(graph, aes(x = ses_revenu, y = prop*100, fill = ses_sex)) +
     facet_grid(rows = vars(ses_lieu),
                cols = vars(ses_sex),
                switch = "y") +
-    geom_bar(stat = "identity") +
+    geom_bar(stat = "identity", show.legend = FALSE) +
+    geom_text(aes(label = paste0("n = ", ngroup)), x = 0.75, y = 75, color = "black", size = 3) +
+    scale_fill_manual(values = colors) +
+    clessnverse::theme_clean_light() +
+    labs(y = "Proportion des répondants (%)",
+       x = "Évaluation de la santé général de chacun",
+       title = "Santé générale des répondants selon\n le sexe et le lieu de résidence",
+       caption = "Source : Données Ahouli") +
+    theme(axis.title.x = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle=0, vjust = 0.5, hjust = 0.5),
+        axis.title.y =element_text(hjust=0.5),
+        plot.title = element_text(hjust = 0)) +
     geom_point() +
-    geom_segment(aes(yend = high, y = low, xend = ses_revenu)) +
-  coord_cartesian(ylim = c(0,1)) +
-  theme(strip.placement = "outside")
+    geom_segment(aes(yend = high, y = low, xend = ses_revenu), color = "black") + 
+    theme(strip.placement = "outside")
   
