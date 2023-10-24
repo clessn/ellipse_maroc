@@ -28,7 +28,7 @@ docs <- docs %>%
   tm_map(removePunctuation) 
 
 docs <- tm_map(docs, content_transformer(tolower))
-docs <- tm_map(docs, removeWords, c(stopwords("french"), 'veuillez',"autre","grand","spécifier","autres","santé", "problèmes"))
+docs <- tm_map(docs, removeWords, c(stopwords("french"), 'veuillez',"autre","grand","spécifier","autres","santé", "problèmes",'troubles'))
 
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
@@ -39,8 +39,9 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light() +
-  labs(title = "Mots les plus fréquents dans les réponses\nsur la question des amélioration\nsocio-sanitaires de la communauté") 
-  scale_size_area(max_size = 18) 
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des problèmes de\nsanté courants dans la communauté") +
+ theme(plot.title = element_text(hjust = 0.5, size = 35)) +
+  scale_size_area(max_size = 23) 
 
 ggsave("graphs/cloudword/probsantecourant.png",
        width = 15 ,height = 15)
@@ -58,7 +59,7 @@ docs_hommes <- docs_hommes %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problèmes"))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problèmes",'troubles'))
 
 # Prétraitement du texte pour les femmes
 text_femmes <- gsub("[[:punct:]]", " ", text_femmes)
@@ -67,7 +68,7 @@ docs_femmes <- docs_femmes %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problèmes'))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problèmes','troubles'))
 
 # Créez le nuage de mots pour les hommes
 dtm_hommes <- TermDocumentMatrix(docs_hommes)
@@ -89,6 +90,8 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light(base_size = 15) +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des problèmes de santé courants\ndans la communauté, selon le sexe") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
   scale_size_area(max_size = 13) +
   facet_wrap(~sex, nrow = 2) +
   theme(strip.text = element_text(size = 25))
@@ -114,7 +117,7 @@ docs_ahouli <- docs_ahouli %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problèmes"))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problèmes","troubles"))
 
 text_mibladen <- gsub("[[:punct:]]", " ", text_mibladen)
 docs_mibladen <- Corpus(VectorSource(text_mibladen))
@@ -122,7 +125,7 @@ docs_mibladen <- docs_mibladen %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problèmes'))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problèmes',"troubles"))
 
 dtm_ahouli <- TermDocumentMatrix(docs_ahouli)
 matrix_ahouli <- as.matrix(dtm_ahouli)
@@ -142,6 +145,8 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light(base_size = 15) +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des problèmes de santé courants\ndans la communauté, selon le lieu de résidence\n") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
   scale_size_area(max_size = 13) +
   facet_wrap(~lieu, nrow = 2) +
   theme(strip.text = element_text(size = 25))
@@ -160,7 +165,7 @@ docs <- docs %>%
   tm_map(removePunctuation) 
 
 docs <- tm_map(docs, content_transformer(tolower))
-docs <- tm_map(docs, removeWords, c(stopwords("french"),"oui", "savez", "dire", "pouvez", "risque",'problème'))
+docs <- tm_map(docs, removeWords, c(stopwords("french"),"oui", "savez", "dire", "pouvez", "risque",'problème','troubles'))
 
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
@@ -171,7 +176,9 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light() +
-  scale_size_area(max_size = 18) 
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la connaissance des dangers de l'extraction du plomb") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
+  scale_size_area(max_size = 23) 
 
 ggsave("graphs/cloudword/opendanger.png",
        width = 15,height = 13)
@@ -189,7 +196,7 @@ docs_hommes <- docs_hommes %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problème","oui","dire","savez","pouvez"))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problème","oui","dire","savez","pouvez",'troubles'))
 
 # Prétraitement du texte pour les femmes
 text_femmes <- gsub("[[:punct:]]", " ", text_femmes)
@@ -198,7 +205,7 @@ docs_femmes <- docs_femmes %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problème',"oui","dire","savez","pouvez"))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problème',"oui","dire","savez","pouvez",'troubles'))
 
 # Créez le nuage de mots pour les hommes
 dtm_hommes <- TermDocumentMatrix(docs_hommes)
@@ -220,7 +227,9 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light(base_size = 15) +
-  scale_size_area(max_size = 13) +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la connaissance des dangers de l'extraction\ndu plomb, selon le sexe") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
+  scale_size_area(max_size = 23) +
   facet_wrap(~sex, nrow = 2) +
   theme(strip.text = element_text(size = 25))
 
@@ -243,7 +252,7 @@ docs_ahouli <- docs_ahouli %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problèmes"))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problèmes",'troubles'))
 
 text_mibladen <- gsub("[[:punct:]]", " ", text_mibladen)
 docs_mibladen <- Corpus(VectorSource(text_mibladen))
@@ -251,7 +260,7 @@ docs_mibladen <- docs_mibladen %>%
   tm_map(removeNumbers) %>%
   tm_map(removePunctuation) %>%
   tm_map(content_transformer(tolower)) %>%
-  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problèmes'))
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problèmes','troubles'))
 
 dtm_ahouli <- TermDocumentMatrix(docs_ahouli)
 matrix_ahouli <- as.matrix(dtm_ahouli)
@@ -271,7 +280,9 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light(base_size = 15) +
-  scale_size_area(max_size = 13) +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la connaissance des dangers de l'extraction\ndu plomb, selon le lieu de résidence") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
+  scale_size_area(max_size = 18) +
   facet_wrap(~lieu, nrow = 2) +
   theme(strip.text = element_text(size = 25))
 
@@ -302,6 +313,8 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light() +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des améliorations \nsocio-sanitaires de la communauté") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
   scale_size_area(max_size = 18) 
 
 ggsave("graphs/cloudword/Openameliosani.png",
@@ -351,6 +364,8 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light(base_size = 15) +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des améliorations \nsocio-sanitaires de la communauté, selon le sexe\n") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
   scale_size_area(max_size = 13) +
   facet_wrap(~sex, nrow = 2) +
   theme(strip.text = element_text(size = 25))
@@ -403,6 +418,8 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light(base_size = 15) +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des améliorations socio-sanitaires\nde la communauté, selon le lieu de résidence\n") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
   scale_size_area(max_size = 13) +
   facet_wrap(~lieu, nrow = 2) +
   theme(strip.text = element_text(size = 25))
