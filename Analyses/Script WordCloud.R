@@ -39,6 +39,7 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   scale_color_gradient(low = "darkgrey", high = "darkblue") +
   clessnverse::theme_clean_light() +
+  labs(title = "Mots les plus fréquents dans les réponses\nsur la question des amélioration\nsocio-sanitaires de la communauté") 
   scale_size_area(max_size = 18) 
 
 ggsave("graphs/cloudword/probsantecourant.png",

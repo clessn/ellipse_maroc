@@ -94,7 +94,7 @@ graph <- graph %>%
 
 colors <- c("#1F77B4", "#FF7F0E", "#2CA02C","#8C564B","#E377C2", "#7F7F7F", "#BCBD22", "#17BECF")
 
-breaks <- c(0.0, 0.25, 0.5, 0.75, 0.1)
+breaks <- c(0.0, 0.25, 0.5, 0.75,1)
 labels <- c("Médiocre", "Mauvaise", "Moyenne", "Bonne", "Très bonne")
 
 ggplot(graph, aes(x = santegenerale, y = prop*100, fill = ses_sex)) +
