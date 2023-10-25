@@ -1058,11 +1058,11 @@ cleanData$santecommunaute_chronique <- NA
 cleanData$santecommunaute_respiratoire_cardio <- NA
 cleanData$santecommunaute_rhumatisme <- NA
 cleanData$santecommunaute_silicose <- NA
-cleanData$santecommunaute_musuclosquelette <- NA
+cleanData$santecommunaute_musculo_squelettique <- NA
 cleanData$santecommunaute_sciatique <- NA
 cleanData$santecommunaute_paralysie <- NA
 cleanData$santecommunaute_parkinson <- NA
-cleanData$santecommunaute_neuro <- NA
+cleanData$santecommunaute_neurologique <- NA
 cleanData$santecommunaute_cassure <- NA
 cleanData$santecommunaute_mort <- NA
 cleanData$santecommunaute_articulation <- NA
@@ -1087,16 +1087,16 @@ cleanData$santecommunaute_rhumatisme <- as.integer(grepl("Rhumatisme|rhumatisme"
 table(cleanData$santecommunaute_rhumatisme)
 cleanData$santecommunaute_silicose <- as.integer(grepl("Silicose|silicose", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
 table(cleanData$santecommunaute_silicose)
-cleanData$santecommunaute_musuclosquelette <- as.integer(grepl("Troubles musculosquelettiques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$santecommunaute_musuclosquelette)
+cleanData$santecommunaute_musculo_squelettique <- as.integer(grepl("Troubles musculosquelettiques", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$santecommunaute_musculo_squelettique)
 cleanData$santecommunaute_sciatique <- as.integer(grepl("Sciatique|sciatique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
 table(cleanData$santecommunaute_sciatique)
 cleanData$santecommunaute_paralysie <- as.integer(grepl("Paralysie", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
 table(cleanData$santecommunaute_paralysie)
 cleanData$problemesantecommunaute_parkinson <- as.integer(grepl("Parkinson", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
 table(cleanData$santecommunaute_parkinson)
-cleanData$santecommunaute_neuro <- as.integer(grepl("problème neurologique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
-table(cleanData$santecommunaute_neuro)
+cleanData$santecommunaute_neurologique <- as.integer(grepl("problème neurologique", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
+table(cleanData$santecommunaute_neurologique)
 cleanData$santecommunaute_cassure <- as.integer(grepl("Casseurs", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))
 table(cleanData$santecommunaute_cassure)
 cleanData$santecommunaute_mort <- as.integer(grepl("Mort", dataH$`Quelles sont les problèmes de santé les plus courant dans votre communauté`))

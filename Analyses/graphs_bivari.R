@@ -190,3 +190,219 @@ ggplot(graph, aes(x = ses_revenu, y = prop*100, fill = ses_sex)) +
   
 ggsave("graphs/perceptions/maladiecardioXrevenu.png",
        width = 12, height = 10)
+
+
+
+### bivarié -----------------------------------------------------------------
+text <- data$opendangerplomb
+text <- gsub("[[:punct:]]", " ", text)
+text <- tolower(text)
+table(data$ses_lieu)
+# Ajoutez des étiquettes pour les hommes et les femmes
+text_ahouli <- data$openprobsantecourant[data$ses_lieu == "Ahouli"]
+text_mibladen <- data$openprobsantecourant[data$ses_lieu == "Mibladen"]
+# Combinez les textes avec des étiquettes
+text_ahouli <- gsub("[[:punct:]]", " ", text_ahouli)
+docs_ahouli <- Corpus(VectorSource(text_ahouli))
+docs_ahouli <- docs_ahouli %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(content_transformer(tolower)) %>%
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres', "problèmes",'troubles'))
+
+text_mibladen <- gsub("[[:punct:]]", " ", text_mibladen)
+docs_mibladen <- Corpus(VectorSource(text_mibladen))
+docs_mibladen <- docs_mibladen %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(content_transformer(tolower)) %>%
+  tm_map(removeWords, c(stopwords("french"), 'veuillez', 'autre', 'grand', 'spécifier', 'autres','problèmes','troubles'))
+
+dtm_ahouli <- TermDocumentMatrix(docs_ahouli)
+matrix_ahouli <- as.matrix(dtm_ahouli)
+words_ahouli <- sort(rowSums(matrix_ahouli), decreasing = TRUE)
+df_ahouli <- data.frame(word = names(words_ahouli), freq = words_ahouli) %>% 
+  mutate(lieu = "Ahouli")
+
+dtm_mibladen <- TermDocumentMatrix(docs_mibladen)
+matrix_mibladen <- as.matrix(dtm_mibladen)
+words_mibladen <- sort(rowSums(matrix_mibladen), decreasing = TRUE)
+df_mibladen <- data.frame(word = names(words_mibladen), freq = words_mibladen) %>% 
+  mutate(lieu = "Mibladen")
+
+df <- rbind(df_ahouli, df_mibladen)
+
+ggplot(df, aes(label = word, size = freq, fill = lieu)) +
+  geom_bar(stat = "identity")+
+  scale_color_gradient(low = "darkgrey", high = "darkblue") +
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la connaissance des dangers de l'extraction\ndu plomb, selon le lieu de résidence") +
+  theme(plot.title = element_text(hjust = 0.5, size = 35)) +
+  scale_size_area(max_size = 18) +
+  facet_wrap(~lieu, nrow = 2) +
+  theme(strip.text = element_text(size = 25))
+
+ggsave("graphs/cloudword/OpendangerplombXlieu.png",
+       width = 15, height = 13)
+
+
+
+
+### graph/prob/sex ----------------------------------------------------------
+table(data_long$santecommunaute_accidents)
+table(data$ses_sex)
+
+data_long <- data %>%
+  pivot_longer(
+    cols = starts_with("santecommunaute"),
+    names_to = "problemecourantcommunaute",
+    names_prefix = "problemecourantcommunaute_",
+    values_to = "valeur")
+
+graph <- data_long %>% 
+  group_by(ses_sex, problemecourantcommunaute) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            nproblemecourantcommunaute = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+  mutate(prop = nproblemecourantcommunaute/ngroup,
+         ses_sex = paste0(ses_sex, "\nn = ", ngroup)) %>% 
+  mutate(problemecourantcommunaute = gsub("problemecourantcommunaute_","", problemecourantcommunaute)) %>% 
+  mutate(problemecourantcommunaute = gsub("santecommunaute_","", problemecourantcommunaute))
+
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+
+ggplot(graph, aes(x = prop * 100, y = reorder(problemecourantcommunaute, prop), fill = ses_sex, label = ses_sex, stat(count))) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  facet_wrap(~ses_sex) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "Le sexe du répondant selon sa perception\ndes problèmes de santé courant de la communauté", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0))
+
+ggsave("graphs/sante/probcourantXses.png",
+       width = 15,height = 13)
+
+
+
+### graph/probsante/lieu ----------------------------------------------------
+table(data_long$santecommunaute_accidents)
+table(data$ses_lieu)
+
+data_long <- data %>%
+  pivot_longer(
+    cols = starts_with("santecommunaute"),
+    names_to = "problemecourantcommunaute",
+    names_prefix = "problemecourantcommunaute_",
+    values_to = "valeur")
+
+graph <- data_long %>% 
+  group_by(ses_lieu, problemecourantcommunaute) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            nproblemecourantcommunaute = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+  mutate(prop = nproblemecourantcommunaute/ngroup,
+         ses_lieu = paste0(ses_lieu, "\nn = ", ngroup)) %>% 
+  mutate(problemecourantcommunaute = gsub("problemecourantcommunaute_","", problemecourantcommunaute)) %>% 
+  mutate(problemecourantcommunaute = gsub("santecommunaute_","", problemecourantcommunaute))
+
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+
+ggplot(graph, aes(x = prop * 100, y = reorder(problemecourantcommunaute, prop), fill = ses_lieu, label = ses_lieu, stat(count))) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  facet_wrap(~ses_lieu) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "Le lieu de résidence du répondant selon sa perception\ndes problèmes de santé courant de la communauté", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0))
+
+ggsave("graphs/sante/probcourantXlieu.png",
+       width = 15,height = 13)
+
+
+### graph/danger/sex --------------------------------------------------------
+table(data_long$santecommunaute_accidents)
+table(data$ses_sex)
+
+data_long <- data %>%
+  pivot_longer(
+    cols = starts_with("perceptiondanger"),
+    names_to = "dangerextractionplomb",
+    names_prefix = "dangerextractionplomb_",
+    values_to = "valeur")
+
+graph <- data_long %>% 
+  group_by(ses_sex, dangerextractionplomb) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            ndangerextractionplomb = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+  mutate(prop = ndangerextractionplomb/ngroup,
+         ses_sex = paste0(ses_sex, "\nn = ", ngroup)) %>% 
+  mutate(dangerextractionplomb = gsub("perceptiondanger_","",dangerextractionplomb))
+
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+
+ggplot(graph, aes(x = prop * 100, y = reorder(dangerextractionplomb, prop), fill = ses_sex, label = ses_sex, stat(count))) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "Le sexe du répondant\nselon sa connaisance des dangers\nde l'extraction du plomb", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0)) 
+
+ggsave("graphs/previous/perceptions/dangerplombXsex.png",
+       width = 15, height = 13)
+
+
+
+# graphs/danger/lieu ------------------------------------------------------
+table(data_long$santecommunaute_accidents)
+table(data$ses_lieu)
+
+data_long <- data %>%
+  pivot_longer(
+    cols = starts_with("perceptiondanger"),
+    names_to = "dangerextractionplomb",
+    names_prefix = "dangerextractionplomb_",
+    values_to = "valeur")
+
+graph <- data_long %>% 
+  group_by(ses_lieu, dangerextractionplomb) %>% # prépare les prochaines données #
+  summarise(ngroup = n(), # va chercher le nb de répondants de chque grps #
+            ndangerextractionplomb = sum(valeur, na.rm = TRUE)) %>% # nb de personnes qui ont mis 1 dans la case #
+  drop_na() %>% 
+  mutate(prop = ndangerextractionplomb/ngroup,
+         ses_lieu = paste0(ses_lieu, "\nn = ", ngroup)) %>% 
+  mutate(dangerextractionplomb = gsub("perceptiondanger_","",dangerextractionplomb))
+
+
+colors <- c("#1F77B4", "#FF7F0E", "#2CA02C", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF", "#a6bddb", "#d95f02", "#006837", "#74c476", "#c7e9c0", "#a50026", "#d73027","#f46d43", "#fdae61", "#54278f", "#6a51a3", "#9e9ac8", "#cbc9e2", "#636363", "#9ebcda", "#e0ecf4", "#fee0d2", "#525252", "#969696", "#bdbdbd", "#d9d9d9")
+
+ggplot(graph, aes(x = prop * 100, y = reorder(dangerextractionplomb, prop), fill = ses_lieu, label = ses_lieu, stat(count))) +
+  geom_bar(stat = "identity",show.legend = FALSE) + # Couleur des barres
+  facet_wrap(~ses_lieu) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  labs(x = "Proportion de répondants (%)", # Titre de l'axe Y
+       title = "Le lieu de résidence du répondant\nselon sa connaisance des dangers\nde l'extraction du plomb", # Titre du graphique
+       caption = "Source: Données Ahouli") + # Légende en bas à droite
+  theme(axis.title.y=element_blank(), # Supprimer le titre de l'axe X
+        axis.text.y=element_text(angle=0, vjust=0, hjust=0.5), # Rotation des labels de l'axe X
+        axis.title.x=element_text(hjust=0.5), # Centrer le titre de l'axe Y
+        plot.title = element_text(hjust = 0)) 
+
+ggsave("graphs/previous/perceptions/dangerplombXlieu.png",
+       width = 15, height = 13)
+

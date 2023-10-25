@@ -638,16 +638,16 @@ cleanDataF$santecommunaute_accidents <- NA
 cleanDataF$santecommunaute_hypertension <- NA
 cleanDataF$santecommunaute_hemorroide <- NA
 cleanDataF$santecommunaute_digestif <- NA
-cleanDataF$santecommunaute_air_cardio <- NA
+cleanDataF$santecommunaute_respiratoire_cardio <- NA
 cleanDataF$santecommunaute_rhumatisme <- NA
-cleanDataF$santecommunaute_muscle_squelette <- NA
+cleanDataF$santecommunaute_musculo_squelettique <- NA
 cleanDataF$santecommunaute_allergie <- NA
 cleanDataF$santecommunaute_fatigue <- NA
 cleanDataF$santecommunaute_mentale <- NA
 cleanDataF$santecommunaute_chronique <- NA
 cleanDataF$santecommunaute_maux_de_tete <- NA
 cleanDataF$santecommunaute_neurologique <- NA
-cleanDataF$santecommunaute_reins <- NA
+cleanDataF$santecommunaute_rein <- NA
 cleanDataF$santecommunaute_silicose <- NA
 cleanDataF$santecommunaute_diminution <- NA
 cleanDataF$santecommunaute_sciatique <- NA
@@ -664,14 +664,14 @@ table(cleanDataF$santecommunaute_hemorroide)
 cleanDataF$santecommunaute_digestif <- as.integer(grepl("Problème digestif|Problème digestifs", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
 table(cleanDataF$santecommunaute_digestif)
 
-cleanDataF$santecommunaute_air_cardio <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute_air_cardio)
+cleanDataF$santecommunaute_respiratoire_cardio <- as.integer(grepl("Problèmes respiratoires et cardiovasculaires", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_respiratoire_cardio)
 
 cleanDataF$santecommunaute_rhumatisme <- as.integer(grepl("Rhumatisme|rhumatisme", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
 table(cleanDataF$santecommunaute_rhumatisme)
 
-cleanDataF$santecommunaute_muscle_squelette <- as.integer(grepl("Troubles musculosquelettiques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute_muscle_squelette)
+cleanDataF$santecommunaute_musculo_squelettique <- as.integer(grepl("Troubles musculosquelettiques", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_musculo_squelettique)
 
 cleanDataF$santecommunaute_allergie <- as.integer(grepl("Allergie|allergie", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
 table(cleanDataF$santecommunaute_allergie)
@@ -691,8 +691,8 @@ table(cleanDataF$santecommunaute_maux_de_tete)
 cleanDataF$santecommunaute_neurologique <- as.integer(grepl("Problème neurologique|Maladie neurologique", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
 table(cleanDataF$santecommunaute_neurologique)
 
-cleanDataF$santecommunaute_reins <- as.integer(grepl("problème rénal|Rénales", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
-table(cleanDataF$santecommunaute_reins)
+cleanDataF$santecommunaute_rein <- as.integer(grepl("problème rénal|Rénales", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
+table(cleanDataF$santecommunaute_rein)
 
 cleanDataF$santecommunaute_silicose <- as.integer(grepl("silicose|Silicose", dataFemmes$`Quelles sont les problèmes de santé les plus courant dans votre communauté` ))
 table(cleanDataF$santecommunaute_silicose)
