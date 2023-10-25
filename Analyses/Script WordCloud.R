@@ -315,7 +315,7 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   clessnverse::theme_clean_light() +
   labs(title = "Mots les plus fréquents dans les réponses \nsur la question des améliorations \nsocio-sanitaires de la communauté") +
   theme(plot.title = element_text(hjust = 0.5, size = 35)) +
-  scale_size_area(max_size = 18) 
+  scale_size_area(max_size = 30) 
 
 ggsave("graphs/cloudword/Openameliosani.png",
        width = 20, height = 17)
@@ -366,7 +366,7 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   clessnverse::theme_clean_light(base_size = 15) +
   labs(title = "Mots les plus fréquents dans les réponses \nsur la question des améliorations \nsocio-sanitaires de la communauté, selon le sexe\n") +
   theme(plot.title = element_text(hjust = 0.5, size = 35)) +
-  scale_size_area(max_size = 13) +
+  scale_size_area(max_size = 20) +
   facet_wrap(~sex, nrow = 2) +
   theme(strip.text = element_text(size = 25))
 
@@ -420,7 +420,7 @@ ggplot(df, aes(label = word, size = freq, color = freq)) +
   clessnverse::theme_clean_light(base_size = 15) +
   labs(title = "Mots les plus fréquents dans les réponses \nsur la question des améliorations socio-sanitaires\nde la communauté, selon le lieu de résidence\n") +
   theme(plot.title = element_text(hjust = 0.5, size = 35)) +
-  scale_size_area(max_size = 13) +
+  scale_size_area(max_size = 20) +
   facet_wrap(~lieu, nrow = 2) +
   theme(strip.text = element_text(size = 25))
 
