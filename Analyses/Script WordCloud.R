@@ -8,6 +8,7 @@ library(svglite)
 library(webshot)
 library(htmlwidgets)
 library(ggwordcloud)
+library(writexl)
 
 ### Load Data ####
 data <- readRDS("Data/data.rds")
@@ -493,7 +494,7 @@ ggplot(df, aes(label = word, size = freq, color = category)) +
 ggsave("graphs/cloudword/Openameliosani.png",
        width = 15, height = 13)
 
-
+write_xlsx(df,"graphs/cloudword/Openameliosani.xlsx")
 
 ### Open/amelio/sex ---------------------------------------------------------
 text_hommes <- data$openameliorationeco[data$ses_sex == "male"]
@@ -942,3 +943,5 @@ ggplot(df, aes(label = word, size = freq, color = category)) +
 
 ggsave("graphs/cloudword/OpenameliosaniXlieu.png",
        width = 15, height = 13)
+
+write_xlsx(df,"graphs/cloudword/Excel_amelioXlieu.xlsx")
