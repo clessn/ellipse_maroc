@@ -720,6 +720,7 @@ ggplot(df, aes(label = word, size = freq, color = category)) +
 ggsave("graphs/cloudword/OpenameliosaniXsex.png",
        width = 15, height = 13)
 
+write_xlsx(df,"graphs/cloudword/Excel_amelioXSex.xlsx")
 
 
 ### Open/amelio/lieu --------------------------------------------------------
