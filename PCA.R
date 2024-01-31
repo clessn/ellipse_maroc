@@ -1,9 +1,15 @@
 
-# LOAD PACKAGES -----------------------------------------------------------
+# Load les packages -------------------------------------------------------
 
 library(tidyverse)
 library(ggplot2)
-library(ade4) 
+library(corrr)
+library(ggcorrplot)
+library(FactoMineR)
+library(factoextra)
+
+
+# Load les données --------------------------------------------------------
 
 
 data <- readRDS("Data/data.rds")
@@ -65,54 +71,78 @@ vd_clean <- c(
   blessurerecentes_oreille = "Blessures récentes - Oreille"
 )
 
-vd <- names(vd_clean)
+vd <- names(vd_clean) ## assignes les noms de variables cleaner à vd
 
-data2 <- data[, vd]
+data2 <- data[, vd] ## va chercher seulement les variables dépendantes dans le jeu de donnée
 
-data2[is.na(data2)] <- 0
+data2[is.na(data2)] <- 0 ## transforme les NA en 0 
 
-
-data2 <- mutate_at(data2, vars(vd), as.factor)
-
-data2 <- as.factor(data2)
-data2
-
-acm <- dudi.acm(data2, scannf = FALSE, nf = 4)
+pca <- PCA(X = data2)
 
 
 
 
+# Loader des variables pour Une PCA des blessures récentes ----------------------------------------------------
+
+data2$pca_blessurerecentes <- pull(data2 %>%
+  select(starts_with('blessurerecentes')) %>%
+  mutate(sum = rowSums(across(everything()))), sum)
+
+
+# Loader des variables pour une PCA des problèmes digestifs -----------------
+
+data2$pca_problemedigestif <- pull(data2 %>% 
+  select(starts_with('problemedigestif')) %>% 
+  mutate(sum = rowSums(across(everything()))), sum)
+
+
+# Loader des variables pour une PCA des problèmes neuro -------------------
+
+data2$pca_problemeneuro <- pull(data2 %>% 
+  select(starts_with('problemeneuro')) %>% 
+  mutate(sum = rowSums(across(everything()))), sum)
+
+
+# Loader des variables pour une PCA des problèmes de peau -------------------
+
+data2$pca_problemepeau <- pull(data2 %>% 
+  select(starts_with('problemepeau')) %>% 
+  mutate(sum = rowSums(across(everything()))), sum)
+
+
+# Loader des variables pour une PCA des maladies respiratoires -------------------
+
+data2$pca_maladierespiratoire <- pull(data2 %>% 
+  select(starts_with('maladierespiratoire')) %>% 
+  mutate(sum = rowSums(across(everything()))), sum)
+
+
+# Loader des variables pour une PCA des maladies chroniques -------------------
+
+data2$pca_maladiechronique <- pull(data2 %>% 
+  select(starts_with('maladiechronique')) %>% 
+  mutate(sum = rowSums(across(everything()))), sum)
+
+
+# Loader des variables pour une PCA des maladies cardio-vasculaires -------------------
+
+data2$pca_maladiecardiovasculaire <- pull(data2 %>% 
+  select(starts_with('maladiecardiovasculaire')) %>% 
+  mutate(sum = rowSums(across(everything()))), sum)
 
 
 
+# Créer un nouveau dataframe pour la PCA ----------------------------------
+pca_columns <- select(data2, starts_with('pca')) ## allez chercher dans la colonne ce qui commence avec pca
 
+specific_columns <- select(data2, santegenerale, santementale, consommationalcool, tabac, douleursmusculaires, douleursarticulaires, troublesommeil) ## allez chercher les vecteurs spécifiques dans la base de donnée
 
-# Autre test d'ACM --------------------------------------------------------
+vrai_pca <- cbind(pca_columns, specific_columns) ## assignez à vrai_pca les vecteurs de colonnes
 
-library(corrr)
-library(ggcorrplot)
-library(ggplot2)
-library(FactoMineR)
-library(factoextra)
+pca2 <- PCA(X = vrai_pca, scale.unit = TRUE)
 
-fviz_pca_var(data.pca, col.var = "black")
+pca2
+summary(pca2)
+pca2[["eig"]] ## Garder aveec les eigenvalue > 1 
 
-
-data2 <- as.numeric(data2)
-
-pca_result <- prcomp(data2, scale. = TRUE)
-
-# Extract PC scores
-pc_scores <- as.data.frame(pca_result$x[, 1:2])
-
-# Create a data frame with the variables and PC scores
-pca_data <- cbind(data2, pc_scores)
-
-# Plot the first two principal components
-ggplot(pca_data, aes(x = PC1, y = PC2)) +
-  geom_point() +
-  labs(title = "PCA Plot",
-       x = "Principal Component 1",
-       y = "Principal Component 2") +
-  theme_minimal()
-
+pca_dims <- pca[['var']][['coord']]
