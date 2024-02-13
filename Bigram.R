@@ -23,12 +23,33 @@ as.character(my_corpus[[1]])
 
 # Bigrams
 
-minfreq_bigram <- 2 
+minfreq_bigram <- 2 ### mets la fréquence minimum des mots à 2
 
-token_delim <- "\\t\\r\\n.!?,;\"()"
-bitoken <- NGramTokenizer(my_corpus,Weka_control(min = 2, max = 2, delimiters = token_delim))
-two_word <- data.frame(table(bitoken))
-sort_two <- two_word[order(two_word$Freq,decreasing = TRUE),]
-wordcloud(sort_two$bitoken,sort_two$Freq,random.order = FALSE,scale = c(2,0.35),min.freq = minfreq_bigram,colors = brewer.pal(8,"Dark2"),max.words = 1000)
+##### Version chatGPT #####
 
-View(wordcloud)
+
+# Create bigrams
+createBigrams <- function(text){
+  words <- unlist(strsplit(text, "\\s+"))
+  bigrams <- paste(words[1:(length(words)-1)], words[2:length(words)], sep = " ")
+  return(bigrams)
+}
+
+# Apply bigram creation function to corpus
+my_bigrams <- lapply(my_corpus, createBigrams)
+
+# Flatten the list of bigrams
+all_bigrams <- unlist(my_bigrams)
+
+# Count frequency of bigrams
+bigram_freq <- table(all_bigrams)
+
+# Convert to data frame
+bigram_freq_df <- data.frame(bigram = names(bigram_freq), freq = as.numeric(bigram_freq))
+
+# Sort by frequency
+bigram_freq_df <- bigram_freq_df[order(bigram_freq_df$freq, decreasing = TRUE), ]
+
+# Generate word cloud
+wordcloud(words = bigram_freq_df$bigram, freq = bigram_freq_df$freq, scale = c(2, 0.35), 
+          colors = brewer.pal(8, "Dark2"), random.order = FALSE, max.words = 5000)
