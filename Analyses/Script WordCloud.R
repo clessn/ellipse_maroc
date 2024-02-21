@@ -48,7 +48,6 @@ ggsave("graphs/cloudword/probsantecourant.png",
        width = 15 ,height = 15)
 
 
-
 #### openprobsante homme/femme -----------------------------------------------------
 text_hommes <- data$openprobsantecourant[data$ses_sex == "male"]
 text_femmes <- data$openprobsantecourant[data$ses_sex == "female"]
