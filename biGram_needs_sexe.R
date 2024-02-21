@@ -3,13 +3,13 @@ library(wordcloud)
 library(RColorBrewer)
 
 # Load data
-my_data <- read_xlsx("raw_data/Excel_bigram.xlsx")
+my_data <- read_xlsx("raw_data/Excel_bigram2.xlsx")
 
 # Check data loading
 print(head(my_data))
 
 # Check unique locations
-print(unique(my_data$Genre))
+print(unique(my_data$Lieu))
 
 # Clean and preprocess text data
 my_corpus <- Corpus(VectorSource(my_data$Données[my_data$Genre == "Male"]))
@@ -18,7 +18,6 @@ my_corpus <- tm_map(my_corpus, removeNumbers)
 my_corpus <- tm_map(my_corpus, removePunctuation)
 my_corpus <- tm_map(my_corpus, removeWords, c("d’emploi Médecin", "publique Bus", "d’emploi La", "féminines tapis", "NA NA"))
 my_corpus <- tm_map(my_corpus, stripWhitespace)
-
 
 # Create bigrams function
 createBigrams <- function(text) {
@@ -45,8 +44,8 @@ bigram_freq_df <- bigram_freq_df[order(bigram_freq_df$freq, decreasing = TRUE), 
 bigram_freq_df <- bigram_freq_df[bigram_freq_df$freq > 2, ]
 
 # Generate word cloud
-bigram_alt_Male <- wordcloud(words = bigram_freq_df$bigram, freq = bigram_freq_df$freq, scale = c(1, 0.35), 
-                               colors = brewer.pal(8, "Dark2"), random.order = FALSE, max.words = 50)
+bigram_needs_Male <- wordcloud(words = bigram_freq_df$bigram, freq = bigram_freq_df$freq, scale = c(1, 0.35), 
+                               colors = brewer.pal(8, "Dark2"), random.order = FALSE, max.words = 75)
 
 
 # Clean and preprocess text data
@@ -54,7 +53,7 @@ my_corpus2 <- Corpus(VectorSource(my_data$Données[my_data$Genre == "Female"]))
 my_corpus2 <- tm_map(my_corpus2, content_transformer(tolower))
 my_corpus2 <- tm_map(my_corpus2, removeNumbers)
 my_corpus2 <- tm_map(my_corpus2, removePunctuation)
-my_corpus2 <- tm_map(my_corpus2, removeWords, c("NA"))
+my_corpus2 <- tm_map(my_corpus2, removeWords, c("d’emploi Médecin", "publique Bus", "d’emploi La", "féminines tapis"))
 my_corpus2 <- tm_map(my_corpus2, stripWhitespace)
 
 # Create bigrams function
@@ -82,9 +81,8 @@ bigram_freq_df2 <- bigram_freq_df2[order(bigram_freq_df2$freq, decreasing = TRUE
 bigram_freq_df2 <- bigram_freq_df2[bigram_freq_df2$freq > 2, ]
 
 # Generate word cloud
-bigram_alt_Female <- wordcloud(words = bigram_freq_df2$bigram, freq = bigram_freq_df2$freq, scale = c(1, 0.35), 
-                                 colors = brewer.pal(8, "Dark2"), random.order = FALSE, max.words = 50)
-
+bigram_needs_Female <- wordcloud(words = bigram_freq_df2$bigram, freq = bigram_freq_df2$freq, scale = c(1, 0.35), 
+                                 colors = brewer.pal(8, "Dark2"), random.order = FALSE, max.words = 75)
 
 bigram_freq_df$gender <- 'Hommes'
 bigram_freq_df2$gender <- 'Femmes'
@@ -92,17 +90,19 @@ bigram_freq_df2$gender <- 'Femmes'
 
 df <- rbind(bigram_freq_df, bigram_freq_df2)
 
-df <- df[!(df$bigram %in% c('NA NA','agricoles coopératives','agricoles ouverture','agricoles promouvoir', 'féminines plantation','mine terre','usines coopératives','agricoles projets','féminines ouverture','mine promouvoir','agricole promouvoir','tourisme coopératives' )),]
+df <- df[!(df$bigram %in% c('NA NA','route réseau','internet aménagement','médicaux contrôle','route services','d’emploi services','communication aménagement','communication services','médicaux transport','médicaux réseau','route autorisation','internet transport','mineurs commercialisation','mineurs droit','mineurs éducation','route eau','route transport','médicaux offres','hebdomadaire services','d’emploi éducation','médicaux éducation','médicaux souq','d’emploi transport','d’emploi souq','public souq','hebdomadaire offres','maisons offres','public services','route éducation','secondaire transport','communication réseau','hebdomadaire éducation','médicaux propriété','public éducation','d’emploi aménagement','hebdomadaire transport','maisons services','médicaux aménagement','route services')),]
+
 
 ggplot(df, aes(label = bigram, size = freq, color = freq)) +
   geom_text_wordcloud() +
   facet_wrap(~gender, ) +
-  scale_color_gradient(low = "darkgrey", high = "darkgreen") +
+  scale_color_gradient(low = "darkgrey", high = "darkred") +
   clessnverse::theme_clean_light(base_size = 15) +
-  labs(title = "Mots les plus fréquents dans les réponses économiques \nsur la question des améliorations socio-sanitaires\n selon le lieu sexe") +
+  labs(title = "Mots les plus fréquents selon les besoins sur \nla question des améliorations socio-sanitaires\nselon le sexe\n") +
   theme(plot.title = element_text(hjust = 0.5, size = 30)) +
   scale_size_area(max_size = 13) +
-  theme(strip.text = element_text(size = 28))
+  theme(strip.text = element_text(size = 25))
 
-ggsave("graphs/Bigram/alt_ecoXsexe.png",
+
+ggsave("graphs/Bigram/besoin_sexe.png",
        width = 12, height = 8)
