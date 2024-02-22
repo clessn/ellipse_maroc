@@ -1,6 +1,9 @@
 library(tm)
 library(wordcloud)
 library(RColorBrewer)
+library(readxl)
+library(ggplot2)
+library(ggwordcloud)
 
 # Load data
 my_data <- read_xlsx("raw_data/Excel_bigram2.xlsx")
@@ -98,7 +101,7 @@ ggplot(df, aes(label = bigram, size = freq, color = freq)) +
   facet_wrap(~lieu, ) +
   scale_color_gradient(low = "darkgrey", high = "darkred") +
   clessnverse::theme_clean_light(base_size = 15) +
-  labs(title = "Mots les plus fréquents selon les besoins sur \nla question des améliorations socio-sanitaires\nselon le lieu de résidence\n") +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des besoins\nselon le lieu de résidence\n") +
   theme(plot.title = element_text(hjust = 0.5, size = 30)) +
   scale_size_area(max_size = 13) +
   theme(strip.text = element_text(size = 25))
