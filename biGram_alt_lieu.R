@@ -93,7 +93,7 @@ bigram_freq_df2$lieu <- 'Mibladen'
 
 df <- rbind(bigram_freq_df, bigram_freq_df2)
 
-df <- df[!(df$bigram %in% c('NA NA','agricoles coopératives','agricoles ouverture','agricoles promouvoir', 'féminines plantation','mine terre','usines coopératives','agricoles projets','féminines ouverture','mine promouvoir','agricole promouvoir','tourisme coopératives' )),]
+df <- df[!(df$bigram %in% c('NA NA','agricoles coopératives','agricoles ouverture','agricoles promouvoir', 'féminines plantation','mine terre','usines coopératives','agricoles projets','féminines ouverture','mine promouvoir','agricole promouvoir','tourisme coopératives','agriculture promouvoir','agriculture ouverture','agriculture coopératives' )),]
 
 
 ggplot(df, aes(label = bigram, size = freq, color = freq)) +
@@ -101,7 +101,7 @@ ggplot(df, aes(label = bigram, size = freq, color = freq)) +
   facet_wrap(~lieu, ) +
   scale_color_gradient(low = "darkgrey", high = "darkgreen") +
   clessnverse::theme_clean_light(base_size = 15) +
-  labs(title = "Mots les plus fréquents dans les réponses économiques \nsur la question des alternatives économiques \nselon le lieu de résidence\n") +
+  labs(title = "Mots les plus fréquents dans les réponses \nsur la question des alternatives économiques \nselon le lieu de résidence\n") +
   theme(plot.title = element_text(hjust = 0.5, size = 30)) +
   scale_size_area(max_size = 13) +
   theme(strip.text = element_text(size = 25))

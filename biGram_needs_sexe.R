@@ -1,6 +1,9 @@
 library(tm)
 library(wordcloud)
 library(RColorBrewer)
+library(readxl)
+library(ggplot2)
+library(ggwordcloud)
 
 # Load data
 my_data <- read_xlsx("raw_data/Excel_bigram2.xlsx")
@@ -90,7 +93,7 @@ bigram_freq_df2$gender <- 'Femmes'
 
 df <- rbind(bigram_freq_df, bigram_freq_df2)
 
-df <- df[!(df$bigram %in% c('NA NA','route réseau','internet aménagement','médicaux contrôle','route services','d’emploi services','communication aménagement','communication services','médicaux transport','médicaux réseau','route autorisation','internet transport','mineurs commercialisation','mineurs droit','mineurs éducation','route eau','route transport','médicaux offres','hebdomadaire services','d’emploi éducation','médicaux éducation','médicaux souq','d’emploi transport','d’emploi souq','public souq','hebdomadaire offres','maisons offres','public services','route éducation','secondaire transport','communication réseau','hebdomadaire éducation','médicaux propriété','public éducation','d’emploi aménagement','hebdomadaire transport','maisons services','médicaux aménagement','route services')),]
+df <- df[!(df$bigram %in% c('NA NA','public aide','route réseau','internet aménagement','route services','communication aménagement','communication services','communication réseau','route éducation','médicaux éducation','internet services','médicaux aménagement','médicaux réseau','route autorisation','route transport','médicaux contrôle','médicaux transport','public souq','route eau','médicaux offres','d’emploi services','hebdomadaire services','d’emploi éducation','d’emploi souq','maisons offres','médicaux contrôle','médicaux transport','secondaire transport','d’emploi transport','médicaux souq','hebdomadaire éducation','médicaux éducation','médicaux propriété','public souq','d’emploi aménagement','hebdomadaire offres','hebdomadaire transport','maisons services','médicaux présence','médicaux rénovation','mineurs commercialisation','mineurs éducation','public services','secondaire services','sécurité services','route accès','internet éducation','public souk','d’emploi souk','médicaux souk','d’emploi service','déchets services')),]
 
 
 ggplot(df, aes(label = bigram, size = freq, color = freq)) +
@@ -98,7 +101,7 @@ ggplot(df, aes(label = bigram, size = freq, color = freq)) +
   facet_wrap(~gender, ) +
   scale_color_gradient(low = "darkgrey", high = "darkred") +
   clessnverse::theme_clean_light(base_size = 15) +
-  labs(title = "Mots les plus fréquents selon les besoins sur \nla question des améliorations socio-sanitaires\nselon le sexe\n") +
+  labs(title = "Mots les plus fréquents dans \nles réponses sur la question des besoins\nselon le sexe") +
   theme(plot.title = element_text(hjust = 0.5, size = 30)) +
   scale_size_area(max_size = 13) +
   theme(strip.text = element_text(size = 25))

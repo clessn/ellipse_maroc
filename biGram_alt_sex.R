@@ -94,7 +94,7 @@ bigram_freq_df2$gender <- 'Femmes'
 
 df <- rbind(bigram_freq_df, bigram_freq_df2)
 
-df <- df[!(df$bigram %in% c('NA NA','agricoles coopératives','agricoles ouverture','agricoles promouvoir', 'féminines plantation','mine terre','usines coopératives','agricoles projets','féminines ouverture','mine promouvoir','agricole promouvoir','tourisme coopératives' )),]
+df <- df[!(df$bigram %in% c('NA NA','agricoles coopératives','agricoles ouverture','agricoles promouvoir', 'féminines plantation','mine terre','usines coopératives','agricoles projets','féminines ouverture','mine promouvoir','agricole promouvoir','tourisme coopératives','agriculture ouverture','agriculture coopératives','féminines promouvoir','agriculture promouvoir' )),]
 
 ggplot(df, aes(label = bigram, size = freq, color = freq)) +
   geom_text_wordcloud() +
