@@ -32,13 +32,13 @@ cleanDataF$ses_etatcivil <- NA
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Célibataire"
 ] <- "celib"
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Divorcée/séparée"
-] <- "divorcee"
+] <- "divorce"
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Mariée"
-] <- "mariee"
+] <- "marie"
 cleanDataF$ses_etatcivil[dataFemmes$`Quel est votre état civil ?` == "Veuve"
-] <- "veuve"
+] <- "veuf"
 
-table(cleanDataF$ses_etatcivil)
+table(cleanDataF$ses_etatcivil, useNA = "always")
 
 
 ##################### Lieu ######################
@@ -55,18 +55,18 @@ table(cleanDataF$ses_lieu)
 #################### est-ce qu'on inclue si invalide est seulement 2 ##########
 table(dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?`)
 
-cleanDataF$statutTravail <- NA
+cleanDataF$ses_statutTravail <- NA
 
-cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
+cleanDataF$ses_statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
                            "Femme au foyer"] <- "femme_foyer"
-cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
-                           "Travailleuse autonome"] <- "travailleuse_autonome"
-cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
+cleanDataF$ses_statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
+                           "Travailleuse autonome"] <- "autonome"
+cleanDataF$ses_statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
                            "Sans emploi - ne recherche pas d'emploi"] <- "cherche_pas_emploi"
-cleanDataF$statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
+cleanDataF$ses_statutTravail[dataFemmes$`Parmi les catégories suivantes, laquelle décrit le mieux votre statut professionnel actuel ?` ==
                            "Sans emploi - recherche un emploi"] <- "cherche_emploi"
 
-table(cleanDataF$statutTravail)
+table(cleanDataF$ses_statutTravail, useNA = "always")
 
 
 #################### Cmb d'enfants ####################
@@ -953,7 +953,7 @@ cleanDataF$formationrisque[dataFemmes$`Avez-vous déjà reçu une formation ou d
   dataFemmes$`Avez-vous déjà reçu une formation ou des informations sur les risques sanitaires associés au travail dans la mine, spécifiquement pour les femmes (par exemple, la manipulation de plomb lorsqu'on est enceinte)?` == 
 "Oui,Si oui, par qui et comment? - Presse et interview"] <- "Oui, par des conférences de presse ou des interviews"
 
-table(cleanDataF$formationrisque)
+table(cleanDataF$formationrisque,useNA = "always")
 
 
 ################################# préoccupation maternité ###################

@@ -82,7 +82,7 @@ cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Divorcé/sépar
 cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Marié"] <- "marie"
 cleanData$ses_etatcivil[dataH$`Quel est votre état civil ?` == "Veuf"] <- "veuf"
 cleanData$ses_etatcivil <- factor(cleanData$ses_etatcivil)
-table(cleanData$ses_etatcivil)
+table(cleanData$ses_etatcivil, useNA = "always")
 
 ################## nb enfants ##################
 table(dataH$`Combien d'enfants avez-vous ?`)
@@ -404,7 +404,7 @@ cleanData$accessoinsante[dataH$`Avez-vous accès à des services de santé?`==
 cleanData$accessoinsante[dataH$`Avez-vous accès à des services de santé?` ==
                            "Oui"] <- "Oui"
 
-table(cleanData$accessoinsante)
+table(cleanData$accessoinsante, useNA = "always")
 
 ########################### Assurance maladie ##################
 table(dataH$`Avez vous une assurance médicale?`)
@@ -494,7 +494,7 @@ cleanData$ecolesecondaire[dataH$`Y a-t-il une école secondaire dans la communau
 
 table(cleanData$ecolesecondaire)
 ######################### système de transport ###################
-######################### difficile à coder ##################
+
 table(dataH$`Y a-t-il un système de transport collectif dans la communauté?`)
 
 cleanData$systemetransport <- NA
@@ -566,7 +566,6 @@ table(cleanData$consommationalcool)
 
 ############################ Fumez Tabac ######################
 
-########################### Me donne mal à la tête ça ##################
 table(dataH$`Fumez-vous du tabac?`)
 
 cleanData$tabac <- NA
@@ -601,7 +600,6 @@ table(cleanData$maladiecardiovasculaire_fatigue)
 
 ############################# Maladie chronique ######################
 
-############################# créer plusieurs variables ? #################
 table(dataH$`Avez-vous déjà été diagnostiqué avec une autre maladie chronique?`)
 
 cleanData$maladiechronique <- NA
@@ -752,7 +750,6 @@ table(cleanData$douleursarticulaires)
 
 ######################## Blessure dans les 12 dernier mois ###################
 
-######################## petit hic de code ########################
 table(dataH$`Avez-vous eu une blessure ou un accident au cours des 12 derniers mois?`)
 
 cleanData$blessurerecentes_main <- NA
@@ -835,8 +832,8 @@ unique(cleanData$anneeexperience)
 
 
 ######################## Perception du danger ###################
-####################### à compléter ####################
-table(dataH$`Connaissez-vous les dangers de l'extraction du plomb?`)
+
+table(dataH$`Connaissez-vous les dangers de l'extraction du plomb?`,useNA = "always")
 
 cleanData$perceptiondanger_accidents <- NA
 cleanData$perceptiondanger_silicose <- NA
